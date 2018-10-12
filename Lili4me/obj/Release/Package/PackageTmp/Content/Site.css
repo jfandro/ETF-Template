@@ -1,0 +1,150 @@
+﻿html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  min-height: 35rem;
+  position: relative;
+  font-weight: 300;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top:100px;
+}
+
+@media (pointer: coarse) and (hover: none) {
+  body {
+    /*background: url("../img/bg-mobile-fallback.jpg") #002E66 no-repeat center center scroll;*/
+    background-position: cover;
+  }
+  body video {
+    display: none;
+  }
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+video {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  z-index: 0;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #cd9557;
+  opacity: 0.7;
+  z-index: 1;
+}
+@media (min-width: 768px) {
+    .masthead {
+        height: 100%;
+        min-height: 0;
+        width: 80%;
+        padding-bottom: 0;
+    }
+}
+.masthead {
+  position: relative;
+  width: 50%;
+  overflow: hidden;
+  z-index: 2;
+}
+.jumbotron.masthead p {
+    font-size:16px;
+}
+
+/* The switch - the box around the slider */
+/***************************************************************/
+.key-numbers-container {
+    margin-top:20px;
+}
+.key-numbers-container .dc-chart {
+    float:none;
+}
+.key-number {
+    color: #778295;
+    border-left: 8px solid #627485;
+    margin-bottom:20px;
+    padding:10px;
+    background-color:rgba(194, 198, 200, 1);
+}
+.key-number.key-before {
+    border-left-color:#567793;
+}
+.key-number.key-before .fa {
+    color:#567793;
+}
+.key-number.key-after {
+    border-left-color:#be9328;
+}
+.key-number.key-after .fa {
+    color:#be9328;
+}
+.key-number .title {
+    font-size:12px;
+    color:#333;
+    margin-top:0;
+    margin-bottom: 10px;
+}
+.key-number .number {
+    width:100%;
+    color:#fff;
+    font-size:36px;
+    line-height:1.1;
+}
+.key-number .logo {
+    font-size:6em;
+    color: #6b6c7b;
+    text-shadow: 2px 2px 10px #7c7a98;
+}
+@media (min-device-width : 768px) and (max-device-width : 1024px) {
+    .key-numbers-container {
+        padding:0;
+    }
+    .key-number {
+        padding:6px;
+    }
+    .key-number .number {
+        font-size:24px;
+    }
+}
+
+
+  .row-chart,
+  .plot-chart,
+  .bar-chart,
+  .line-chart,
+  .range-chart,
+  .bubble-chart,
+  .pie-chart {
+      width:100%;
+      min-height: 200px; 
+      position:relative;
+  }
+
+  .portfolio-chart .reset {
+    position:absolute;
+    bottom:0;
+    right:0;
+}

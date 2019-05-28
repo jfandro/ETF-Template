@@ -216,3 +216,66 @@ div.dc-chart {
         height:250px !important;
     }
 }
+
+
+ .stacked-area-container {
+    width:100%;
+    height:400px;
+}   
+ .stacked-area {
+    width:100%;
+}
+
+.stacked-area .axis text {
+  font: 10px sans-serif;
+}
+
+.stacked-area .axis path,
+.stacked-area .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+.stacked-area .legend {
+	position: absolute;
+	top: 30px;
+	left: 50px;
+	background-color: hsla(0,0%,100%,.9);
+	padding: 5px 10px 5px 10px;
+	border-radius: 5px;
+}
+.stacked-area .legend .title {
+	margin-bottom: 2px;
+	font-weight: 900;
+}
+.stacked-area .legend .item {
+	font-size: .75em;
+}
+.stacked-area .legend .swatch {
+	width: 10px;
+	height: 10px;
+	margin-top: 3px;
+	float: left;
+	margin-right: 5px;
+}
+
+/*TIP*/
+.stacked-area .tip {
+  background-color: hsla(0,0%,100%,.9);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1em;
+	width: 180px;
+}
+.stacked-area .tip .year {
+  font-weight: 900;
+  font-size: 1.25em;
+  margin-bottom: 2px;
+}
+.stacked-area .tip .swatch {
+  width: 11px;
+  height: 11px;
+  float: left;
+  margin-top: 6px;
+  margin-right: 4px;
+}

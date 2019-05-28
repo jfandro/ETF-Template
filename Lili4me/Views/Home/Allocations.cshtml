@@ -1,0 +1,259 @@
+﻿<h2><span  id="name"></span> allocations <i class="glyphicon glyphicon-asterisk text-warning"></i></h2>
+
+    <p class="well text-info">Cette page est un exemple de reporting client. Une partie de son contenu est dynamique et
+    nourri d'appels à l'API de Lili. Ces actions (GET dans le jargon RESTful) porte sur un portefeuille identifié par sa clef privée,
+    clef délivrée automatiquement par notre serveur.
+    Pour ce reporting, nous avons interrogé quelques informations basiques et déployé 2 widgets. 
+    Ces contenus dynamiques sont repérables par le symbole <i class="glyphicon glyphicon-asterisk text-warning"></i>. 
+    Il s'agit de textes (ex nom du portefeuille), de nombres (ex indicateurs), des listes d'objets manipulables et intégrables dans 
+    un tableau (voir tableau des Kpis), des images ou des pluggins de dataviz. toutes ces données sont collectées au format JSON.
+    Le style (taille, couleurs, polices ...) et le comportement des contenus sont personnalisables pour coller à la charte graphique 
+    du site hôte.<br /><b>IMPORTANT</b> : nous avons laissé éditable la clef privée de manière à pouvoir la changer au terme de votre seconde expérience
+    sur la <a href="/Home/Create">création d'un portefeuille</a>. Choix éditorial ...</p>
+    <div class="text-center">
+        <form class="report-form form-inline">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Clef privée</div>
+                    <input type="text" class="form-control" id="code" value="e1a563bc-a094-4a73-ab18-609cdfa83303" />
+                </div>
+            </div>
+            <p class="text-right">
+                <button type="submit" class="btn btn-primary">Afficher</button>
+            </p>
+        </form>
+    </div>
+
+    <hr />
+
+    <p>Batnae municipium in Anthemusia conditum Macedonum manu priscorum ab Euphrate flumine brevi spatio disparatur, refertum mercatoribus opulentis, ubi annua sollemnitate prope Septembris initium mensis ad nundinas magna promiscuae fortunae convenit multitudo ad commercanda quae Indi mittunt et Seres aliaque plurima vehi terra marique consueta.
+    Dumque ibi diu moratur commeatus opperiens, quorum translationem ex Aquitania verni imbres solito crebriores prohibebant auctique torrentes, Herculanus advenit protector domesticus, Hermogenis ex magistro equitum filius, apud Constantinopolim, ut supra rettulimus, populari quondam turbela discerpti. quo verissime referente quae Gallus egerat, damnis super praeteritis maerens et futurorum timore suspensus angorem animi quam diu potuit emendabat.
+    Tempore quo primis auspiciis in mundanum fulgorem surgeret victura dum erunt homines Roma, ut augeretur sublimibus incrementis, foedere pacis aeternae Virtus convenit atque Fortuna plerumque dissidentes, quarum si altera defuisset, ad perfectam non venerat summitatem.
+    Erat autem diritatis eius hoc quoque indicium nec obscurum nec latens, quod ludicris cruentis delectabatur et in circo sex vel septem aliquotiens vetitis certaminibus pugilum vicissim se concidentium perfusorumque sanguine specie ut lucratus ingentia laetabatur.
+    Fuerit toto in consulatu sine provincia, cui fuerit, antequam designatus est, decreta provincia. Sortietur an non? Nam et non sortiri absurdum est, et, quod sortitus sis, non habere. Proficiscetur paludatus? Quo? Quo pervenire ante certam diem non licebit. ianuario, Februario, provinciam non habebit; Kalendis ei denique Martiis nascetur repente provincia.
+    </p>
+
+    <style>
+        .container-stats table td,
+        .container-stats table th {
+            width:80px;
+            text-align:right;
+        }
+        .container-stats table td.depth {
+            font-weight:bold;
+            text-align:center;
+        }
+    </style>
+
+    <div class="row">
+        <div class="col-md-4">
+            <p>Aliquam feugiat magna diam, a faucibus enim interdum ut. Vivamus accumsan urna tristique diam maximus ullamcorper. Aliquam posuere nulla erat, vitae cursus velit pellentesque quis. Vestibulum vitae sodales elit, sit amet ullamcorper nunc. Nunc ullamcorper lorem ut massa pretium viverra. Maecenas finibus vitae mauris in laoreet. Vivamus ac egestas ligula. Curabitur imperdiet sapien lorem, vitae egestas eros imperdiet vitae. Pellentesque fringilla ipsum id felis aliquam, vel tempor eros accumsan.</p>
+            <p>Praesent nec elit maximus, hendrerit lacus vitae, dignissim neque. Mauris volutpat urna quis dui dignissim dignissim. Pellentesque mollis imperdiet arcu nec malesuada. Vestibulum imperdiet lorem a sodales convallis. Duis ut nibh varius, convallis augue a, pretium lectus. Aenean id dui ullamcorper, dapibus nulla id, vehicula purus. Suspendisse suscipit mattis est non congue. Proin auctor dui ut diam placerat, eu luctus risus vulputate. Praesent congue purus velit, ac lobortis erat pharetra sed. Aenean sed rutrum arcu, id volutpat dolor. Vivamus placerat a diam a sollicitudin. Nullam sed aliquet massa, in sagittis enim</p>
+        </div>
+        <div class="container-stats col-md-8">
+            <h3 class="text-center">Performances and risks indicators <i class="glyphicon glyphicon-asterisk text-warning"></i></h3>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Option</th>
+                        <th>Rendement</th>
+                        <th>Volatilité</th>
+                        <th>Ratio Sharpe</th>
+                        <th>Min</th>
+                        <th>Max</th>
+                    </tr>
+                </thead>
+                <tbody class="text-right"></tbody>
+            </table>
+        </div>
+    </div>
+
+<p>Aliquam feugiat magna diam, a faucibus enim interdum ut. Vivamus accumsan urna tristique diam maximus ullamcorper. Aliquam posuere nulla erat, vitae cursus velit pellentesque quis. Vestibulum vitae sodales elit, sit amet ullamcorper nunc. Nunc ullamcorper lorem ut massa pretium viverra. Maecenas finibus vitae mauris in laoreet. Vivamus ac egestas ligula. Curabitur imperdiet sapien lorem, vitae egestas eros imperdiet vitae. Pellentesque fringilla ipsum id felis aliquam, vel tempor eros accumsan.</p>
+
+
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4">
+            <div class="panel panel-primary text-center">
+                <div class="panel-heading">
+                    <h2>Net value <i class="glyphicon glyphicon-asterisk text-warning"></i></h2>
+                </div>
+                <div class="panel-body">
+                    <p style="font-size:4em;"><span id="last" class="text-info"></span> €</p>
+                    <p>Delta <span id="pnl"></span> €</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="results"></div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="text-center">Portfolio Strategy</h3>
+            <p>Iam virtutem ex consuetudine vitae sermonisque nostri interpretemur nec eam, ut quidam docti, verborum magnificentia metiamur virosque bonos eos, qui habentur, numeremus, Paulos, Catones, Galos, Scipiones, Philos; his communis vita contenta est; eos autem omittamus, qui omnino nusquam reperiuntur.
+                Hac ex causa conlaticia stipe Valerius humatur ille Publicola et subsidiis amicorum mariti inops cum liberis uxor alitur Reguli et dotatur ex aerario filia Scipionis, cum nobilitas florem adultae virginis diuturnum absentia pauperis erubesceret patris.
+            <div class="treemap-container" style="height:400px;">
+                <div id="tree" class="treemap"></div>
+            </div>
+            <p class="text-center">Treemap <i class="glyphicon glyphicon-asterisk text-warning"></i></p>
+            <p>
+                Iam virtutem ex consuetudine vitae sermonisque nostri interpretemur nec eam, ut quidam docti, verborum magnificentia metiamur virosque bonos eos, qui habentur, numeremus, Paulos, Catones, Galos, Scipiones, Philos; his communis vita contenta est; eos autem omittamus, qui omnino nusquam reperiuntur.
+                Montius nos tumore inusitato quodam et novo ut rebellis et maiestati recalcitrantes Augustae per haec quae strepit incusat iratus nimirum quod contumacem praefectum, quid rerum ordo postulat ignorare dissimulantem formidine tenus iusserim custodiri.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">Unrealized Profits and Losses</h3>
+            <p>
+                Iam virtutem ex consuetudine vitae sermonisque nostri interpretemur nec eam, ut quidam docti, verborum magnificentia metiamur virosque bonos eos, qui habentur, numeremus, Paulos, Catones, Galos, Scipiones, Philos; his communis vita contenta est; eos autem omittamus, qui omnino nusquam reperiuntur.
+                Montius nos tumore inusitato quodam et novo ut rebellis et maiestati recalcitrantes Augustae per haec quae strepit incusat iratus nimirum quod contumacem praefectum, quid rerum ordo postulat ignorare dissimulantem formidine tenus iusserim custodiri.
+            </p>
+            <div>
+                <div id="sun" class="sunburst-container"></div>
+            </div>
+            <p class="text-center">Sunburst <i class="glyphicon glyphicon-asterisk text-warning"></i></p>
+            <p>
+                Hac ex causa conlaticia stipe Valerius humatur ille Publicola et subsidiis amicorum mariti inops cum liberis uxor alitur Reguli et dotatur ex aerario filia Scipionis, cum nobilitas florem adultae virginis diuturnum absentia pauperis erubesceret patris.
+                Montius nos tumore inusitato quodam et novo ut rebellis et maiestati recalcitrantes Augustae per haec quae strepit incusat iratus nimirum quod contumacem praefectum, quid rerum ordo postulat ignorare dissimulantem formidine tenus iusserim custodiri.
+            </p>
+        </div>
+    </div>
+
+<h2>Implémentation</h2>
+<p>Nous allons vous montrer comment les deux widgets ci-dessus (treemap et sunburst) ont été intégrés dans cette page HTML5.
+    Dans un premier temps, vous allez insérer et identifier les élements HTML qui feront office de conteneurs:</p>
+
+<pre class="prettyprint">
+<xmp>
+    ...
+    <div id="tree"></div>
+    ...
+    <div id="sun" class="sunburst-container"></div>
+</xmp>
+</pre>
+
+<p>Déclarez les scripts permettant l'accès sécurisé aux données des portefeuilles via l'API. 
+    Le script session.js est en charge de la conservation du jeton d'accès (<em>access token</em>) contenant l'authentification (utisateur et mot de passe) et la durée de vie de l'accès.
+    Le script portfolioController se charge des appels à l'API afin d'en simplifier l'usage.
+    </p>
+
+<pre class="prettyprint"><xmp>
+    <!-- Declare the session in charge of keeping in the current session all the credentials requested to secure exchanges with LILI -->
+    <script src="~/Scripts/session.js"></script>
+    <!-- Declare the portfolio controllers to manage all actions (get and post) with the LILI server throught its API -->
+    <script src="~/Scripts/portfoliosController.js"></script>
+</xmp></pre>
+
+<p>
+    Déclarez les scripts permettant la création de ces widgets. Noter ici que ces java scripts sont versionnés et disponibles
+    en open source pour une meilleure adaptabilité et personnalisation si besoin est. Les widgets que nous proposons s'appuient sur la
+    librairie d3.js qui a ce jour reste l'open source le plus utilisée pour créer des expériences en datavizualisation.
+    Cette approche nous permetra demain d'intégrer d'autres librairies innovantes.
+</p>
+<pre class="prettyprint"><xmp>
+    <!-- Latest versions of d3 librairies -->
+    <script src="http://lili2.am/Scripts/d3/d3.min.js" type="text/javascript"></script>
+    <!-- Latest versions of treemap librairies -->
+    <script src="http://lili2.am/scripts/d3/treemap-1.4.js" type="text/javascript"></script>
+    <!-- Latest versions of sunburst librairies -->
+    <script src="http://lili2.am/scripts/d3/sunburst-1.3.js" type="text/javascript"></script>
+</xmp></pre>
+<p>Vous déclarez les feuilles de styles permettant un affichage par défaut de ces widgets. Ces feuilles de styles sont remplaçables
+    par d'autres feuilles de style (le vôtres) permettant ainsi une totale personnalisation des éléments affichés.</p>
+<pre class="prettyprint"><xmp>
+    <!-- Latest versions default style sheets for widgets -->
+    <link rel="stylesheet" href="https://lili2.am/Content/treemap.css" />
+    <link rel="stylesheet" href="https://lili2.am/Content/sunburst-1.2.css" />
+</xmp></pre>
+
+<p>Pour interroger le serveur distant, ouvrez une instance vers un contrôleur de portefeuille. Interrogez une méthode POST ou GET
+    (comme ici un GET sur <em>allocations</em>). Et injectez les données ainsi collectée dans les widgets qui seront crées dynamiquement en cas de succès.
+    <b>IMPORTANT</b> Chaque script et chaque feuille de style a un job précis :  sécurité, collecte de données, datavisualisation. 
+    C'est l'approche retenue pour permettre un haut niveau de personnalisation dans un environnement existant.</p>
+<pre class="prettyprint"> 
+    // Here we create a new instance of portfoliocontroller to get data
+    var ptf = new LoyolApp.PortfolioController();
+    // Les paramètres sont restreints à la seule clef privée du portefeuille
+    var params = { code : $('#portfoliocode').val() }
+    // Call the API to GET allocations data from the server
+    ptf.get('allocations', params, function (data) {
+        // first, we load the treemap with the json data
+        var tree = new treemap('#tree');
+        tree.load(data, function () { });
+        // then, we load the sunburst with the json data
+        var sun = new sunburst('#sun');
+        sun.load(data, function () { });
+    });
+</pre>
+    
+@section scripts {
+    <!-- Latest version of d3 librairies -->
+<script src="https://lili2.am/Scripts/d3/d3.min.js"></script>
+<script src="https://lili2.am/scripts/d3/treemap-1.4.js"></script>
+<script src="https://lili2.am/scripts/d3/sunburst-1.3.js"></script>
+<link rel="stylesheet" href="https://lili2.am/Content/treemap.css" />
+<link rel="stylesheet" href="https://lili2.am/Content/sunburst-1.2.css" />
+
+<script>
+
+    // ************* On loading form ************************************//
+    $(document).ready(function () {
+
+        // Here we create a new instance of portfoliocontroller to get data
+        var ptf = new LoyolApp.PortfolioController();
+        var sun = new sunburst('#sun');
+        var tree = new treemap('#tree');
+
+        // A function in charge of calls and widgets
+        var loadReport = function () {
+            $('.container-stats').fadeOut();
+            // empty the results
+            $('#tree').empty();
+            $('#sun').empty();
+            // Get portfolio parameters
+            var params = { code: $('#code').val() };
+            // The first set of data is targeted on portfolio allocations
+            ptf.get('Allocations', params, function (data) {
+                // IMPORTANT we make a copy of collected data to ensure INDEPENDANT transition for the 2 widgets
+                var data2 = JSON.parse(JSON.stringify(data));
+                // first, we load a treemap with the original json data
+                tree.load(data, function () { });
+                // then, we load the sun with copied data
+                sun.load(data2, function () { });
+
+            });
+
+            // The second set is traget on simple data
+            ptf.get('Get', params, function (data) {
+                $('#name').html(data.name);
+            });
+
+            // The second set is traget on simple data
+            ptf.get('LastNAV', params, function (data) {
+                $('#last').html(data.price);
+                $('#pnl').html(data.pnl);
+            });
+
+            // The second set is traget on simple data
+            ptf.get('Stats', params, function (data) {
+                $('.container-stats tbody').empty();
+                $.each(data, function (index, obj) {
+                    $('.container-stats tbody')
+                        .append(String.format('<tr><td class="depth">{0}</td><td width="80">{1}</td><td>{2}</td><td>{3}</td><td>{4}</td><td>{5}</td></tr>', obj.depth, obj.netreturn.toFixed(2), obj.stddev.toFixed(2), obj.sharpe.toFixed(2), obj.min.toFixed(2), obj.max.toFixed(2)));
+                });
+                $('.container-stats').fadeIn();
+            });
+        }
+
+        // Load report when open form
+        loadReport();
+
+        // On each new request
+        $('.report-form').submit(function () {
+            // Load data
+            loadReport();
+            return false;
+        })
+
+    });
+
+</script>
+}

@@ -38,3 +38,5 @@ c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\bin\Newtonsoft.Json.
 c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\obj\Debug\Lili4me.csprojResolveAssemblyReference.cache
 c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\obj\Debug\Lili4me.dll
 c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\obj\Debug\Lili4me.pdb
+C:\Users\Jeff\Source\Repos\Lili project\Lili4me\obj\Debug\Lili4me.dll
+C:\Users\Jeff\Source\Repos\Lili project\Lili4me\obj\Debug\Lili4me.pdb

@@ -206,13 +206,13 @@ function loadTreeMap(data, divname, callback) {
             .html(function (d) {
 
                 if (d.NodeType == "Root" || d.NodeType == "Portfolio") {
-                    return String.format('<p class="text-center" width="100%"><img width="10%" src="{2}"/></p><h5>{0}</h5><p class="text-center">{1}€</p>', d.Name, formatNumber(d.value), d.Image);
+                    return String.format('<p class="text-center" width="100%"></p><h5>{0}</h5><p class="text-center">{1}€</p>', d.Name, formatNumber(d.value), d.Image);
                 }
                 if (d.value > 0 && (d.NodeType == "Class" || d.NodeType == "MasterClass"))
                     return String.format('<h5>{0}</h5><p class="text-center">{1}%</p>',
                         d.Name, formatNumber(d.Weight * 100));
 
-                return String.format('<p class="text-center" width="100%"><img class="img-circle" width="10%" src="{3}"/></p><h5>{0}</h5><p class="text-center">Val: {1}€ (P&L = {2}€)</p>',
+                return String.format('<p class="text-center" width="100%"></p><h5>{0}</h5><p class="text-center">Val: {1}€ (P&L = {2}€)</p>',
                     d.Name, formatNumber(d.value), formatNumber(d.Pnl), d.Image);
             })
             .attr("class", "textdiv"); //textdiv class allows us to style the text easily with CSS
@@ -236,7 +236,7 @@ function loadTreeMap(data, divname, callback) {
             y.domain([d.y, d.y + d.dy]);
 
             // Enable anti-aliasing during the transition.
-            svg.style("shape-rendering", null);
+            //svg.style("shape-rendering", null);
 
             // Draw child nodes on top of parent nodes.
             svg.selectAll(".depth").sort(function (a, b) { return a.depth - b.depth; });
@@ -258,7 +258,7 @@ function loadTreeMap(data, divname, callback) {
 
             // Remove the old node when the transition is finished.
             t1.remove().each("end", function () {
-                svg.style("shape-rendering", "crispEdges");
+                //svg.style("shape-rendering", "crispEdges");
                 transitioning = false;
             });
 

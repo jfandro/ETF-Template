@@ -136,8 +136,9 @@
     <Content Include="Content\videos\bg.mp4" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="Content\site-1.0.css" />
     <Content Include="lili.ico" />
+    <Content Include="Scripts\activity-charts.js" />
     <Content Include="Scripts\assetsController.js" />
     <Content Include="Scripts\bootstrap-switch.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -184,10 +185,10 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Allocations.cshtml" />
     <Content Include="Views\Home\Create.cshtml" />
-    <Content Include="Views\Home\Index0.cshtml" />
     <Content Include="Views\Home\Positions.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Benchmark.cshtml" />
+    <Content Include="Views\Home\Operations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

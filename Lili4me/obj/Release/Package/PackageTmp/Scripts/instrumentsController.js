@@ -2,17 +2,17 @@
 LoyolApp = LoyolApp || {};
 
 // Constructor of the controller
-LoyolApp.PortfolioController = function () {
+LoyolApp.InstrumentController = function () {
     this.Code = '';
 }
 
 // Get all the data from API portfolios related to one portfolio
-LoyolApp.PortfolioController.prototype.get = function (action, data, callback) {
+LoyolApp.InstrumentController.prototype.get = function (action, data, callback) {
 
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-        url = LoyolApp.Settings.domain + '/api/Portfolios/' + action;
+        url = LoyolApp.Settings.domain + '/api/Instruments/' + action;
 
         $.ajax({
             type: 'GET',
@@ -33,11 +33,11 @@ LoyolApp.PortfolioController.prototype.get = function (action, data, callback) {
 }
 
 // Post the data to the controller API portfolios
-LoyolApp.PortfolioController.prototype.post = function (action, data, callback) {
+LoyolApp.InstrumentController.prototype.post = function (action, data, callback) {
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-            url = LoyolApp.Settings.domain + '/api/portfolios/' + action;
+            url = LoyolApp.Settings.domain + '/api/Instruments/' + action;
 
         $.ajax({
             type: 'POST',
@@ -56,14 +56,4 @@ LoyolApp.PortfolioController.prototype.post = function (action, data, callback) 
             }
         });
     }
-}
-
-// render select controls
-LoyolApp.PortfolioController.prototype.select = function (divname, callback) {
-    this.get('UserIndex', null, function (lst) {
-        $.each(lst, function (i, item) {
-            $('<option value="' + item.code + '">').text(item.name).appendTo(divname);
-        });
-        callback;
-    })
 }

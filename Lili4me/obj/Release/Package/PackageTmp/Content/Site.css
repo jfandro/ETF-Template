@@ -13,7 +13,7 @@ body {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    padding-top:100px;
+    /*padding-top:100px;*/
 }
 
 @media (pointer: coarse) and (hover: none) {
@@ -66,12 +66,12 @@ video {
 }
 .masthead {
   position: relative;
-  width: 50%;
+  width: 60%;
   overflow: hidden;
   z-index: 2;
 }
 .jumbotron.masthead p {
-    font-size:16px;
+    font-size:14px;
 }
 
 /* The switch - the box around the slider */
@@ -82,38 +82,38 @@ video {
 .key-numbers-container .dc-chart {
     float:none;
 }
-.key-number {
+.key-numbers-container .key-number {
     color: #778295;
     border-left: 8px solid #627485;
     margin-bottom:20px;
     padding:10px;
     background-color:rgba(194, 198, 200, 1);
 }
-.key-number.key-before {
+.key-numbers-container  .key-number.key-before {
     border-left-color:#567793;
 }
-.key-number.key-before .fa {
+.key-numbers-container .key-number.key-before .fa {
     color:#567793;
 }
-.key-number.key-after {
+.key-numbers-container .key-number.key-after {
     border-left-color:#be9328;
 }
-.key-number.key-after .fa {
+.key-numbers-container .key-number.key-after .fa {
     color:#be9328;
 }
-.key-number .title {
+.key-numbers-container .key-number .title {
     font-size:12px;
     color:#333;
     margin-top:0;
     margin-bottom: 10px;
 }
-.key-number .number {
+.key-numbers-container .key-number .number {
     width:100%;
     color:#fff;
     font-size:36px;
     line-height:1.1;
 }
-.key-number .logo {
+.key-numbers-container .key-number .logo {
     font-size:6em;
     color: #6b6c7b;
     text-shadow: 2px 2px 10px #7c7a98;
@@ -122,10 +122,10 @@ video {
     .key-numbers-container {
         padding:0;
     }
-    .key-number {
+    .key-numbers-container .key-number {
         padding:6px;
     }
-    .key-number .number {
+    .key-numbers-container .key-number .number {
         font-size:24px;
     }
 }
@@ -148,3 +148,70 @@ video {
     bottom:0;
     right:0;
 }
+
+         .jumbotron.section-header {
+            height: 50vh;
+            min-height: 400px;
+            padding: 80px 0;
+            margin-bottom: 0;
+        }
+
+        .jumbotron.header-image {          
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-clip: padding-box;
+            background-position: center center;
+            background-image: url('https://la1ere.francetvinfo.fr/wallisfutuna/sites/regions_outremer/files/styles/top_big/public/assets/images/2019/01/10/ocean-wave-1149174_960_720-984697.jpg?itok=KZrSWjqF');
+        }
+
+        .jumbotron.header-image {
+            color:#fff;
+        }
+        .jumbotron.header-image h1 {
+            font-weight:600;
+        }
+        .section-a, .section-b, .section-c, .section-d, .section-e {
+            padding: 50px 0;
+        }
+
+        .section-a {
+            background-color: #000;
+        }
+
+        .section-c {
+            background-color: #808080;
+        }
+
+        .section-b {
+            background-color: #30465e;
+            color: #fff;
+        }
+      
+        .section-d {
+            background-color: #9c9daf;
+        }
+
+              
+        .section-e {
+            background-color: #c8cae0;
+        }
+        .section-b h2,
+        .section-d h2,
+        .section-c h2 {
+            font-size:4em;
+            color:#fff;
+        }
+        .section-e h2 {
+            font-size:4em;
+            color:#000;
+        }
+        .container-stats table td,
+        .container-stats table th {
+            width: 80px;
+            text-align: right;
+        }
+
+            .container-stats table td.depth {
+                font-weight: bold;
+                text-align: center;
+            }

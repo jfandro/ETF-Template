@@ -4,217 +4,251 @@
     <link rel="stylesheet" href="https://jouelacommeliliane.com/Content/waterfall.css" />
 
 }
-<h1>La gestion de portefeuilles ... as a service</h1>
-<div class="well">
-    <span class="logo"><i class="glyphicon glyphicon-info-sign"></i></span>
-    Après l'expérience du reporting client (lecture lecture), nous vous proposons un aperçu des fonctions IBOR as a service de LILI.
-    Cette expérience intègre des actions en lecture (GET) et en écriture (POST), et se déroule en 3 étapes distinctes pour ce showroom :
-    <ul>
-    <li>Création d'un portefeuille persistent ou temporaire,</li>
-    <li>Chargement de son activité avec un inventaire,</li>
-    <li>Visualisation de ses résultats avec un graphique de type cascade ou <em>waterfall</em>.</li>
-    </ul>
-    Afin de rendre fluide l'expérience, nous utiliserons un dénominateur commun pour ces 3 étapes : la clef du portefeuille. 
-</div>
 
-<h2>Etape #1 : création de portefeuille</h2>
-
-<p><b>IMPORTANT</b> L'API donne un accès sécurisé aux services du moteur de positions (via une couche de controleurs) et non à une base de données.
-    Ainsi, et selon vos besoins, un portefeuille peut être <b>persistent</b> (sa structure, son activité et ses résultats sont conservés en base de données 
-    privée ou partagée sur le serveur distant à des fins de futures requêtes), 
-    ou <b>temporaire</b>  (sa structure, son activité et ses résultats sont conservés dans le cache du serveur pour un usage éphémère 
-    limité à 15 minutes dans le cas présent). Cette faculté fait partie des options compétitives de l'offre.
- </p>
-
-<div>
-    <form class="creation-form" method="post">
-        
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon">Nom</div>
-                <input type="text" class="form-control" id="Name" name="Name" value="" placeholder="Donnez un nom à votre portefeuille" />
-            </div>
+@section header {
+    <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
+        <div class="container">
+            <h1 class="text-center">POST/GET</h1>
+            <p class="lead text-center">La puissance d'une API en action</p>
         </div>
+    </section>
+}
 
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">Date de départ</div>
-                        <input type="date" class="form-control" id="StartDate" name="StartDate" value="2018-01-03" />
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-lg-offset-1">
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon">Niveau de risques</div>
-                        <input type="number" class="form-control" id="RiskLevel" name="RiskLevel" value="4" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="input-group">
-                <div class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i> Clef privée</div>
-                <input type="text" class="form-control portfolio-key" id="Code" name="Code" value="" disabled="disabled" />
-            </div>
-        </div>
-
-        <div class="form-group">
-            Indiquez si vous souhaitez que le portefeuille crée soit conservé en base ou en cache sur le serveur
-            <input type="checkbox" name="Persistence" id="Persistence" value="true" class="checkbox-switch" data-on-text="Persistence" data-off-text="Cache" />
-        </div>
-
-        <input type="hidden" value="15" name="minutes" id="minutes" />
-
-        <p>Avant de lancer la création ci-après, sachez que si celle-ci est réussie, l'API renvoie une clef unique à ce portefeuille,
-        clef que nous utiliserons par la suite.</p>
-            
-        <p class="text-right">
-            <button type="submit" class="btn btn-primary">Création du portefeuille</button>
+<section class="section-b">
+    <div class="container">
+        <p>
+            <span class="logo"><i class="glyphicon glyphicon-info-sign"></i></span>
+            Après l'expérience de la restitution d'un portefeuille modèle en mode data et graphiques, expérience en lecture suele, nous vous proposons un aperçu des fonctions de gestion de portefeuilles as a service de LILI.
+            Cette expérience intègre des actions en lecture (GET) et en écriture (POST). Elle se déroule en plusieurs étapes distinctes :
+            <ul>
+                <li>Création d'un portefeuille persistent ou temporaire,</li>
+                <li>Chargement de son activité avec un inventaire,</li>
+                <li>Visualisation de ses résultats avec un premier graphique de type cascade ou <em>waterfall</em>.</li>
+                <li>Enfin, nous procèderons à la saisie mauelle d'opérations sans quitter le site;</li>
+            </ul>
+        </p>
+        <p>
+            <b>IMPORTANT</b> L'API donne un accès sécurisé aux services distants de Lili, en particulier son moteur de tenues de positions
+            de contrôles des risques, de liquidités ... Pour cette première expérience, nous allons vous montrer que la notion dite de <b>persistence</b>
+            Selon vos besoins, un portefeuille peut être <b>persistent</b> : sa structure, son activité et ses résultats seront conservés
+            en base de données, privée ou partagée, hébergée sur un serveur distant à des fins de futures requêtes.
+            ou <b>temporaire</b>  (sa structure, son activité et ses résultats sont conservés dans le cache du serveur pour un usage éphémère
+            limité à 15 minutes dans le cas présent). Cette faculté fait partie des options compétitives de l'offre.
         </p>
 
-    </form>
-</div>
+    </div>
+</section>
 
-<h2>Etape #2 : Backtesting</h2>
+<section class="section-c">
+    <div class="container">
+        <h2>Création d'un portefeuille</h2>
+        <form class="creation-form" method="post">
 
-<p>
-    Pour cette seconde étape, nous vous proposons une expérience de <b>backtesting</b>.
-    Déclinez l'inventaire d'un portefeuille (celui que vous venez de créer).
-    L'intégration de cet inventaire exécute la valorisation quotidienne du portefeuille, ainsi que les calculs de performances et de risques.
-    Les résultats sont affichés dans l'étape suivante.
-    L'inventaire est ici un tableau de codes ISIN associés à des poids (exemple 10 signifie que le titre représente 10% de l'actif net du portefeuille à la date d'inventaire).
-    La date d'inventaire est proposée par défault au 3 janvier 2018. 
-</p>
-
-<div class="row">
-    <div class="col-lg-5 col-md-6">
-        <form class="operations-form">
             <div class="form-group">
                 <div class="input-group">
-                    <div class="input-group-addon">Clef privée</div>
-                    <input type="text" class="form-control portfolio-key" id="PortfolioCode" name="PortfolioCode" value="" placeholder="Indiquez les 28 caractères de la clef de votre portefeuille" />
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <div class="input-group-addon">Inventaire au</div>
-                    <input type="date" class="form-control" id="ValueDate" name="ValueDate" value="2018-01-03" />
+                    <div class="input-group-addon">Nom</div>
+                    <input type="text" class="form-control" id="Name" name="Name" value="" placeholder="Donnez un nom à votre portefeuille" />
                 </div>
             </div>
 
-            <div class="form-group">
-                Mode d'insertion
-                <input type="checkbox" name="ResetPortfolio" id="ResetPortfolio" value="false" class="checkbox-switch" data-size="small" data-on-text="Ajouter" data-off-text="Initialiser" />
-            </div>
-
-            <div class="form-group">
-
-                @for (int i = 0; i < 7; i++)
-            {
-                    <div class="row">
-                        <div class="col-xs-6 col-lg-8">
-                            <div class="input-group">
-                                <input type="text" name="ISIN" value="" class="form-control" placeholder="ISIN ou ticker" />
-                            </div>
-                        </div>
-                        <div class="col-xs-3 col-lg-4">
-                            <div class="input-group">
-                                <input type="number" name="Weight" value="10" max="100" min="0" class="form-control text-right" />
-                                <span class="input-group-addon">%</span>
-                            </div>
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">Date de départ</div>
+                            <input type="date" class="form-control" id="StartDate" name="StartDate" value="2018-01-03" />
                         </div>
                     </div>
-                }
-            </div>
-
-
-
-            <p class="text-right">
-                <button type="submit" class="btn btn-primary">Importer</button>
-            </p>
-
-        </form>
-    </div>
-
-    <div class="col-lg-7 col-md-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3>Monitoring</h3>
-            </div>
-            <div class="panel-body">
-                <p>Pour ce test, voici une liste de codes ISIN à copier/coller ci-contre pour la saisie de votre inventaire.</p>
-                <dl>
-                    <dd>LU1646359452</dd>
-                    <dd>FR0010345371</dd>
-                    <dd>FR0000975930</dd>
-                </dl>
-                <p id="results1" class=""></p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<h2>Etape #3 :  affichage des résultats</h2>
-
-<p>
-    Pour cette troisième expérience, vous n'avez rien à faire, si ce n'est qu'à visualiser les résultats de votre portefeuille 
-    résultats cumulés sur les douze derniers mois d'activité.
-    Nous prenons un waterfall, autrement un graphique en cascades. D'autres widgets pourraient être déployés sur cette étape, 
-    c'est ce que nous allons voir dans la <a href="/Home/Positions">troisième expérience</a> centrée sur les technologies de datavisualisation.
-</p>
-
-<div id="results" class="waterfall-container"></div>
-
-<h2>Expérience #4 : Arbitrages</h2>
-
-<div class="row">
-    <div class="col-sm-6">
-        <p>Pour cette expérience, nous vous proposons d'enregistrer un arbitrage sur un portefeuille existant ou en mémoire.</p>
-        <form class="form-rebalance form-horizontal">
-            <div class="form-group">
-                <label class="control-label col-sm-3">Date de valeur</label>
-                <div class="col-sm-9">
-                    <input type="date" class="form-control" name="ValueDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                </div>            
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-3">Clef privée</label>
-                <div class="col-sm-9">
-                    @*<input type="text" class="form-control" name="PortfolioCode" value="18112564-9164-43d2-a666-e9a2eaacfaaf" placeholder="Indiquez les 28 caractères de la clef de votre portefeuille" />*@
-                    <select name="PortfolioCode" class="form-control select-portfolios"></select>
-               </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label col-sm-3">Instrument</label>
-                <div class="col-sm-9">
-                    <select name="SecurityID" class="form-control select-funds"></select>
+                </div>
+                <div class="col-lg-3 col-lg-offset-1">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">Niveau de risques</div>
+                            <input type="number" class="form-control" id="RiskLevel" name="RiskLevel" value="4" />
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <div class="form-group">
-                <label class="control-label col-sm-3">Poids cible %</label>
-                <div class="col-sm-9">
-                    <input type="number" class="form-control text-right" min="0" max="100" name="TargetWeight" value="" placeholder="25 means 25%" />
-               </div>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="glyphicon glyphicon-barcode"></i> Clef privée</div>
+                    <input type="text" class="form-control portfolio-key" id="Code" name="Code" value="" disabled="disabled" />
+                </div>
             </div>
-            <p class="text-right">
-                <button type="submit" class="btn btn-primary">Valider</button>
+
+            <div class="form-group">
+                Indiquez si vous souhaitez que le portefeuille crée soit conservé en base ou en cache sur le serveur
+                <input type="checkbox" name="Persistence" id="Persistence" value="true" class="checkbox-switch" data-on-text="Persistence" data-off-text="Cache" />
+            </div>
+
+            <input type="hidden" value="15" name="minutes" id="minutes" />
+
+            <p>
+                Avant de lancer la création ci-après, sachez que si celle-ci est réussie, l'API renvoie une clef unique à ce portefeuille,
+                clef que nous utiliserons par la suite.
             </p>
-            <p id="results-rebalance" class="text-info"></p>
+
+            <p class="text-right">
+                <button type="submit" class="btn btn-primary">Création du portefeuille</button>
+            </p>
+
         </form>
     </div>
-</div>
+</section>
 
-    @section scripts {
 
-<!-- Latest version of d3 librairies -->
-<script src="https://lili2.am/scripts/d3/d3.js" type="text/javascript"></script>
-<script src="https://lili2.am/scripts/d3/waterfall-1.1.js" type="text/javascript"></script>
 
-<script>
+<section class="section-d">
+    <div class="container">
+        <h2>Backtesting</h2>
+        <p>
+            Pour cette seconde étape, nous vous proposons une expérience de <b>backtesting</b>,
+            c'est à dire une expérience où vous allez rejouer la vie d'un portefeuille.
+            Déclinez l'inventaire d'un portefeuille (celui que vous venez de créer).
+            L'intégration de cet inventaire exécute la valorisation quotidienne du portefeuille, ainsi que les calculs de performances et de risques.
+            Les résultats sont affichés dans l'étape suivante.
+            L'inventaire est ici un tableau de codes ISIN associés à des poids (exemple 10 signifie que le titre représente 10% de l'actif net du portefeuille à la date d'inventaire).
+            La date d'inventaire est proposée par défault au 3 janvier 2018.
+        </p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-6">
+                <form class="operations-form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">Clef privée</div>
+                            <input type="text" class="form-control portfolio-key" id="PortfolioCode" name="PortfolioCode" value="" placeholder="Indiquez les 28 caractères de la clef de votre portefeuille" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">Inventaire au</div>
+                            <input type="date" class="form-control" id="ValueDate" name="ValueDate" value="2018-01-03" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        Mode d'insertion
+                        <input type="checkbox" name="ResetPortfolio" id="ResetPortfolio" value="false" class="checkbox-switch" data-size="small" data-on-text="Ajouter" data-off-text="Initialiser" />
+                    </div>
+
+                    <div class="form-group">
+
+                        @for (int i = 0; i < 7; i++)
+            {
+                            <div class="row">
+                                <div class="col-xs-6 col-lg-8">
+                                    <div class="input-group">
+                                        <input type="text" name="ISIN" value="" class="form-control" placeholder="ISIN ou ticker" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-3 col-lg-4">
+                                    <div class="input-group">
+                                        <input type="number" name="Weight" value="10" max="100" min="0" class="form-control text-right" />
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+
+                    <p class="text-right">
+                        <button type="submit" class="btn btn-primary">Importer</button>
+                    </p>
+
+                </form>
+            </div>
+
+            <div class="col-lg-7 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3>Monitoring</h3>
+                    </div>
+                    <div class="panel-body">
+                        <p>Pour ce test, voici une liste de codes ISIN à copier/coller ci-contre pour la saisie de votre inventaire.</p>
+                        <dl>
+                            <dd>LU1646359452</dd>
+                            <dd>FR0010345371</dd>
+                            <dd>FR0000975930</dd>
+                        </dl>
+                        <p id="results1" class=""></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="section-b">
+    <div class="container">
+        <h2>Résultats sur 12 mois</h2>
+        <p>
+            Pour cette étape, vous n'avez rien à faire, si ce n'est qu'à visualiser les résultats de votre portefeuille
+            cumulés sur les douze derniers mois d'activité.
+            Nous prenons un waterfall, autrement un graphique en cascades. D'autres widgets pourraient être déployés sur cette étape,
+            c'est ce que nous allons voir dans la <a href="/Home/Positions">troisième expérience</a> centrée sur les technologies de datavisualisation.
+        </p>
+        <div id="results" class="waterfall-container"></div>
+    </div>
+</section>
+
+<section class="section-d">
+    <div class="container">
+        <h2>Arbitrages</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <p>Dernière étape de cette expérience, nous vous proposons d'enregistrer un arbitrage sur un portefeuille existant ou en mémoire.</p>
+                <form class="form-rebalance form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Date de valeur</label>
+                        <div class="col-sm-9">
+                            <input type="date" class="form-control" name="ValueDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Clef privée</label>
+                        <div class="col-sm-9">
+                            @*<input type="text" class="form-control" name="PortfolioCode" value="18112564-9164-43d2-a666-e9a2eaacfaaf" placeholder="Indiquez les 28 caractères de la clef de votre portefeuille" />*@
+                            <select name="PortfolioCode" class="form-control select-portfolios"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Instrument</label>
+                        <div class="col-sm-9">
+                            <select name="SecurityID" class="form-control select-funds"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-sm-3">Poids cible %</label>
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control text-right" min="0" max="100" name="TargetWeight" value="" placeholder="25 means 25%" />
+                        </div>
+                    </div>
+                    <p class="text-right">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    </p>
+                    <p id="results-rebalance" class="text-info"></p>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+@section scripts {
+
+    <!-- Latest version of d3 librairies -->
+    <script src="https://lili2.am/scripts/d3/d3.js" type="text/javascript"></script>
+    <script src="https://lili2.am/scripts/d3/waterfall-1.1.js" type="text/javascript"></script>
+
+    <script>
 
     $(document).ready(function () {
 
@@ -252,7 +286,7 @@
                     $('#results').empty();
                     // Then create a local widget for a waterfall
                     var wf = new waterfall('#results');
-                    // and load data 
+                    // and load data
                     wf.load(data, function () { });
                 });
             })
@@ -272,5 +306,5 @@
 
     });
 
-</script>
+    </script>
 }

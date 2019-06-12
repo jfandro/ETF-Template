@@ -2,45 +2,163 @@
 @{
     ViewBag.Title = "Positions";
 }
+<!-- The style of my web site for widgets -->
+<link href="~/Content/mydataviz.css" rel="stylesheet" />
 
-    <!-- The style of my web site for widgets -->
-    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+@section header {
+    <section class="jumbotron section-header header-image" style="background-image:url('http://www.pieuvre.ca/wp-content/uploads/2019/01/oc%C3%A9an.jpg')">
+        <div class="container">
+            <h1 class="text-center">Performances Risques</h1>
+            <p class="lead text-center">La datavisualisation as a service</p>
+        </div>
+    </section>
+}
 
-    <h1>Dataviz ... as a service</h1>
-
-    <div class="well">
+<section class="section-c">
+    <div class="container">
         <p>
             Pour cette expérience, vous devez disposer d'une clef privée valide de portefeuille. Vous pouvez reprendre celle que l'on vous propose
             dans le cadre du <a href="/Home/Allocations">reporting client</a> ou reprendre celle du portefeuille que vous avez peut-être créé
             lors de la <a href="/Home/Create">précédente expérience</a>.
             Pour analyser votre portefeuille, renseignez cette clef et activez le bouton <span class="btn btn-xs btn-primary">Analyser</span> dont l'action se résume en 2 étapes :
         </p>
-        <ul>
-            <li>
-                La première étape interroge le serveur distant (via son API)
-                pour charger les données historiques du portefeuille correspondant à la clef privée ci-dessous.
-            </li>
-            <li>La seconde étapge consiste à charger les <b>widgets</b> déclarés sur ce formulaire.</li>
-        </ul>Les widgets sont des éléments managés via des javascripts déclarés en local (spécifique) ou sur le serveur (standard). Leurs
-        nombre et leur fonction sont ajustables par le client.
+        <p>
+            <ul>
+                <li>
+                    La première étape interroge le serveur distant (via son API)
+                    pour charger les données historiques du portefeuille correspondant à la clef privée ci-dessous.
+                </li>
+                <li>La seconde étape consiste à charger les <b>widgets</b> déclarés sur ce formulaire.</li>
+            </ul>
+        </p>
+        <p>
+            Tous les widgets de cette page sont des éléments développés en open sourcce
+            proposés et accessibles via des javascripts déclarés en local (spécifique) ou sur le serveur (standard).
+            Leur nombre et leur fonction sont ajustables par le client.
+        </p>
+        <div class="form-inline row">
+            <div class="form-group col-sm-5">
+                <label class="control-label">Code/clef de portefeuille </label>
+                <input type="text" class="form-control portfolio-key" id="PositionCode" name="PositionCode" value="e1a563bc-a094-4a73-ab18-609cdfa83303" placeholder="Indiquez la clef de votre portefeuille" />
+            </div>
+            <div class="form-group col-sm-5">
+                <label class="control-label">Date de valeur </label>
+                <input type="date" class="form-control" id="PositionDate" name="PositionDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+            <button type="button" class="btn btn-primary btn-positions">Afficher</button>
+
+        </div>
+
     </div>
+</section>
 
-    <h2>Analyse de votre portefeuille</h2>
+<section class="section-d">
+    <div class="container">
+        <h2>Inventaire détaillé</h2>
+        <p>
+            Dans cette section et la suivante dénommée "Pertes et Profits", nous allons afficher la position détaillée d'un portefeuille à une date donnée (aujourd'hui et passée).
+        </p>
 
-    <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-addon">Clef privée</div>
-            <input type="text" class="form-control portfolio-key" id="PositionCode" name="PositionCode" value="" placeholder="Indiquez la clef de votre portefeuille" />
+        <div class="table-responsive" style="margin-top:40px;">
+            <table class="table table-bordered table-striped small">
+                <thead>
+                    <tr>
+                        <th colspan="7" class="text-center">Instrument</th>
+                        <th colspan="3" class="text-center">Portfolio</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th class="text-right">MTD</th>
+                        <th class="text-right">YTD</th>
+                        <th class="text-right">Market</th>
+                        <th class="text-right">Cost</th>
+                        <th class="text-right">Return</th>
+                        <th class="text-right">Weight</th>
+                    </tr>
+                </thead>
+                <tbody id="holdings"></tbody>
+            </table>
         </div>
     </div>
-
-    <p class="text-right">
-        <button type="button" class="btn btn-primary btn-positions">Analyser</button>
-    </p>
+</section>
 
 
-<div class="row">
-    <div class="col-md-8 col-md-offset-2">
+<style>
+    .td-img {
+        height: 1em;
+        width: 1em;
+    }
+
+    .key-number {
+        font-size: 5em;
+        font-weight: 600;
+        text-align: center;
+        float: none;
+        color: #30465e;
+    }
+</style>
+
+
+<section class="section-c">
+    <div class="container">
+        <h2>Pertes et profits</h2>
+        <p>Ci-dessous, le tableau des pertes et des profits réalisés depuis la création du portefeuille sur la plateforme.</p>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th colspan="3" class="text-center">Instrument</th>
+                        <th colspan="5" class="text-center">Résultat</th>
+                    </tr>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th class="text-center">Date</th>
+                        <th class="text-right">Cost</th>
+                        <th class="text-right">Market</th>
+                        <th class="text-right">Return</th>
+                        <th class="text-right">Weight</th>
+                    </tr>
+                </thead>
+                <tbody id="results"></tbody>
+            </table>
+        </div>
+
+    </div>
+</section>
+
+<section class="section-a">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-6">
+                <div class="key-number">
+                    <div id="pnl-counter" class="portfolio-chart" data-chart="number" data-number="pnl"></div>
+                </div>
+                <p>Performance</p>
+            </div>
+            <div class="col-md-6">
+                <div class="key-number">
+                    <div id="std-counter" class="portfolio-chart" data-chart="number" data-number="std"></div>
+                </div>
+                <p>Volatilité</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-b">
+    <div class="container">
+        <h2>Encours moyens</h2>
+        <p>
+            Ci-dessous, retrouvez un ensemble de widgets interactifs permettant de comprendre la source des performances et des risques.
+            Par interactivité, cela sous entends qu'en sélectionnant un composant graphique d'un widget, vous appliquez un filtre
+            correspondant à la sélection sur tous les autres widgets de l'ensemble. Essayer c'est l'adopter.
+        </p>
+
         <div class="row">
             <div class="col-sm-4">
                 <div id="issuer-pie" class="portfolio-chart pie-chart" data-chart="pie" data-dimension="issuer">
@@ -55,7 +173,7 @@
                         <a class="reset" href="javascript:$b.reset('#rating-pie');" style="display: none;"><i class="glyphicon glyphicon-star"></i></a>
                     </p>
                 </div>
-            </div>            
+            </div>
             <div class="col-sm-4">
                 <div id="legal-pie" class="portfolio-chart pie-chart" data-chart="pie" data-dimension="legal">
                     <p class="header-chart">
@@ -63,64 +181,78 @@
                     </p>
                 </div>
             </div>
+
         </div>
     </div>
-</div>
-
-<div class="row">
-
-    <div class="col-lg-4">
-        <div class="row key-numbers-container">
-
-            <div class="col-xs-12">
-                <div class="key-number">
-                    <div class="title"><i class="fa fa-line-chart"></i> Performance</div>
-                    <div id="pf-counter" class="portfolio-chart number" data-chart="number" data-number="yld"></div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="key-number">
-                    <div class="title"><i class="fa fa-bar-chart-o"></i> Résultats</div>
-                    <div id="pnl-counter" class="portfolio-chart number" data-chart="number" data-number="pnl"></div>
-                </div>
-            </div>
-            <div class="col-xs-12">
-                <div class="key-number">
-                    <div class="title"><i class="fa fa-random"></i> Volatilité</div>
-                    <div id="std-counter" class="portfolio-chart number" data-chart="number" data-number="std"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-8">
+    <div class="container">
+        <h3 class="text-center">Performance base 100</h3>
         <div id="nav-chart" class="portfolio-chart line-chart" data-chart="lines" data-range-chart="#range-chart" style="height:300px;">
             <p class="header-chart text-center">
                 <span class="reset small text-info" style="display: none;"><br />Période du <span class="filter"></span></span>
             </p>
         </div>
+        <h3 class="text-center">Résultats hebdomadaires</h3>
         <div id="range-chart" class="portfolio-chart range-chart" data-chart="bars" data-dimension="week" style="height:170px;">
             <a class="reset" href="javascript:$b.reset('#range-chart');$b.reset('#nav-chart');" style="display: none;"><i class="glyphicon glyphicon-star"></i></a>
         </div>
     </div>
+</section>
 
-</div>
+<section class="section-c">
+    <div class="container">
+        <h2>Contribution aux performances</h2>
+        <p class="text-center">
+            <div id="select-contribution" class="btn-group btn-group-xs btn-group-select" data-toggle="buttons" data-chart="#pnl-contribution">
+                <label class="btn btn-primary active" data-contrib="legal"><input type=radio name="contribution" checked="checked">Classes</label>
+                <label class="btn btn-primary" data-contrib="sustainability"><input type=radio name="contribution">Durabilité</label>
+                <label class="btn btn-primary" data-contrib="risklevel"><input type=radio name="contribution" value="risk">Profil de risques</label>
+                <label class="btn btn-primary" data-contrib="rating"><input type=radio name="contribution" value="rating">Notation MS</label>
+                <label class="btn btn-primary" data-contrib="name"><input type=radio name="contribution" value="name">Société de Gestion</label>
+            </div>
+        </p>
+        <div id="pnl-contribution" class="portfolio-chart row-chart chart-xs" data-chart="rows" data-dimension="legal">
+            <a class="reset" href="javascript:$b.reset('#pnl-contribution');" style="display: none;"><i class="fa fa-undo"></i></a>
+        </div>
+    </div>
+</section>
 
-<h2>Implémentation</h2>
-<p>S'agissant des widgets de cette page, on retrouve la même technique d'intégration. Sur cette page, sont déclarés 
-    deux autres librairies open source dc.js et crossfilter.js qui vont permettre la dépendance des widgets.</p>
+<section class="section-d">
+    <div class="container">
+        <h2>Carte des résultats</h2>
+        <p class="text-center">
+            <div id="select-heatmap" class="btn-group btn-group-xs btn-group-select" data-toggle="buttons" data-chart="#pnl-map">
+                <label class="btn btn-primary active" data-contrib="legal"><input type=radio name="contribution" checked="checked">Classes</label>
+                <label class="btn btn-primary" data-contrib="sustainability"><input type=radio name="contribution">Durabilité</label>
+                <label class="btn btn-primary" data-contrib="risklevel"><input type=radio name="contribution" value="risk">Profil de risques</label>
+                <label class="btn btn-primary" data-contrib="rating"><input type=radio name="contribution" value="rating">Notation MS</label>
+                <label class="btn btn-primary" data-contrib="name"><input type=radio name="contribution" value="name">Société de Gestion</label>
+            </div>
+        </p>
+        <div id="pnl-map" class="portfolio-chart row-chart chart-xs" data-chart="heatMap" data-x-dim="month" data-y-dim="legal" data-dimension="ret" data-x-label="Période" data-y-label="Dimension" data-z-label="Performances">
+            <a class="reset" href="javascript:$b.reset('#pnl-map');" style="display: none;"><i class="fa fa-undo"></i></a>
+        </div>
+
+    </div>
+</section>
+
+<section class="container">
+    <h2>Implémentation</h2>
+    <p>
+        S'agissant des widgets de cette page, on retrouve la même technique d'intégration. Sur cette page, sont déclarés
+        deux autres librairies open source dc.js et crossfilter.js qui vont permettre la dépendance des widgets.
+    </p>
 <pre class="prettyprint"><xmp>
 <!-- Latest version of d3 librairies -->
-<script src="http://joueslacommeliliane.com/Scripts/d3/d3.js" type="text/javascript"></script>
+<script src="https://lili2.am/Scripts/d3/d3.js" type="text/javascript"></script>
 <!-- Latest version of crossfilter librairies -->
-<script src="http://joueslacommeliliane.com/Scripts/Crossfilter/crossfilter.js" type="text/javascript"></script>
+<script src="https://lili2.am/Scripts/Crossfilter/crossfilter.js" type="text/javascript"></script>
 <!-- Latest version of dc librairies -->
-<script src="http://joueslacommeliliane.com/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
+<script src="https://lili2.am/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
 <!-- Latest version of widgets portfolio charts -->
-<script src="http://joueslacommeliliane.com/Scripts/portfolio.charts-1.4.js" type="text/javascript"></script>
+<script src="https://lili2.am/Scripts/portfolio.charts-1.7.js" type="text/javascript"></script>
 </xmp></pre>
 
-<p>Chaque élément pour widget a une propriété <span class="atn">data-chart</span> permettant de définir le type de widget qui sera déployé au sein de l'élément.</p>
+    <p>Chaque élément pour widget a une propriété <span class="atn">data-chart</span> permettant de définir le type de widget qui sera déployé au sein de l'élément.</p>
 <pre class="prettyprint"><xmp>
 <div id="pnl-counter" class="portfolio-chart number" data-chart="number" data-number="pnl"></div>
 <div id="rating-pie" class="portfolio-chart pie-chart" data-chart="pie" data-dimension="rating">
@@ -129,44 +261,188 @@
 </xmp>
 </pre>
 
-<p>
-    Chaque type de widget dispose d'une documentation propre permettant d'ajuster des paramètres concernant l'information analysée
-    ou l'apparence. Par exemple, la propriété <span class="atn">data-number</span> est fixée sur std pour récupérer la volatilité de
-    la période active.
-</p>
-<pre class="prettyprint"><xmp>
-<div id="std-counter" class="portfolio-chart number" data-chart="number" data-number="std"></div>
-</xmp>
-</pre>
+    <p>
+        Chaque type de widget dispose d'une documentation propre permettant d'ajuster des paramètres concernant l'information analysée
+        ou l'apparence. Par exemple, la propriété <span class="atn">data-number</span> est fixée sur std pour récupérer la volatilité de
+        la période active.
+    </p>
 
-<p>
-    Les widgets qui ont un comportement liés sont rassemblés par groupe d'élements. Vous pouvez définir autant de groupe que
-    vous le souhaitez avec une seule instance. La méthode de regroupement
-    que nous avons utilisé ici s'appuie sur la classe de style <span>"portfolio-chart"</span>:
-</p>
-<pre class="prettyprint"><xmp>
-<div class="portfolio-chart"></div>
-</xmp>
-</pre>
-    @section scripts {
+    <pre class="prettyprint"><xmp>
+    <div id="std-counter" class="portfolio-chart number" data-chart="number" data-number="std"></div>
+    </xmp>
+    </pre>
 
+    <p>
+        Les widgets qui ont un comportement liés sont rassemblés par groupe d'élements. Vous pouvez définir autant de groupe que
+        vous le souhaitez avec une seule instance. La méthode de regroupement
+        que nous avons utilisé ici s'appuie sur la classe de style <span>"portfolio-chart"</span>:
+    </p>
+    <pre class="prettyprint"><xmp>
+    <div class="portfolio-chart"></div>
+    </xmp>
+    </pre>
+
+</section>
+
+<section class="section-d">
+    <div class="container">
+        <h2>Expositions géographiques</h2>
+        <button class="btn btn-primary btn-show-map" data-map-container="#world" data-map-table="#table-exposures">Afficher la carte des risques</button>
+        <div class="row">
+            <div class="col-lg-2 table-responsive">
+                <table id="table-exposures"></table>
+            </div>
+            <div id="world" class="col-lg-10">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <h2>Implémentation</h2>
+    <p>
+        Pour représenter les risques d'expositions sur une map monde, rien de mieux qu'un choropleth.
+        Intégrer un tel widget est assez simple. Veuillez d'abord déclarer une feuille de style pour les pays, les océans et des frontières.
+        Attention, la couleur des expositions n'est pas gérée dans ce fihcier.
+    </p>
+    <pre class="prettyprint"><xmp>
+    <!-- Latest versions default style sheets for widgets -->
+<link rel="stylesheet" href="https://lili2.am/Content/geomap-1.0.css" />
+</xmp></pre>
+    <p>Dans la section destinée à vos javascripts, déclarez 2 premiers scriptss fournis par d3.js</p>
+<pre class="prettyprint"><xmp>
+    <!-- Latest versions of requested d3 scripts -->
+<script src="//d3js.org/topojson.v1.min.js"></script>
+<script src="//d3js.org/queue.v1.min.js"></script>
+</xmp></pre>
+    <p>Ensuite, déclarez le script geomap en charge de la construction et du remplissage de la carte.</p>
+<pre class="prettyprint"><xmp>
+    <!-- Latest version of script requested for build and populating world map -->
+<script src="https://lili2.am/Scripts/d3/geomap-2.0.js"></script>
+</xmp></pre>
+    <p>
+        Créez ensuite un élement HTML qui fera office de conteneur pour la carte, et si vous le souhaitez, un second élément
+        qui fera office de table de synthèse pour les expositions.
+    </p>
+<pre class="prettyprint"><xmp>
+...
+<table id="table-exposures"></table>
+...
+<div id="world"></div>
+</xmp></pre>
+
+    <p>
+        Pour produire la carte, nous utilisons ici un bouton associé aux deux éléments déclarés ci-dessus (voir les deux propriétés data-).
+        L'action (onclick) ouvre un objet geomap, qui appellera la méthode JsonGeomap pour récupérer les points
+        permettant de dessiner la map-monde en svg. Puis, la méthode geoexpoures du controller portfolio pour
+        obtenir les expositions du portefeuille renseigné ci-dessus, et remplir les deux éléments (carte et table).
+        La légende est une option que l'on peut ou pas afficher.
+    </p>
+    <p>Les données d'expositions sont accessibles en interrogeant la méthode data de geomap.</p>
+    <pre class="prettyprint"><xmp>
+$('.btn-show-map').click(function () {
+    var urlpoints = 'https://lili2.am/api/Instruments/GeoMap';
+    // Create a world map using data points given by lili2 (json format)
+    var map = new geomap($(this).data('map-container'), urlpoints, $(this).data('map-table'), true);
+    // Get the detailed geo exposures from the server in Json format
+    $p.get('geoexposures', params, function (data) {
+        map.load(data);
+    });
+})
+</xmp></pre>
+</section>
+
+
+<section class="section-c">
+    <div class="container">
+        <h2>Allocations tactiques</h2>
+        <button class="btn btn-primary btn-show-fluctuation" data-container="#fluctuations">Afficher l'allocation tactique du portefeuille</button>
+        <div class="stacked-area-container">
+            <div id="fluctuations" class="stacked-area row-chart chart-xs"></div>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <h2>Implémentation</h2>
+    <p>
+        Pour représenter la stratégie d'un portefeuille, nous utiliserons les aires empilées ou <em>stacked area</em>.
+        Pour cela, il faut déclarer la dernière version du script associé:
+    </p>
+    <pre class="prettyprint"><xmp>
+        <!-- Latest version of stacked area librairie for fluctuations of asset classes -->
+    <script src="https://lili2.am/Scripts/d3/stacked-area-1.5.js" type="text/javascript"></script>
+        </xmp></pre>
+    <p>Puis insérer un élement qui fera office de conteneur à ce widget</p>
+    <pre class="prettyprint"><xmp>
+        ...
+    <div id="fluctuations" class="stacked-area"></div>
+        ...
+    </xmp></pre>
+
+    <p>
+        Pour réaliser ce widget, nous allons procéder en deux étapes.
+        Nous interrogeons d'abord l'API pour obtenir les codes couleurs associés à chaque classe d'actif.
+        Cette interrogation est optionnelle et peut être remplacée par une méthode interne qui impose ses couleurs.
+        Dans un second temps, nous interrogeons la méthode assetClassFluctuations du controleur <em>Portfolio</em>
+        pour accéder aux données historiques. Le script est ainsi :
+    </p>
+
+    <pre class="prettyprint"><xmp>
+// button to display portfolio fluctuations
+$('.btn-show-fluctuation').click(function () {
+    $($(this).data('container')).empty();
+    // First, create a new widget related to the element attached to the button
+    var area = new stackedarea($(this).data('container'));
+    // Then, we get the standard class colors using the instruments controller
+    $i.get('assetclasscolors', null, function (colors) {
+        // after colors setting ...
+        area.setcolors(colors, function () {
+            // we call the portfolio controller to get the fluctuation of its conten
+            $p.get('assetClassFluctuations', params, function (data) {
+                area.load(data, function () {
+                    // do what you want here ...
+                });
+            });
+        });
+    });
+})
+</xmp></pre>
+
+</section>
+
+
+
+@section scripts {
+    <script src="~/Scripts/instrumentsController.js"></script>
     <!-- Latest version of d3 librairies -->
-    <script src="http://joueslacommeliliane.com/Scripts/d3/d3.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/d3/d3.js" type="text/javascript"></script>
     <!-- Latest version of crossfilter librairies -->
-    <script src="http://joueslacommeliliane.com/Scripts/Crossfilter/crossfilter.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/Crossfilter/crossfilter.js" type="text/javascript"></script>
     <!-- Latest version of dc librairies -->
-    <script src="http://joueslacommeliliane.com/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
     <!-- Latest version of calculations on arrays -->
-    <script src="http://joueslacommeliliane.com/Scripts/jquery-array-stats.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/jquery-array-stats.js" type="text/javascript"></script>
     <!-- Latest version of widgets portfolio charts -->
-    <script src="http://joueslacommeliliane.com/Scripts/portfolio.charts-1.4.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/portfolio.charts-1.7.js" type="text/javascript"></script>
+    <!-- Latest version of stacked area librairie for fluctuations of asset classes -->
+    <script src="https://lili2.am/Scripts/d3/stacked-area-1.5.js" type="text/javascript"></script>
 
-        <script>
+    <script src="~/Scripts/d3dc/queue-min.js"></script>
+    <script src="~/Scripts/d3dc/topojson.min.js"></script>
+
+    <!-- Latest version of geomap library -->
+    <script src="https://lili2.am/Scripts/d3/geomap-2.0.js" type="text/javascript"></script>
+
+    <script>
 
             $(document).ready(function () {
 
+                var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
+
                 // First, we create a new instance of portfolios controller to get data from server with LILI API
                 $p = new LoyolApp.PortfolioController();
+                $i = new LoyolApp.InstrumentController();
 
                 // create a new instance of portfolioCharts in charge of widgets management
                 $b = new portfolioCharts('');
@@ -176,14 +452,121 @@
 
                 // When we click for dataviz of current portfolio
                 $('.btn-positions').click(function () {
-                    var code = $('#PositionCode').val();
-                    // Get the detailed positions from the server in Json format
-                    $p.get(code, 'positions', function (data) {
+                    // Get the hitorical positions from the server in Json format
+                    $p.get('positions', params, function (data) {
                         // Render all the grouped widgets
-                        $b.loaddata(data);
+                        $b.loaddata(data.Positions);
                     });
+                    // Get the detailed positions from the server in Json format
+                    $p.get('holdings', params, function (data) {
+                        // Populate the table with holdings
+                        populateHoldings(data, '#holdings');
+                    });
+                    // Get the detailed profits/losses from the server in Json format
+                    $p.get('results', params, function (data) {
+                        // Populate the table with holdings
+                        populateResults(data, '#results');
+                    });
+
+                    // stacked area for strategies fluctuation
+                    @*var area = new stackedarea('#stackedarea');
+                    area.json('/Portfolios/JsonClassFluctuations?code=@Model.Portfolio.Code', function () { })*@
                 });
+
+                // contribution/risk selector
+                $('.btn-group-select .btn').click(function () {
+                    var chartdiv = $(this).parent().data('chart');
+                    $(chartdiv).data($(chartdiv).data('chart') == 'heatMap' ? 'y-dim' : 'dimension', $(this).data('contrib'));
+                    $b.widget(chartdiv).reload();
+                });
+
+                // button to display portfolio risk map
+                $('.btn-show-map').click(function () {
+                    var urlpoints = 'https://lili2.am/api/Instruments/GeoMap';
+                    // Create a world map using data points given by lili2 (json format)
+                    var map = new geomap($(this).data('map-container'), urlpoints, $(this).data('map-table'), true);
+                    // Get the detailed geo exposures from the server in Json format
+                    $p.get('geoexposures', params, function (data) {
+                        map.load(data);
+                    });
+                })
+
+                // button to display portfolio fluctuations
+                $('.btn-show-fluctuation').click(function () {
+                    $($(this).data('container')).empty();
+                    // First, create a new widget related to the element attached to the button
+                    var area = new stackedarea($(this).data('container'));
+                    // Then, we get the standard class colors using the instruments controller
+                    $i.get('assetclasscolors', null, function (colors) {
+                        // after colors setting ...
+                        area.setcolors(colors, function () {
+                            // we call the portfolio controller to get the fluctuation of its conten
+                            $p.get('assetClassFluctuations', params, function (data) {
+                                area.load(data, function () {
+                                    // do what you want here ...
+                                });
+                            });
+                        });
+                    });
+                })
+
             });
 
-        </script>
-    }
+            // return asset kpi
+            var assetkpi = function (node, depth) {
+                var v = null;
+                $.each(node.Stats, function (i, k) {
+                    if (k.depth == depth) {
+                        v = k;
+                        return false; // break
+                    }
+                })
+                return v;
+            }
+
+            /********************************************************/
+            /************ Holdings table ****************************/
+            /********************************************************/
+            var populateHoldings = function (data, div) {
+                $(div).empty();
+                $.each(data.Holdings, function (i, item) {
+                    var mtd = assetkpi(item, 'MTD'),
+                        ytd = assetkpi(item, 'YTD'),
+                        tr = $('<tr>').append(
+                        $('<td>').append('<img>').addClass('td-img').attr('src', 'https://lili2.am/Assets/GetImage/' + item.Asset.id),
+                        $('<td>').text(item.Asset.code),
+                        $('<td>').text(item.Asset.name),
+                        $('<td>').text(item.Asset.class),
+                        $('<td class="text-right">').text(mtd ? parseFloat(100 * mtd.netreturn).toFixed(2) + "%" : ''),
+                        $('<td class="text-right">').text(ytd ? parseFloat(100 * ytd.netreturn).toFixed(2) + "%" : ''),
+                        $('<td class="text-right">').text(item.marketprice),
+                        $('<td class="text-right">').text(item.costprice),
+                        $('<td class="text-right">').text(parseFloat(100 * item.return).toFixed(2) + "%"),
+                        $('<td class="text-right">').text(item.weight + '%')
+                    );
+                    tr.appendTo(div);
+                });
+            }
+
+            /********************************************************/
+            /************ Results table *****************************/
+            /********************************************************/
+            var populateResults = function (data, div) {
+                $(div).empty();
+                $.each(data.ProfitsLosses, function (i, item) {
+                    var tr = $('<tr>').append(
+                        $('<td>').text(item.Asset.code),
+                        $('<td>').text(item.Asset.name),
+                        $('<td>').text(item.Asset.class),
+                        $('<td>').text(item.valuedate),
+                        $('<td class="text-right">').text(item.costprice),
+                        $('<td class="text-right">').text(item.saleprice),
+                        $('<td class="text-right">').text(parseFloat(100 * item.netreturn).toFixed(2) + '%'),
+                        $('<td class="text-right">').text(parseFloat(100 * item.weight).toFixed(2) + '%')
+                    );
+                    tr.appendTo(div);
+                });
+            }
+
+    </script>
+}

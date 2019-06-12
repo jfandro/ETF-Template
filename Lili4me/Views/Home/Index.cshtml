@@ -6,49 +6,53 @@
     <source src="~/Content/videos/bg.mp4" type="video/mp4" />
 </video>
 
-<div class="jumbotron masthead">
-    
-    <h1>PARIS <span class="text-warning">by Lili</span></h1>
+<div class="container">
+    <div class="jumbotron masthead" style="margin-top:150px;">
 
-    <p><strong>Non intrusive</strong> librairies are designed to perform high quality web sites and applications of fund managers, fund retailers and fund advisors.
-    This website is a showroom of new UX and demonstrate some of the capabilities of PARIS with <b>API</b>, a gallery of smart <b>dataviz</b> pluggins in open source 
-    and its <b>IBOR</b> engine available as a service.</p>
-    <p class="lead text-center">This web site could be <b>your web site</b>.</p>
-        
-    <div class="signin-container">
+        <h1>Robo <span class="text-warning">for</span> Advisor</h1>
+
         <p>
-            To discover PARIS services, please enter your username, your
-            password, or let <a href="mailto:admin@lili.am?subject=Credentials">email us</a>  to get credentials.
+            <strong>Ce site pourrait être le vôtre</strong> mais c'est notre show-room centré sur les services proposés
+            par <a target="_blank" href="https://lili.am">la place de marché Lili</a>, une plateforme digitale réservéee aux professionels de la gestion d'actifs.
+            Nous allons vous montrer dans ce show-romm, par des exemples concrets, du plus simple au plus complexe,
+            comment utiliser et déployer <b>notre API</b> dans un contexte propriétaire sécurisé qui pourrait être votre site web.
+            Nous allons vous faire découvrir tout le potentiel de notre approche "open" en faisant notamment appel à la libraire de <b>widgets dataviz</b>
+            développés en open source pour offrir le maximum de nouvelles expériences à vos clients.
         </p>
+        <div class="signin-container">
+            <p>
+                To discover LILi services, please enter your username, your
+                password, or let <a href="mailto:admin@lili.am?subject=Credentials">email us</a>  to get credentials.
+            </p>
 
-        <form id="signin-form" class="signin-form" method="post">
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input type="text" class="form-control" id="username" name="username" placeholder="Votre identifiant" />
+            <form id="signin-form" class="signin-form" method="post">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Votre identifiant" />
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de passe" />
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de passe" />
+                    </div>
                 </div>
-            </div>
-            <div id="ctnErr" class="well hide">
-            </div>
-            <div class="form-group text-right">
-                <button class="btn btn-primary btn-sm" type="submit">Sign in</button>
-            </div>
-            <em class="small text-warning">PARIS : <strong>P</strong>ortfolio <strong>A</strong>nalysis <strong>R</strong>eporting <strong>I</strong>ntegrated <strong>S</strong>ervices</em>
-        </form>
-    </div>
+                <div id="ctnErr" class="well hide">
+                </div>
+                <div class="form-group text-right">
+                    <button class="btn btn-primary btn-sm" type="submit">Sign in</button>
+                </div>
+            </form>
+        </div>
 
-    <div class="signoff-container">
-        <p class="small">
-            Your first experience starts with a sample of <a href="/Home/Allocations">client report</a> related to the portfolio linked to the connected user.
-        </p>    
-    </div>
+        <div class="signoff-container">
+            <p class="small">
+                Your first experience starts with a sample of <a href="/Home/Allocations">client report</a> related to the portfolio linked to the connected user.
+            </p>
+        </div>
 
+    </div>
 </div>
 
 

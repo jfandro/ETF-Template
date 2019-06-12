@@ -35,6 +35,16 @@ namespace Lili4me.Controllers
             return View();
         }
 
+        public ActionResult Benchmark()
+        {
+            return View();
+        }
+
+        public ActionResult Operations()
+        {
+            return View();
+        }
+
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

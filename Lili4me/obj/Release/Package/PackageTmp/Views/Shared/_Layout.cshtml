@@ -29,11 +29,14 @@
             </div>
             <div class="navbar-collapse collapse signoff-container">
                 <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Board", "Board", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Report", "Allocations", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Creation", "Create", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Positions", "Positions", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Operations", "Operations", "Home", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Benchmark", "Benchmark", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("KYC", "KYC", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Fonds", "MyFund", "Home", new { area = "" }, null)</li>
                     <li><a href="#" class="btn-signout signoff-container">Signout</a></li>
                 </ul>
             </div>

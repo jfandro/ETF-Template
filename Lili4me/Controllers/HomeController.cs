@@ -44,7 +44,18 @@ namespace Lili4me.Controllers
         {
             return View();
         }
-
+        public ActionResult Board()
+        {
+            return View();
+        }
+        public ActionResult KYC()
+        {
+            return View();
+        }
+        public ActionResult MyFund()
+        {
+            return View();
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

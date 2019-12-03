@@ -438,8 +438,6 @@ $('.btn-show-fluctuation').click(function () {
 
             $(document).ready(function () {
 
-                var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
-
                 // First, we create a new instance of portfolios controller to get data from server with LILI API
                 $p = new LoyolApp.PortfolioController();
                 $i = new LoyolApp.InstrumentController();
@@ -452,6 +450,9 @@ $('.btn-show-fluctuation').click(function () {
 
                 // When we click for dataviz of current portfolio
                 $('.btn-positions').click(function () {
+
+                    var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
+
                     // Get the hitorical positions from the server in Json format
                     $p.get('positions', params, function (data) {
                         // Render all the grouped widgets
@@ -482,6 +483,7 @@ $('.btn-show-fluctuation').click(function () {
 
                 // button to display portfolio risk map
                 $('.btn-show-map').click(function () {
+                    var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
                     var urlpoints = 'https://lili2.am/api/Instruments/GeoMap';
                     // Create a world map using data points given by lili2 (json format)
                     var map = new geomap($(this).data('map-container'), urlpoints, $(this).data('map-table'), true);
@@ -493,6 +495,7 @@ $('.btn-show-fluctuation').click(function () {
 
                 // button to display portfolio fluctuations
                 $('.btn-show-fluctuation').click(function () {
+                    var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
                     $($(this).data('container')).empty();
                     // First, create a new widget related to the element attached to the button
                     var area = new stackedarea($(this).data('container'));
@@ -533,7 +536,7 @@ $('.btn-show-fluctuation').click(function () {
                     var mtd = assetkpi(item, 'MTD'),
                         ytd = assetkpi(item, 'YTD'),
                         tr = $('<tr>').append(
-                        $('<td>').append('<img>').addClass('td-img').attr('src', 'https://lili2.am/Assets/GetImage/' + item.Asset.id),
+                        $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://lili2.am/Assets/GetImage/' + item.Asset.id)),
                         $('<td>').text(item.Asset.code),
                         $('<td>').text(item.Asset.name),
                         $('<td>').text(item.Asset.class),

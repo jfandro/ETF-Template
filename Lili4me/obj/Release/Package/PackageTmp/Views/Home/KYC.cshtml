@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Benchmarks";
+}
+<link href="~/Content/mydataviz.css" rel="stylesheet" />
+<style>
+    .container-question {
+        color:#000;
+    }
+</style>
+
+@section header {
+    <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
+        <div class="container">
+            <h1 class="text-center">Know Your Customer</h1>
+            <p class="lead text-center">Intégration d'un questionnaire de connaissance client</p>
+        </div>
+    </section>
+}
+
+<section class="section-b" style="height:100vh;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
+                <h2 id="questionnaire-name">Questionnaire</h2>
+                <div class="container-question">
+                    <p>Pour ce questionnaire, nous</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <h2>Implémentation</h2>
+</section>
+
+
+@section scripts {
+
+    <script src="~/Scripts/questionnairesController.js"></script>
+    <script src="~/Scripts/questionnaire.jquery-1.0.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
+
+    <script>
+
+            $(document).ready(function () {
+
+                // First, we create a new instance of portfolios controller to get data from server with LILI API
+                $k = new LoyolApp.QuestionnaireController();
+
+                var cookie = "newuserid";
+                var userid = $.cookie(cookie);
+
+                // if the cookie not exists create one.
+                if (!userid) {
+                    // check if the browser supports cookie
+                    var test_cookie = 'test cookie';
+                    $.cookie(test_cookie, true);
+                    // browser supports cookie
+                    if ($.cookie(cookie)) {
+                        // delete the test cookie
+                        $.cookie(test_cookie, null);
+                        // create a new guid for the user
+                        userid = 'X-' + createGuid();
+                        // create a new cookie with created value
+                        $.cookie(cookie, userid);
+                    }
+                }
+
+                // launch survey
+                $k.get('Complete', { id: 1007, objectid: 'abdc' }, function (data) {
+                    // title of the questionnaire
+                    $('#questionnaire-name').html(data.Name);
+                    // add a property to container
+                    var container = $('.container-question');
+                    container.attr('data-reference', data.ObjectID);
+                    // render the first question
+                    renderContainer(container, data.FirstQuestion, $k);
+                })
+
+            });
+
+
+            // Create a new guid
+            function createGuid() {
+                function _p8(s) {
+                    var p = (Math.random().toString(16) + "000000000").substr(2, 8);
+                    return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+                }
+                return _p8() + _p8(true) + _p8(true) + _p8();
+            }
+
+    </script>
+}

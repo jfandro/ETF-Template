@@ -41,7 +41,8 @@
             <div class="form-group">
                 <div class="input-group">
                     <div class="input-group-addon">Clef privée</div>
-                    <input type="text" class="form-control" id="code" value="98ad6dc0-79a6-462c-ac90-79d1fee0fa23" />
+                    @*<input type="text" class="form-control" id="code" value="98ad6dc0-79a6-462c-ac90-79d1fee0fa23" />*@
+                    <select id="code" name="code" class="form-control select-portfolios"></select>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Afficher</button>
@@ -112,7 +113,7 @@
             <div class="col-md-6">
                 <h3 class="text-center">Allocation</h3>
                 <p>
-                    Iam virtutem ex consuetudine vitae sermonisque nostri interpretemur nec eam, ut quidam docti, verborum magnificentia metiamur virosque bonos eos, qui habentur, numeremus, Paulos, Catones, Galos, Scipiones, Philos; his communis vita contenta est; eos autem omittamus, qui omnino nusquam reperiuntur.
+                    <span id="body" style="font-weight:600;"></span>Iam virtutem ex consuetudine vitae sermonisque nostri interpretemur nec eam, ut quidam docti, verborum magnificentia metiamur virosque bonos eos, qui habentur, numeremus, Paulos, Catones, Galos, Scipiones, Philos; his communis vita contenta est; eos autem omittamus, qui omnino nusquam reperiuntur.
                     Hac ex causa conlaticia stipe Valerius humatur ille Publicola et subsidiis amicorum mariti inops cum liberis uxor alitur Reguli et dotatur ex aerario filia Scipionis, cum nobilitas florem adultae virginis diuturnum absentia pauperis erubesceret patris.
                     <div class="treemap-container" style="height:400px;">
                         <div id="tree" class="treemap"></div>
@@ -236,6 +237,8 @@
         var sun = new sunburst('#sun');
         var tree = new treemap('#tree');
 
+        ptf.select($('.select-portfolios'));
+
         // A function in charge of calls and widgets
         var loadReport = function () {
             $('.container-stats').fadeOut();
@@ -277,9 +280,11 @@
             });
         }
 
-        // Load report when open form
-        loadReport();
-
+        // get default portfolio
+        ptf.get('GetDefault', null, function (p) {
+            $('#code').val(p.code);
+            loadReport();
+        })
         // On each new request
         $('.report-form').submit(function () {
             // Load data

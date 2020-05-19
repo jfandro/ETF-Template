@@ -224,6 +224,7 @@
                 <label class="btn btn-primary" data-contrib="risklevel"><input type=radio name="contribution" value="risk">Profil de risques</label>
                 <label class="btn btn-primary" data-contrib="rating"><input type=radio name="contribution" value="rating">Notation MS</label>
                 <label class="btn btn-primary" data-contrib="name"><input type=radio name="contribution" value="name">Société de Gestion</label>
+                <label class="btn btn-primary" data-contrib="name"><input type=radio name="contribution" value="portfolio">Portefeuille</label>
             </div>
         </p>
         <div id="pnl-map" class="portfolio-chart row-chart chart-xs" data-chart="heatMap" data-x-dim="month" data-y-dim="legal" data-dimension="ret" data-x-label="Période" data-y-label="Dimension" data-z-label="Performances">
@@ -247,7 +248,7 @@
 <!-- Latest version of dc librairies -->
 <script src="https://lili2.am/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
 <!-- Latest version of widgets portfolio charts -->
-<script src="https://lili2.am/Scripts/portfolio.charts-1.7.js" type="text/javascript"></script>
+<script src="https://lili2.am/Scripts/portfolio.charts-2.4.js" type="text/javascript"></script>
 </xmp></pre>
 
     <p>Chaque élément pour widget a une propriété <span class="atn">data-chart</span> permettant de définir le type de widget qui sera déployé au sein de l'élément.</p>
@@ -422,9 +423,9 @@ $('.btn-show-fluctuation').click(function () {
     <!-- Latest version of calculations on arrays -->
     <script src="https://lili2.am/Scripts/jquery-array-stats.js" type="text/javascript"></script>
     <!-- Latest version of widgets portfolio charts -->
-    <script src="https://lili2.am/Scripts/portfolio.charts-1.7.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/portfolio.charts-2.4.js" type="text/javascript"></script>
     <!-- Latest version of stacked area librairie for fluctuations of asset classes -->
-    <script src="https://lili2.am/Scripts/d3/stacked-area-1.5.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/d3/stacked-area-1.9.js" type="text/javascript"></script>
 
     <script src="~/Scripts/d3dc/queue-min.js"></script>
     <script src="~/Scripts/d3dc/topojson.min.js"></script>
@@ -481,7 +482,7 @@ $('.btn-show-fluctuation').click(function () {
 
                 // button to display portfolio risk map
                 $('.btn-show-map').click(function () {
-                    var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
+                    var params = { code: $('#PositionCode').val() };
                     var urlpoints = 'https://lili2.am/api/Instruments/GeoMap';
                     // Create a world map using data points given by lili2 (json format)
                     var map = new geomap($(this).data('map-container'), urlpoints, $(this).data('map-table'), true);

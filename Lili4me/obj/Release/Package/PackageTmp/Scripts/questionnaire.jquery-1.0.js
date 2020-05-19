@@ -125,7 +125,24 @@ var renderQuestion = function (panel, question, controller) {
                 panel.fadeIn('slow');
             })
         });
+    });
 
+    $('.btn-project').click(function () {
+        var item = $(this);
+        panel.fadeOut('slow', function () {
+            // launch related survey
+            $k.get('Complete', { id: 2, objectid: item.data('rel') }, function (data) {
+                // title of the questionnaire
+                $('#questionnaire-name').html(data.Name);
+                // add a property to container
+                var container = $('.container-question');
+                container.attr('data-reference', data.ObjectID);
+                // render the first question
+                renderContainer(container, data.FirstQuestion, $k);
+                // show it
+                panel.fadeIn('slow');
+            })
+        });
     });
 
     var d = $('.checked-list-box input:checked')[0];
@@ -138,6 +155,9 @@ var renderContainer = function (panel, question, controller) {
 
     // first we empty the panel
     panel.empty();
+
+    // title of the questionnaire
+    $('#questionnaire-name').html(question.Questionnaire);
 
     // create the list and a first item for header
     var list = $('<ul></ul>')
@@ -181,6 +201,15 @@ var renderContainer = function (panel, question, controller) {
                 .attr('data-question', question.NextQuestionID)
                 .attr('data-rel', panel.data('reference'))
                 .text('Suivant');
+        actions.append(b2);
+    }
+    else
+    {
+        var b2 = $('<button></button>')
+        .addClass('btn btn-sm btn-project')
+        .attr('data-question', 0)
+        .attr('data-rel', panel.data('reference'))
+        .text('Mon Projet...');
         actions.append(b2);
     }
     // add a new line for actions

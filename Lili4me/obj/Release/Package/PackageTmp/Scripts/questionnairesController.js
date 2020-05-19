@@ -59,3 +59,28 @@ LoyolApp.QuestionnaireController.prototype.post = function (action, data, callba
         });
     }
 }
+
+// Get or open default user project
+LoyolApp.QuestionnaireController.prototype.openProject = function (callback) {
+
+    var session = LoyolApp.Session.getInstance().get();
+    if (session && session.keepSignedIn && session.token) {
+        var token = session.token,
+        url = LoyolApp.Settings.domain + '/api/InvestorProjects/CreateDefault';
+
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            url: url,
+            crossDomain: true,
+            cache: false,
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", 'Bearer ' + token);
+            },
+            success: callback,
+            error: function (xhr, status, error) {
+                alert(error);
+            }
+        });
+    }
+}

@@ -20,7 +20,7 @@
             Pour cette expérience, vous devez disposer d'une clef privée valide de portefeuille. Vous pouvez reprendre celle que l'on vous propose
             dans le cadre du <a href="/Home/Allocations">reporting client</a> ou reprendre celle du portefeuille que vous avez peut-être créé
             lors de la <a href="/Home/Create">précédente expérience</a>.
-            Pour analyser votre portefeuille, renseignez cette clef et activez le bouton <span class="btn btn-xs btn-primary">Analyser</span> dont l'action se résume en 2 étapes :
+            Pour analyser votre portefeuille, renseignez cette clef et activez le bouton <span class="btn btn-xs btn-primary">Afficher</span> dont l'action se résume en 2 étapes :
         </p>
         <p>
             <ul>
@@ -39,7 +39,7 @@
         <div class="form-inline row">
             <div class="form-group col-sm-5">
                 <label class="control-label">Code/clef de portefeuille </label>
-                <input type="text" class="form-control portfolio-key" id="PositionCode" name="PositionCode" value="e1a563bc-a094-4a73-ab18-609cdfa83303" placeholder="Indiquez la clef de votre portefeuille" />
+                <input type="text" class="form-control portfolio-key" id="PositionCode" name="PositionCode" value="98ad6dc0-79a6-462c-ac90-79d1fee0fa23" placeholder="Indiquez la clef de votre portefeuille" />
             </div>
             <div class="form-group col-sm-5">
                 <label class="control-label">Date de valeur </label>
@@ -152,11 +152,9 @@
 
 <section class="section-b">
     <div class="container">
-        <h2>Encours moyens</h2>
+        <h2>Mon portefeuille Equilibre</h2>
         <p>
-            Ci-dessous, retrouvez un ensemble de widgets interactifs permettant de comprendre la source des performances et des risques.
-            Par interactivité, cela sous entends qu'en sélectionnant un composant graphique d'un widget, vous appliquez un filtre
-            correspondant à la sélection sur tous les autres widgets de l'ensemble. Essayer c'est l'adopter.
+            Ci-dessous, retrouvez les encoours moyens et les performances de mon portefeuille.
         </p>
 
         <div class="row">
@@ -185,7 +183,7 @@
         </div>
     </div>
     <div class="container">
-        <h3 class="text-center">Performance base 100</h3>
+        <h3 class="text-center">Performances base 100</h3>
         <div id="nav-chart" class="portfolio-chart line-chart" data-chart="lines" data-range-chart="#range-chart" style="height:300px;">
             <p class="header-chart text-center">
                 <span class="reset small text-info" style="display: none;"><br />Période du <span class="filter"></span></span>
@@ -226,6 +224,7 @@
                 <label class="btn btn-primary" data-contrib="risklevel"><input type=radio name="contribution" value="risk">Profil de risques</label>
                 <label class="btn btn-primary" data-contrib="rating"><input type=radio name="contribution" value="rating">Notation MS</label>
                 <label class="btn btn-primary" data-contrib="name"><input type=radio name="contribution" value="name">Société de Gestion</label>
+                <label class="btn btn-primary" data-contrib="name"><input type=radio name="contribution" value="portfolio">Portefeuille</label>
             </div>
         </p>
         <div id="pnl-map" class="portfolio-chart row-chart chart-xs" data-chart="heatMap" data-x-dim="month" data-y-dim="legal" data-dimension="ret" data-x-label="Période" data-y-label="Dimension" data-z-label="Performances">
@@ -249,7 +248,7 @@
 <!-- Latest version of dc librairies -->
 <script src="https://lili2.am/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
 <!-- Latest version of widgets portfolio charts -->
-<script src="https://lili2.am/Scripts/portfolio.charts-1.7.js" type="text/javascript"></script>
+<script src="https://lili2.am/Scripts/portfolio.charts-2.4.js" type="text/javascript"></script>
 </xmp></pre>
 
     <p>Chaque élément pour widget a une propriété <span class="atn">data-chart</span> permettant de définir le type de widget qui sera déployé au sein de l'élément.</p>
@@ -424,9 +423,9 @@ $('.btn-show-fluctuation').click(function () {
     <!-- Latest version of calculations on arrays -->
     <script src="https://lili2.am/Scripts/jquery-array-stats.js" type="text/javascript"></script>
     <!-- Latest version of widgets portfolio charts -->
-    <script src="https://lili2.am/Scripts/portfolio.charts-1.7.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/portfolio.charts-2.4.js" type="text/javascript"></script>
     <!-- Latest version of stacked area librairie for fluctuations of asset classes -->
-    <script src="https://lili2.am/Scripts/d3/stacked-area-1.5.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/d3/stacked-area-1.9.js" type="text/javascript"></script>
 
     <script src="~/Scripts/d3dc/queue-min.js"></script>
     <script src="~/Scripts/d3dc/topojson.min.js"></script>

@@ -1,0 +1,563 @@
+﻿
+@{
+    ViewBag.Title = "My Robo";
+}
+
+@section header {
+    <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
+        <div class="container">
+            <h1 class="text-center">Allocation à la Carte</h1>
+            <p class="lead text-center">Ou comment développer un robo-advisor haut de gamme sur son site internet?</p>
+        </div>
+    </section>
+}
+
+<section class="section-b section-0">
+    <div class="container">
+        <p>
+            <span class="logo"><i class="glyphicon glyphicon-info-sign"></i></span>
+            Nous allons voir ici <strong>comment créer sur son propre site internet un portefeuille à la carte</strong> 
+            pour un client ou un prospect.
+            Les portefeuilles qui seront conçus ici ne font l'objet d'enregistrement
+            en base de données.
+            Cette expérience utilise l'API de Lili avec ses actions en lecture (GET) et en écriture (POST). 
+            Elle se déroule en plusieurs étapes que vous pourrez automatiser différemment sur votre propre site :
+            <ul>
+                <li>Création d'un portefeuille temporaire,</li>
+                <li>Sélection d'un projet/contrat,</li>
+                <li>Sélection de plusieurs thématiques avec pondération,</li>
+                <li>Fixation d'un niveau de risques,</li>
+                <li>Visualisation du portefeuille résultant,</li>
+                <li>Analyse des performances passées,</li>
+                <li>Comparatif avec les fonds diversifiés du marché.</li>
+            </ul>
+        </p>
+        <p>
+            L'objectif de cette expérience est de donc construire à la volée un portefeuille 
+            dont <strong>la proposition matche avec les sensibilités du visiteur</strong>, 
+            Chaque thématique sélectionnée est un portefeuille modèle géré sur Lili.
+            Le portefeuille dynamiquement restitué est donc une aggrégation de sous portefeuilles 
+            avec un recalcul des performances et des volatilités passées. Exactement le principe d'un fonds de fonds.
+        </p>
+        <p>
+            Dans la phase dite de restitution, nous avons sélectionné un nombre restreint de widgets.
+            D'autres éléments graphiques ou de données peuvent être librement choisis.
+        </p>
+
+    </div>
+</section>
+
+<section class="section-c section-0">
+    <div class="container">
+
+        <h2>On démarre ?</h2>
+
+        <form class="creation-form" method="post">
+
+            <input type="hidden" id="StartDate" name="StartDate" value="2019-12-31" />
+            <input type="hidden" id="RiskLevel" name="RiskLevel" value="4" />
+            <input type="hidden" id="IsModel" name="IsModel" value="true" />
+            <input type="hidden" id="Code" name="Code" value="" />
+            <input type="hidden" id="minutes" name="minutes" value="60" />
+            <input type="hidden" id="Persistence" name="Persistence" value="false" />
+            <input type="hidden" id="PositionDate" name="PositionDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            <p>
+                Donnez un nom à votre portefeuille afin de pouvoir opérer ensuite
+                quelques comparaisons avec d'autres propositions.
+            </p>
+
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Nom</div>
+                    <input type="text" class="form-control" id="Name" name="Name" value="" placeholder="Donnez un nom à votre portefeuille" />
+                </div>
+            </div>
+
+            <p class="text-center" style="margin-top:150px;">
+                <button type="submit" class="btn btn-primary">Choix des thématiques ...</button>
+            </p>
+
+        </form>
+    </div>
+</section>
+
+<section id="section-robos" class="section-b section-1">
+    <div class="container">
+        <h2>Mon Projet</h2>
+        <p>
+            Dans cette expérience, nous avons pris comme postulat que les différentes thématiques proposées
+            sont fonction d'un TYPE DE PROJET, mais qu'il est tout à fait possible de choisir: <ul>
+                <li>le profil de risques,</li>
+                <li>l'enveloppe fiscale,</li>
+                <li>l'horizon du projet,</li>
+                <li>.etc</li>
+            </ul>
+            Pour ce faire, nous allons faire usage des <strong>tags</strong> rattachés
+            aux modèles gérés sur Lili,
+            chaque modèle présentant une liste de tags plus ou moins longue.
+            Pour notre allocation à la carte,
+            nous avons créé 3 tags intitulés robo1, robo2 et robo3.
+            <ul>
+                <li>Un modèle ayant le tag robo1 est pour les projets RETRAITES</li>
+                <li>Un modèle ayant le tag robo2 est pour les projets INVESTISSEMENT</li>
+                <li>Un modèle ayant le tag robo3 est pour les projets SUCCESSION</li>
+            </ul>
+            Voilà pour la configuration proposée.
+        </p>
+        <p>La référence du portefeuille est : <input width="200" class="portfolio-key" type="text" disabled /></p>
+        <hr />
+        <p>Sélectionnez un contrat, puis ajustez les thématiques éligibles à ce dernier.</p>
+    </div>
+    <div class="container text-center" style="padding-top:80px;">
+        <p id="select-contribution" class="btn-group btn-group-lg btn-group-tag" data-toggle="buttons" data-chart="#pnl-contribution">
+            <label class="btn btn-default active" data-tag="robo1"><input type=radio name="tag">Retraite</label>
+            <label class="btn btn-default" data-tag="robo2"><input type=radio name="tag">Investissement</label>
+            <label class="btn btn-default" data-tag="robo3"><input type=radio name="tag">Succession</label>
+        </p>  
+    </div>
+</section>
+
+<form class="robo-form">
+
+    <section id="section-themes" class="section-d section-1">
+        
+        <div class="container container-themes">
+
+            <input type="hidden" id="PortfolioCode" name="PortfolioCode" value="" class="portfolio-key" />
+            <input type="hidden" id="ValueDate" name="ValueDate" value="2019-12-31" />
+            <input type="hidden" id="ResetPortfolio" name="ResetPortfolio" value="true" />
+            <input type="hidden" id="IsAbsolute" name="IsAbsolute" value="true" />
+
+            <h2>Mes Thématiques</h2>
+            <p>
+                Notre équipe de gestion a préparé quelques <b>thématiques</b>.
+                Chaque thématique est un portefeuille investi sur un ou pluiseurs fonds couvrant l'enjeu. 
+                Indiquez pour chaque thème votre sensibilité
+                avec une valeur comprise entre 0 (pas sensible) et 7 (très sensible).
+                A partir des valeurs fixées, nous composerons une allocation sur mesure 
+                dont la partie risquée correspondra à vos sensibilités.
+            </p>
+            <div class="table-responsive">
+                <table class="table table-themes" id="themes"></table>
+            </div>
+        </div>
+
+    </section>
+
+
+    <section class="section-a section-1">
+        <div class="container">
+            <h2>Mon appétence aux risques</h2>
+            <p>
+                Indiquez maintenant sur une échelle de 10 à 100
+                la part risquée de votre portefeuille.
+                Un niveau de 100 indique que l'allocation construite sera investi à 100% sur les thématiques choisie. 
+                Un niveau de 10 (le plus faible) indique que seulement 10% de votre capital sera à risques. 
+                Par défaut, votre niveau de risque est positionné à 100% 
+                considérant que vous gérez indépendammant votre capital garanti sur un PEL, livret A ou Fonds Euro.
+            </p>
+            <div class="row">
+                <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
+                    <div class="text-center slider-container" style="margin-top:50px;">
+                        <input type="text" name="RiskWeight" data-slider-min="10" data-slider-max="100" data-slider-step="1" data-slider-value="60" />
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-center" style="padding-top:80px;">
+                <button type="submit" class="btn btn-primary">Développement de mon portefeuille</button>
+            </p>
+        </div>
+
+    </section>
+
+</form>
+
+
+<section id="section-portfolio" class="section-e section-2">
+    <div class="container">
+        <h2>Mon Portefeuille à la Carte</h2>
+        <p>Voici la composition détaillée de votre portefeuille. Il est <b>le reflet</b> de vos 
+        sensibilités et de votre profil de risques. On peut ananlyser son contenu selon deux approches : 
+            <ul>
+            <li>Une allocation par thème, puis par classe d'actifs puis enfin par support.</li>
+            <li>Une allocation par marché, puis classe d'actifs puis par support.</li>
+            </ul>
+            Les allocations sont traditionnellement présentées selon la seconde approche. En retenant
+            une approche thématique, vous donnez plus de sens à votre allocation.
+        </p>        
+        <div class="row">
+            <div class="col-lg-6">
+                <h3 class="text-center">Allocation thématique</h3>
+                <div class="treemap-container">
+                    <div id="tree1" class="treemap"></div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <h3 class="text-center">Allocation financière</h3>
+                <div class="treemap-container">
+                    <div id="tree2" class="treemap"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+@Html.Partial("_expectedSrri")
+@Html.Partial("_exposures")
+@Html.Partial("_nav")
+@Html.Partial("_performances")
+@Html.Partial("_kpis")
+@Html.Partial("_comparison")
+
+@section scripts {
+
+<!-- Latest version of d3 librairies -->
+<script src="https://lili2.am/Scripts/d3/d3.js" type="text/javascript"></script>
+<!-- Latest version of crossfilter librairies -->
+<script src="https://lili2.am/Scripts/Crossfilter/crossfilter.js" type="text/javascript"></script>
+<!-- Latest version of dc librairies -->
+<script src="https://lili2.am/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
+<!-- Latest version of calculations on arrays -->
+<script src="https://lili2.am/Scripts/jquery-array-stats.js" type="text/javascript"></script>
+
+<!-- Latest version of d3 librairies -->
+<script src="https://lili2.am/scripts/d3/d3.js" type="text/javascript"></script>
+<script src="https://lili2.am/scripts/d3/waterfall-1.1.js" type="text/javascript"></script>
+<script src="https://lili2.am/scripts/d3/treemap-1.6.js"></script>
+<script src="https://lili2.am/scripts/d3/sectormap-1.0.js"></script>
+<script src="https://lili2.am/scripts/d3/navschart-1.6.js"></script>
+<script src="https://lili2.am/Scripts/d3/geomap-2.0.js" type="text/javascript"></script>
+<script src="https://lili2.am/Scripts/d3/liquidFillgauge.js" type="text/javascript"></script>
+
+<script src="https://lili2.am/scripts/bootstrap-slider.js"></script>
+
+<!-- Server version of portfolios chart -->
+<script src="https://lili2.am/Scripts/portfolio.charts-2.4.js" type="text/javascript"></script>
+
+<!-- Server version of liquid gauges >> use liquidgauges -->
+<script src="https://lili2.am/Scripts/portfolio.gauge-1.3.js" type="text/javascript"></script>
+
+<!-- Local version of widgets instruments charts -->
+<script src="~/Scripts/instruments-local-charts.js" type="text/javascript"></script>
+
+<script src="~/Scripts/d3dc/queue-min.js"></script>
+<script src="~/Scripts/d3dc/topojson.min.js"></script>
+<script src="~/Scripts/jquery.cookie.js"></script>
+
+<link rel="stylesheet" href="https://lili2.am/Content/treemap-1.3.css" />
+<link rel="stylesheet" href="https://lili2.am/Content/waterfall-1.1.css" />
+<link rel="stylesheet" href="https://lili2.am/Content/bootstrap-slider.css" />
+<link rel="stylesheet" href="https://lili2.am/Content/lineschart-1.3.css" />
+
+<!-- The style of my web site for widgets -->
+<link href="~/Content/mydataviz.css" rel="stylesheet" />
+<link href="~/Content/robo-1.0.css" rel="stylesheet" />
+
+<script>
+
+    $(document).ready(function () {
+
+        var cookie = 'cookie-robo';
+
+        // First, we create new instances of controllers to get and post data with LILI API
+        $p = new LoyolApp.PortfolioController();
+        $a = new LoyolApp.AssetsController();
+        $i = new LoyolApp.InstrumentController();
+
+        // get treeview colors from server
+        var treeviewcolors = null;
+        $i.get('assetclasscolors', null, function (colors) {
+            treeviewcolors = colors;
+        });
+
+        // populate the asset selectors
+        $a.select($('.select-funds'));
+
+        // create a new instance of portfolioCharts in charge of widgets management
+        $b = new portfolioCharts('');
+        $b.group($('.portfolio-chart'));
+
+        // load themes of selected tag
+        var loadthemes = function (tag) {
+            // empty the themes list
+            $('#themes').empty();
+            // read themes
+            $p.get('UserIndex', { tag: tag }, function (lst) {
+                var tb = $('#themes').append($('<tbody>'));
+                $.each(lst, function (i, item) {
+                    var img = '<div class="img-container"><img id="img-' + i + '" style="opacity:0.1;" src="' + LoyolApp.Settings.domain + '/Instruments/GetImage/' + item.id + '" /></div>',
+                        s = '<div class="gauges-container"><svg id="srri' + i + '" class="risk-gauge" width="100%" data-value="' + item.srri + '" data-dimension="srri" /></div>',       
+                        v = '<input type="hidden" value="' + item.code + '" name="Allocations[' + i + '].SecurityID" />',
+                        c = '<div class="slider-container"><input type="text" data-img="' + i + '" data-slider-min="0" data-slider-max="6" data-slider-step="1" data-slider-value="0" data-slider-tooltip="always" name="Allocations[' + i + '].Weight" /></div>';
+
+                    tb.append('<tr><td class="td-img">' + img + c + '</td><td><h3>' + item.name + '</h3><h5>' + item.category + '</h5><p>' + item.strategy +
+                        '</p>' + v + '</td><td>' + s + '</td></tr>');
+                });
+                // render risk gauges
+                liquidGaugesRender('.risk-gauge');
+                // render sliders
+                $('.slider-container input').slider();
+                // animation of images linked to sliders
+                $('.slider-container input').on('slide', function (e) {
+                    var img = '#img-' + $(this).data('img');
+                    $(img).css('opacity', 0.166 * e.value);
+                });
+                $('.container-themes .slider-container input').slider({
+                    formatter: function (value) {
+                        switch (value) {
+                            case 0:
+                                return "Insensible";
+                            case 1:
+                                return "Très peu sensible";
+                            case 2:
+                                return "Peu sensible";
+                            case 3:
+                                return "Sensible";
+                            case 4:
+                                return "Plus que sensible";
+                            case 5:
+                                return "Assez sensible";
+                            case 6:
+                                return "Très sensible";
+                        }
+                    }
+                });
+            })
+
+        }
+
+        // by default we load the themes attached to the robo1
+        loadthemes('robo1');
+
+        // when changing the robo, we relaod the themes
+        $('.btn-group-tag .btn').click(function () {
+            loadthemes($(this).data('tag'));
+        })
+
+        // look at the registered cookies
+        var key = $.cookie(cookie);
+        $p.exists(key, function (success, p) {
+            if (success) {
+                $('.portfolio-key').val(key);
+                $('.section-0').addClass('hidden');
+                $('.section-1').removeClass('hidden');
+            }
+            else {
+                $('.section-0').removeClass('hidden');
+                $('.section-1').addClass('hidden');
+            }
+            $('.section-2').addClass('hidden');
+        });
+
+        // When we submit for a creation of a portfolio
+        $('.creation-form').submit(function () {
+            var params = $(this).serialize();
+            $p.post('create', params, function (result) {
+                $('.portfolio-key').val(result.code);
+                $('.section-0').addClass('hidden');
+                $('.section-1').removeClass('hidden');
+                $.cookie(cookie, result.code);
+                $('html, body').animate({
+                    scrollTop: $("#section-themes").offset().top
+                }, 1000);
+            })
+            return false;
+        });
+
+        // Create a world map using data points given by lili2 (json format)
+        var urlpoints = 'https://lili2.am/api/Instruments/GeoMap';
+
+        var loadGeomap = function (code, callback) {
+            $p.get('geoexposures', { code: code }, function (data) {
+                var map = new geomap('#world', urlpoints, '#table-geo', true);
+                map.load(data);
+            });
+        };
+
+        var loadSectors = function (code) {
+            var sec = new sectormap('#sectors');
+            $p.get('SectorBreakdown', { code: code }, function (data) {
+                sec.load(data, null, loadGeomap(code));
+            });
+        };
+
+        var loadAllocation = function (code) {
+            var tree = new treemap('#tree2');
+            $p.get('Allocations', { code: code }, function (data) {
+                loadImages(data.Children);
+                tree.setcolors(treeviewcolors, function () {
+                    tree.load(data, function () {});
+                });
+                loadExpectedSrri(code);
+            });
+        };
+
+        var loadAssetAllocation = function (code) {
+            var tree = new treemap('#tree1');
+            $p.get('AssetAllocations', { code: code }, function (data) {
+                loadImages(data.Children);
+                tree.setcolors(treeviewcolors, function () {
+                   tree.load(data, loadAllocation(code));
+                });
+            });
+        };
+
+        // load images of assets from the server
+        var loadImages = function (data) {
+            $.each(data, function (i, item) {
+                item.Image = LoyolApp.Settings.domain + item.Image;
+                if (item.Children) {
+                    loadImages(item.Children);
+                }
+            })
+        }
+
+        // load poitions in the related table
+        var loadPositions = function (code, d) {
+            // Get the hitorical positions from the server
+            $p.get('positions', { code: code, valuedate: d }, function (data) {
+                $b.loaddata(data.Positions);
+            });
+        }
+
+        // load expected srri
+        var loadExpectedSrri = function (code) {
+            // Get the hitorical positions from the server in Json format
+            $p.get('expectedRisk', { code: code }, function (data) {
+                $('#expected-srri').empty();
+                $('#expected-srri').data('value', data.SRRI);
+                liquidGaugesRender('.portfolio-gauge');
+            });
+        }
+
+        // create new widget for navs comparison
+        var $n = new navschart('#navs');
+
+        // This section is focused on nav lines
+        var loadNavs = function (code) {
+
+            // remove previous elements
+            $n = new navschart('#navs');
+
+            // get parameters
+            var opt = $('#navs').data('option'),
+                frm = $('#form-navs');
+
+            // Get the hitorical positions from the server in Json format
+            $i.get('prices', { id: code, option: opt }, function (data) {
+                $n.load(data, code, false);
+            });
+
+            // when adding instruments for comparison
+            frm.submit(function (e) {
+                var instrumentid = $(this).find('select').val();
+                $i.get('prices', { option: opt, id: instrumentid }, function (data) {
+                    $n.load(data, instrumentid, false); // false = no reset (add line)
+                })
+                return false;
+            });
+
+            // to erase the graph
+            $('.btn-clear-graph').click(function () {
+                $n.clear();
+            })
+
+        }
+
+        // get kpis to compare the portfolio with active funds
+        var loadKpis = function (code) {
+            // create a new instance of portfolioCharts in charge of widgets management
+            $k = new kpiCharts('');
+            // we link all the element marked as benchmark-chart
+            $k.group($('.benchmark-chart'));
+            // Get the kpis of funds from the server in Json format
+            $p.get('BenchmarkKpis', { code: code, option: "YTD" }, function (results) {
+                $k.loaddata(results.Kpis);
+            });
+        }
+
+        // When we submit for an upload a set of operations link to the current portfolio
+        $('.robo-form').submit(function () {
+
+            var params = $(this).serialize();
+            var code = $('#PortfolioCode').val();
+            var dt = $('#PositionDate').val();
+
+            // erase previous content
+            $('#sectors').empty();
+            $('#tree1').empty();
+            $('#tree2').empty();
+            $('#world').empty();
+            $('#table-geo').empty();
+            $('#navs').empty();
+
+            // call api to upload selected themes
+            $p.post('upload', params, function (result) {
+                // when results are ready
+                $('.section-2').removeClass('hidden');
+                // load trees
+                loadAssetAllocation(code);
+                // goto portfolio
+                $('html, body').animate({
+                    scrollTop: $("#section-portfolio").offset().top
+                }, 1000);
+                listenScroll();
+            })
+
+            return false;
+        });
+
+        // contribution/risk selector
+        $('.btn-group-select .btn').click(function () {
+            var chartdiv = $(this).parent().data('chart');
+            $(chartdiv).data($(chartdiv).data('chart') == 'heatMap' ? 'y-dim' : 'dimension', $(this).data('contrib'));
+            $b.widget(chartdiv).reload();
+        });
+
+        // listen to scrolling
+        var listenScroll = function () {
+            $('.container-anim').addClass('anim-on');
+            $(window).scroll(function () {
+                $('.container-anim.anim-on').each(function () {
+                    var pos = $(this).offset().top;
+                    var winTop = $(window).scrollTop();
+                    if (pos < winTop + 600) {
+                        $(this).removeClass('anim-on');
+                        var r = $(this).data('run'),
+                            c = $('#PortfolioCode').val(),
+                            d = $('#PositionDate').val();
+
+                        switch (r) {
+
+                            case 'exposures':
+                                loadSectors(c);
+                                break;
+
+                            case 'positions':
+                                loadPositions(c, d);
+                                break;
+
+                            case 'navs':
+                                loadNavs(c);
+                                break;
+
+                            case 'kpis':
+                                loadKpis(c);
+                                break;
+
+                            default:
+                                break;
+                        }
+                    }
+                });
+            });
+        }
+
+    });
+
+</script>
+ 
+ }

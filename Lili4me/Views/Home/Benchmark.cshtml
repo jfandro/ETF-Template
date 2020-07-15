@@ -3,12 +3,6 @@
     ViewBag.Title = "Benchmarks";
 }
 <link href="~/Content/mydataviz.css" rel="stylesheet" />
-<style>
-    .img-td-2 {
-        width: 40px;
-        height: 40px;
-    }
-</style>
 
 @section header {
     <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
@@ -35,8 +29,10 @@
 
         <div class="form-inline row">
             <div class="form-group col-sm-5">
-                <label class="control-label">Clef privée </label>
-                <input type="text" class="form-control portfolio-key" id="PositionCode" name="PositionCode" value="e1a563bc-a094-4a73-ab18-609cdfa83303" placeholder="Indiquez la clef de votre portefeuille" />
+                <div class="input-group">
+                    <div class="input-group-addon">Modèle</div>
+                    <select id="code" name="code" class="form-control select-portfolios"></select>
+                </div>
             </div>
             <div class="form-group col-sm-5">
                 <label class="control-label">Calcul </label>
@@ -145,6 +141,7 @@
 
                 // First, we create a new instance of portfolios controller to get data from server with LILI API
                 $p = new LoyolApp.PortfolioController();
+                $p.select($('.select-portfolios'));
 
                 // create a new instance of portfolioCharts in charge of widgets management
                 $k = new kpiCharts('');
@@ -154,7 +151,7 @@
                 // button to display portfolio risk map
                 $('.btn-benchmark').click(function () {
                     // As option, we use here STD for 'Start To Date'; change to YTP or 1M or  ....
-                    var params = { code: $('#PositionCode').val(), option: $('#depth').val() };
+                    var params = { code: $('#code').val(), option: $('#depth').val() };
                     // Get the data from the server in Json format by calling the method BenchmarkKpis
                     $p.get('BenchmarkKpis', params, function (results) {
                         // Then we populate the widgets with kpis

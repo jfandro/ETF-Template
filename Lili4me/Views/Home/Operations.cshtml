@@ -47,14 +47,14 @@
 <section class="section-d">
     <div class="container">
         <h2>Activité mensuelle</h2>
-        <p>Indiquez ci-dessous une clef de portefeuille OU laissez cette zone vide pour afficher l'activité de tous les portefeuilles modèles
+        <p>Indiquez le portefeuille OU laissez cette zone vide pour afficher l'activité de tous les portefeuilles modèles
         que vous gérez et suivez. Le nom du portefeuille apparaitra dans le tableau.</p>
-        <div class="form-inline row">
-            <div class="form-group col-sm-5">
-                <label class="control-label">Clef de portefeuille </label>
-                <input type="text" class="form-control portfolio-key" id="PositionCode" name="PositionCode" value="e1a563bc-a094-4a73-ab18-609cdfa83303" placeholder="Indiquez la clef de votre portefeuille" />
-            </div>
-            <div class="form-group col-sm-2">
+        <div class="form-inline  text-center">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Portefeuille/Modèle</div>
+                    <select id="PositionCode" name="code" class="form-control select-portfolios"></select>
+                </div>
                 <button type="button" class="btn btn-primary btn-activity">Afficher</button>
             </div>
         </div>
@@ -120,7 +120,7 @@
 
 <section class="section-e">
     <div class="container">
-        <h2>Tableau des opérations et des résultats</h2>
+        <h2>Journal des opérations et des résultats</h2>
         <p>
             Ce tableau reflète l'activité du portefeuille et son contenu est filtré en fonction des éléments sélectionnés sur les
             widgets précédent. Son contenu est personnalisable en terme de données, de format, de liens de redirection et de tri.
@@ -151,6 +151,43 @@
         </div>
     </div>
 </section>
+
+
+<section class="section-d">
+    <div class="container">
+        <h2>Arbitrage</h2>
+        <p>Dernière étape de cette expérience, nous vous proposons d'enregistrer un arbitrage. 
+        Indiquez la date, l'instrument concerné ainsi que
+        le <b>poids cible</b> de ce dernier dans le portefeuille choisi après validation.</p>
+        <form class="form-rebalance form-horizontal">
+            <input type="hidden" id="PositionCode2" name="PortfolioCode" value="" />
+            <div class="form-group">
+                <label class="control-label col-sm-3">Date de valeur</label>
+                <div class="col-sm-9">
+                    <input type="date" class="form-control" name="ValueDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">Instrument</label>
+                <div class="col-sm-9">
+                    <select name="SecurityID" class="form-control select-funds"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">Poids cible %</label>
+                <div class="col-sm-9">
+                    <input type="number" class="form-control text-right" min="0" max="100" name="TargetWeight" value="" placeholder="25 means 25%" />
+                </div>
+            </div>
+            <p class="text-right">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+            </p>
+            <p id="results-rebalance" class="text-info"></p>
+        </form>
+    </div>
+
+</section>
+
 
 <section class="container">
     <h2>Implémentation</h2>
@@ -207,10 +244,21 @@
 
             // First, we create a new instance of portfolios controller to get data from server with LILI API
             $p = new LoyolApp.PortfolioController();
+            $a = new LoyolApp.AssetsController();
+
             // create a new instance of activityCharts from the server
             $x = new activityCharts();
             // we group all the element classed activity-chart
             $x.group($('.activity-chart'));
+            
+            // populate the portfolio selectors and the asset selectors
+            $p.select($('.select-portfolios'));
+            $a.select($('.select-funds'));
+
+            // when select new portfolio
+            $('.select-portfolios').on('change', function () {
+                $('#PositionCode2').val(this.value);
+            });
 
             // button to display portfolio historical operations
             $('.btn-activity').click(function () {
@@ -228,6 +276,16 @@
                 var chartdiv = $(this).parent().data('chart');
                 $(chartdiv).data('value', $(this).data('value'));
                 $x.widget(chartdiv).reload();
+            });
+
+            // When we submit for an upload a set of operations link to the current portfolio
+            $('.form-rebalance').submit(function () {
+                var params = $(this).serialize();
+                //$('#results-balance').html('');
+                $p.post('Rebalance', params, function (result) {
+                    alert(result.type + ' ' + result.status + ' prix : ' + result.price);
+                })
+                return false;
             });
 
             //Listen to resize widgets (tablet or smartphone)

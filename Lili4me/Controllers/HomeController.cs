@@ -56,6 +56,10 @@ namespace Lili4me.Controllers
         {
             return View();
         }
+        public ActionResult Robo()
+        {
+            return View();
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

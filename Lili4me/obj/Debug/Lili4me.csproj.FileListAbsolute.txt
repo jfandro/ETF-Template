@@ -38,19 +38,17 @@ c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\bin\Newtonsoft.Json.
 c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\obj\Debug\Lili4me.csprojResolveAssemblyReference.cache
 c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\obj\Debug\Lili4me.dll
 c:\users\jeff\documents\visual studio 2015\Projects\Lili4me\obj\Debug\Lili4me.pdb
-C:\Users\Jeff\Source\Repos\Lili project\Lili4me\obj\Debug\Lili4me.dll
-C:\Users\Jeff\Source\Repos\Lili project\Lili4me\obj\Debug\Lili4me.pdb
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\csc.exe
-C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\VBCSCompiler.exe
+C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\Microsoft.CSharp.Core.targets
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\Microsoft.VisualBasic.Core.targets
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\System.Collections.Immutable.dll
-C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\System.Reflection.Metadata.dll
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\vbc.exe
-C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\VBCSCompiler.exe
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\roslyn\VBCSCompiler.exe.config
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\Lili4me.dll.config
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\Lili4me.dll
@@ -77,4 +75,6 @@ C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\System.Web.WebPages.Deployme
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\System.Web.WebPages.Razor.xml
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\Antlr3.Runtime.pdb
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\bin\Newtonsoft.Json.xml
+C:\Users\Jeff\Source\Repos\Lili project\Lili4me\obj\Debug\Lili4me.dll
+C:\Users\Jeff\Source\Repos\Lili project\Lili4me\obj\Debug\Lili4me.pdb
 C:\Users\Jeff\Source\Repos\Lili project\Lili4me\obj\Debug\Lili4me.csprojResolveAssemblyReference.cache

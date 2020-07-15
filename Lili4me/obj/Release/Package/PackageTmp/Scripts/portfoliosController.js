@@ -67,3 +67,29 @@ LoyolApp.PortfolioController.prototype.select = function (divname, callback) {
         callback;
     })
 }
+
+// render select controls
+LoyolApp.PortfolioController.prototype.exists = function (id, callback) {
+    var session = LoyolApp.Session.getInstance().get();
+    if (session && session.keepSignedIn && session.token) {
+        var token = session.token,
+            result = false,
+            url = LoyolApp.Settings.domain + '/api/Portfolios/Get';
+
+        $.ajax({
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            url: url,
+            data: { code: id },
+            crossDomain: true,
+            cache: false,
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", 'Bearer ' + token);
+            },
+            success: function (p) { callback(true, p); },
+            error: function (xhr, status, error) {
+                callback(false, null);
+            }
+        });
+    }
+}

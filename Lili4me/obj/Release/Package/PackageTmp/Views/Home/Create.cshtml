@@ -8,8 +8,8 @@
 @section header {
     <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
         <div class="container">
-            <h1 class="text-center">POST/GET</h1>
-            <p class="lead text-center">La puissance d'une API en action</p>
+            <h1 class="text-center">Backtest</h1>
+            <p class="lead text-center">Création dynamique d'un portefeuille</p>
         </div>
     </section>
 }
@@ -137,24 +137,24 @@
                     <div class="form-group">
 
                         @for (int i = 0; i < 7; i++)
-            {
+                        {
+                            var name1 = "Allocations[" + i + "].SecurityID";
+                            var name2 = "Allocations[" + i + "].Weight";
                             <div class="row">
                                 <div class="col-xs-6 col-lg-8">
                                     <div class="input-group">
-                                        <input type="text" name="ISIN" value="" class="form-control" placeholder="ISIN ou ticker" />
+                                        <input type="text" name="@name1" value="" class="form-control" placeholder="ISIN ou ticker" />
                                     </div>
                                 </div>
                                 <div class="col-xs-3 col-lg-4">
                                     <div class="input-group">
-                                        <input type="number" name="Weight" value="10" max="100" min="0" class="form-control text-right" />
+                                        <input type="number" name="@name2" value="10" max="100" min="0" class="form-control text-right" />
                                         <span class="input-group-addon">%</span>
                                     </div>
                                 </div>
                             </div>
                         }
                     </div>
-
-
 
                     <p class="text-right">
                         <button type="submit" class="btn btn-primary">Importer</button>
@@ -197,50 +197,6 @@
     </div>
 </section>
 
-<section class="section-d">
-    <div class="container">
-        <h2>Arbitrages</h2>
-        <div class="row">
-            <div class="col-sm-6">
-                <p>Dernière étape de cette expérience, nous vous proposons d'enregistrer un arbitrage sur un portefeuille existant ou en mémoire.</p>
-                <form class="form-rebalance form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Date de valeur</label>
-                        <div class="col-sm-9">
-                            <input type="date" class="form-control" name="ValueDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Clef privée</label>
-                        <div class="col-sm-9">
-                            @*<input type="text" class="form-control" name="PortfolioCode" value="18112564-9164-43d2-a666-e9a2eaacfaaf" placeholder="Indiquez les 28 caractères de la clef de votre portefeuille" />*@
-                            <select name="PortfolioCode" class="form-control select-portfolios"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Instrument</label>
-                        <div class="col-sm-9">
-                            <select name="SecurityID" class="form-control select-funds"></select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3">Poids cible %</label>
-                        <div class="col-sm-9">
-                            <input type="number" class="form-control text-right" min="0" max="100" name="TargetWeight" value="" placeholder="25 means 25%" />
-                        </div>
-                    </div>
-                    <p class="text-right">
-                        <button type="submit" class="btn btn-primary">Valider</button>
-                    </p>
-                    <p id="results-rebalance" class="text-info"></p>
-                </form>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-
 
 @section scripts {
 
@@ -273,8 +229,7 @@
             return false;
         });
 
-        // When we submit for an upload a set of operations link to the current portfolio
-        $('form.operations-form').submit(function () {
+        $('.operations-form').submit(function () {
             var params = $(this).serialize();
             ptf.post('upload', params, function (result) {
                 $('#results1').addClass('text-success');
@@ -289,17 +244,6 @@
                     // and load data
                     wf.load(data, function () { });
                 });
-            })
-            return false;
-        });
-
-
-        // When we submit for an upload a set of operations link to the current portfolio
-        $('.form-rebalance').submit(function () {
-            var params = $(this).serialize();
-            $('#results-balance').html('');
-            ptf.post('Rebalance', params, function (result) {
-                alert(result.type + ' ' + result.status + ' prix : ' + result.price);
             })
             return false;
         });

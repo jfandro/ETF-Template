@@ -133,6 +133,7 @@
     <Content Include="Content\coming-soon.css" />
     <Content Include="Content\mydataviz.css" />
     <Content Include="Content\prettify.css" />
+    <Content Include="Content\robo-1.0.css" />
     <Content Include="Content\videos\bg.mp4" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -155,6 +156,7 @@
     <Content Include="Scripts\instruments-local-charts.js" />
     <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\navschart.js" />
     <Content Include="Scripts\questionnaire.jquery-1.0.js" />
     <Content Include="Scripts\questionnairesController.js" />
     <Content Include="Scripts\instrumentsController.js" />
@@ -197,6 +199,14 @@
     <Content Include="Views\Home\KYC.cshtml" />
     <Content Include="Views\Home\Board.cshtml" />
     <Content Include="Views\Home\MyFund.cshtml" />
+    <Content Include="Views\Home\Robo.cshtml" />
+    <Content Include="Views\Home\_performances.cshtml" />
+    <Content Include="Views\Home\_contributions.cshtml" />
+    <Content Include="Views\Home\_kpis.cshtml" />
+    <Content Include="Views\Home\_nav.cshtml" />
+    <Content Include="Views\Home\_comparison.cshtml" />
+    <Content Include="Views\Home\_expectedSrri.cshtml" />
+    <Content Include="Views\Home\_exposures.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

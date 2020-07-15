@@ -175,7 +175,8 @@ video {
         }
 
         .section-a {
-            background-color: #000;
+            background-color: #292a33;
+            color:#fff;
         }
 
         .section-c {
@@ -190,11 +191,11 @@ video {
         .section-d {
             background-color: #9c9daf;
         }
-
-              
+    
         .section-e {
             background-color: #c8cae0;
         }
+        .section-a h2,
         .section-b h2,
         .section-d h2,
         .section-c h2 {
@@ -215,3 +216,8 @@ video {
                 font-weight: bold;
                 text-align: center;
             }
+
+
+                .sliders-container .form-group {
+        margin-bottom:2px;
+    }

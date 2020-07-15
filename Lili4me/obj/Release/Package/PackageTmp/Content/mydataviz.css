@@ -279,3 +279,8 @@ div.dc-chart {
   margin-top: 6px;
   margin-right: 4px;
 }
+
+table.benchmark-chart .img-td-2 {
+    width: 40px;
+    height: 40px;
+}

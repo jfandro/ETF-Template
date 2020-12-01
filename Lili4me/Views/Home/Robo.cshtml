@@ -176,7 +176,7 @@
 
 <section id="section-portfolio" class="section-e section-2">
     <div class="container">
-        <h2>Mon Portefeuille à la Carte</h2>
+        <h2>Mon Allocation</h2>
         <p>Voici la composition détaillée de votre portefeuille. Il est <b>le reflet</b> de vos 
         sensibilités et de votre profil de risques. On peut ananlyser son contenu selon deux approches : 
             <ul>
@@ -340,7 +340,7 @@
         // look at the registered cookies
         var key = $.cookie(cookie);
         $p.exists(key, function (success, p) {
-            if (success) {
+            if (success && p.name != null) {
                 $('.portfolio-key').val(key);
                 $('.section-0').addClass('hidden');
                 $('.section-1').removeClass('hidden');

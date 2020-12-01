@@ -37,9 +37,9 @@
 <section class="section-c">
 
     <div class="container text-center">
-        <form class="report-form form-inline">
+        <form id="report-form" class="report-form form-inline">
             <div class="form-group">
-                <div class="input-group">
+                <div id="select-portfolio" class="input-group">
                     <div class="input-group-addon">Portefeuille/Modèle</div>
                     <select id="code" name="code" class="form-control select-portfolios"></select>
                 </div>
@@ -241,16 +241,21 @@
             tree.setcolors(colors, function(){});
         });
 
-        ptf.select($('.select-portfolios'));
-
         // A function in charge of calls and widgets
-        var loadReport = function () {
+        var loadReport = function (callback) {
+
             $('.container-stats').fadeOut();
             // empty the results
             $('#tree').empty();
             $('#sun').empty();
-            // Get portfolio parameters
+           
             var params = { code: $('#code').val() };
+
+            // The second set is traget on simple data
+            ptf.get('Get', params, function (data) {
+                $('#name').html(data.name);
+            });
+
             // The first set of data is targeted on portfolio allocations
             ptf.get('Allocations', params, function (data) {
                 // IMPORTANT we make a copy of collected data to ensure INDEPENDANT transition for the 2 widgets
@@ -260,11 +265,6 @@
                 // then, we load the sun with copied data
                 sun.load(data2, function () { });
 
-            });
-
-            // The second set is traget on simple data
-            ptf.get('Get', params, function (data) {
-                $('#name').html(data.name);
             });
 
             // The second set is traget on simple data
@@ -284,11 +284,15 @@
             });
         }
 
+        // main call
+        ptf.select($('.select-portfolios'));
+
         // get default portfolio
-        ptf.get('GetDefault', null, function (p) {
-            $('#code').val(p.code);
-            loadReport();
-        })
+        //ptf.get('Default', null, function (p) {
+        //    $('#select-portfolio select').val(p.code);
+        //    loadReport();
+        //})
+
         // On each new request
         $('.report-form').submit(function () {
             // Load data

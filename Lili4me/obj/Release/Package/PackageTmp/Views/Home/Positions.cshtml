@@ -4,6 +4,7 @@
 }
 <!-- The style of my web site for widgets -->
 <link href="~/Content/mydataviz.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://lili2.am/Content/waterfall.css" />
 
 @section header {
     <section class="jumbotron section-header header-image" style="background-image:url('http://www.pieuvre.ca/wp-content/uploads/2019/01/oc%C3%A9an.jpg')">
@@ -72,25 +73,24 @@
         <p>
             Dans cette section et la suivante dénommée "Pertes et Profits", nous allons afficher la position détaillée d'un portefeuille à une date donnée (aujourd'hui et passée).
         </p>
-
-        <div class="table-responsive" style="margin-top:40px;">
+        <div class="table-responsive well" style="margin-top:40px;">
             <table class="table table-bordered table-striped small">
                 <thead>
                     <tr>
-                        <th colspan="7" class="text-center">Instrument</th>
-                        <th colspan="3" class="text-center">Portfolio</th>
+                        <th colspan="6" class="text-center">Instrument</th>
+                        <th colspan="4" class="text-center">Portfolio</th>
                     </tr>
                     <tr>
                         <th></th>
                         <th>Code</th>
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th class="text-right">MTD</th>
+                        <th>Nom</th>
+                        <th>Categories</th>
                         <th class="text-right">YTD</th>
-                        <th class="text-right">Market</th>
-                        <th class="text-right">Cost</th>
-                        <th class="text-right">Return</th>
-                        <th class="text-right">Weight</th>
+                        <th class="text-right">Marché</th>
+                        <th class="text-right">Achat</th>
+                        <th class="text-right">Perf.</th>
+                        <th class="text-right">Poids</th>
+                        <th class="text-right">Valeur</th>
                     </tr>
                 </thead>
                 <tbody id="holdings"></tbody>
@@ -120,8 +120,8 @@
     <div class="container">
         <h2>Pertes et profits</h2>
         <p>Ci-dessous, le tableau des pertes et des profits réalisés depuis la création du portefeuille sur la plateforme.</p>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+        <div class="table-responsive well">
+            <table class="table table-bordered table-striped small">
                 <thead>
                     <tr>
                         <th colspan="3" class="text-center">Instrument</th>
@@ -147,7 +147,6 @@
 
 @Html.Partial("_kpis")
 @Html.Partial("_performances")
-@Html.Partial("_contributions")
 
 <section class="section-d">
     <div class="container">
@@ -218,6 +217,14 @@
 
 </section>
 
+<section class="section-c">
+    <div class="container">
+        <h2>Derniers résultats mensuels</h2>
+        <button class="btn btn-primary btn-show-breakdowns" data-container="#breakdowns">Afficher la dernière année</button>
+        <div id="breakdowns" class="waterfall-container"></div>
+    </div>
+</section>
+
 <section class="section-d">
     <div class="container">
         <h2>Expositions géographiques et sectorielles</h2>
@@ -226,7 +233,9 @@
             <div class="col-lg-2 table-responsive">
                 <table id="table-exposures"></table>
             </div>
-            <div id="world" class="col-lg-10"></div>
+            <div class="col-lg-10">
+                <div id="world" style="height:350px; margin:50px;"></div>
+            </div>
         </div>
         <div id="sectors" class="sectormap" data-legend="" style="width:100%;height:300px;"></div>
     </div>
@@ -286,13 +295,12 @@ $('.btn-show-map').click(function () {
 </xmp></pre>
 </section>
 
-
 <section class="section-c">
     <div class="container">
         <h2>Allocations tactiques</h2>
         <button class="btn btn-primary btn-show-fluctuation" data-container="#fluctuations">Afficher l'allocation tactique du portefeuille</button>
         <div class="stacked-area-container">
-            <div id="fluctuations" class="stacked-area row-chart chart-xs"></div>
+            <div id="fluctuations" class="stacked-area row-chart" style="height:100%;"></div>
         </div>
     </div>
 </section>
@@ -349,25 +357,28 @@ $('.btn-show-fluctuation').click(function () {
 
 @section scripts {
     <!-- Latest version of d3 librairies -->
-    <script src="https://lili2.am/Scripts/d3/d3.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/d3/v5/d3.js" type="text/javascript"></script>
     <!-- Latest version of crossfilter librairies -->
-    <script src="https://lili2.am/Scripts/Crossfilter/crossfilter.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/dc/v4/crossfilter.js" type="text/javascript"></script>
     <!-- Latest version of dc librairies -->
-    <script src="https://lili2.am/Scripts/dc/2.1.7/dc.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/dc/v4/dc.min.js" type="text/javascript"></script>
     <!-- Latest version of calculations on arrays -->
     <script src="https://lili2.am/Scripts/jquery-array-stats.js" type="text/javascript"></script>
     <!-- Latest version of widgets portfolio charts -->
-    <script src="https://lili2.am/Scripts/portfolio.charts-2.4.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/dc/charts/portfolio.charts-4.0.js" type="text/javascript"></script>
     <!-- Latest version of stacked area librairie for fluctuations of asset classes -->
-    <script src="https://lili2.am/Scripts/d3/stacked-area-1.9.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/d3/v5/stacked-area-5.0.js" type="text/javascript"></script>
+    <!-- Latest version of waterfall librairie for last year results -->
+    <script src="https://lili2.am/scripts/d3/v5/waterfall-5.0.js" type="text/javascript"></script>
+
     <!-- Latest version of sectors treemap -->
-    <script src="https://lili2.am/scripts/d3/sectormap-1.0.js"></script>
+    <script src="https://lili2.am/scripts/d3/v5/sectormap-5.0.js"></script>
 
     <script src="~/Scripts/d3dc/queue-min.js"></script>
     <script src="~/Scripts/d3dc/topojson.min.js"></script>
 
     <!-- Latest version of geomap library -->
-    <script src="https://lili2.am/Scripts/d3/geomap-2.0.js" type="text/javascript"></script>
+    <script src="https://lili2.am/Scripts/d3/v5/geomap-5.0.js" type="text/javascript"></script>
 
     <script>
 
@@ -407,6 +418,8 @@ $('.btn-show-fluctuation').click(function () {
                         populateResults(data, '#results');
                     });
 
+                    populateMonthlyPnL(params);
+
                     // stacked area for strategies fluctuation
                     @*var area = new stackedarea('#stackedarea');
                     area.json('/Portfolios/JsonClassFluctuations?code=@Model.Portfolio.Code', function () { })*@
@@ -424,7 +437,7 @@ $('.btn-show-fluctuation').click(function () {
                     var params = { code: $('#PositionCode').val() };
                     var urlpoints = 'https://lili2.am/api/Instruments/GeoMap';
                     // Create a world map using data points given by lili2 (json format)
-                    var map = new geomap($(this).data('map-container'), urlpoints, $(this).data('map-table'), true);
+                    var map = new geomap($(this).data('map-container'), urlpoints, $($(this).data('map-table')), true);
                     // Get the detailed geo exposures from the server in Json format
                     $p.get('geoexposures', params, function (data) {
                         map.load(data);
@@ -456,6 +469,19 @@ $('.btn-show-fluctuation').click(function () {
                     });
                 })
 
+                // button to display portfolio fluctuations
+                $('.btn-show-breakdowns').click(function () {
+                    var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
+                    var div = $(this).data('container');
+                    $(div).empty();
+                    $p.get('PnLBreakdowns', params, function (data) {
+                        // Then create a local widget for a waterfall
+                        var wf = new waterfall(div);
+                        // and load data
+                        wf.load(data, function () { });
+                    });
+                })
+
             });
 
             // return asset kpi
@@ -468,6 +494,11 @@ $('.btn-show-fluctuation').click(function () {
                     }
                 })
                 return v;
+            }
+
+            var myLocalFormat = {
+                style: "currency",
+                currency: "EUR"
             }
 
             /********************************************************/
@@ -483,12 +514,12 @@ $('.btn-show-fluctuation').click(function () {
                         $('<td>').text(item.Asset.code),
                         $('<td>').text(item.Asset.name),
                         $('<td>').text(item.Asset.class),
-                        $('<td class="text-right">').text(mtd ? parseFloat(100 * mtd.netreturn).toFixed(2) + "%" : ''),
                         $('<td class="text-right">').text(ytd ? parseFloat(100 * ytd.netreturn).toFixed(2) + "%" : ''),
                         $('<td class="text-right">').text(item.marketprice),
                         $('<td class="text-right">').text(item.costprice),
                         $('<td class="text-right">').text(parseFloat(100 * item.return).toFixed(2) + "%"),
-                        $('<td class="text-right">').text(item.weight + '%')
+                        $('<td class="text-right">').text(item.weight + '%'),
+                        $('<td class="text-right">').text(item.npv.toLocaleString("fr-FR", myLocalFormat))
                     );
                     tr.appendTo(div);
                 });

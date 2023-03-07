@@ -17,7 +17,7 @@ LoyolApp.AssetsController.prototype.get = function (action, data, callback) {
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-        url = LoyolApp.Settings.domain + '/api/assets/' + action;
+        url = session.domain + '/api/assets/' + action;
 
         $.ajax({
             type: 'GET',
@@ -42,7 +42,7 @@ LoyolApp.AssetsController.prototype.post = function (action, data, callback) {
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-        url = LoyolApp.Settings.domain + '/api/assets/' + action;
+        url = session.domain + '/api/assets/' + action;
 
         $.ajax({
             type: 'POST',

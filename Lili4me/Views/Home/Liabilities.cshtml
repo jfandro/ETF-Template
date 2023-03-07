@@ -1,0 +1,202 @@
+﻿
+@{
+    ViewBag.Title = "Passif";
+}
+<!-- The style of my web site for widgets -->
+<link href="~/Content/mydataviz.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://lili.am/Content/waterfall.css" />
+
+@section header {
+    <section class="jumbotron section-header header-image" style="background-image:url('http://www.pieuvre.ca/wp-content/uploads/2019/01/oc%C3%A9an.jpg')">
+        <div class="container">
+            <h1 class="text-center">Fund Prices</h1>
+            <p class="lead text-center">Historical NAV</p>
+        </div>
+    </section>
+}
+
+<section class="section-c">
+    <div class="container">
+        <p>
+            Pour cette expérience, vous devez disposer d'une clef privée valide de portefeuille. Vous pouvez reprendre celle que l'on vous propose
+            dans le cadre du <a href="/Home/Allocations">reporting client</a> ou reprendre celle du portefeuille que vous avez peut-être créé
+            lors de la <a href="/Home/Create">précédente expérience</a>.
+            Pour analyser votre portefeuille, renseignez cette clef et activez le bouton <span class="btn btn-xs btn-primary">Afficher</span> dont l'action se résume en 2 étapes :
+        </p>
+        <p>
+            <ul>
+                <li>
+                    La première étape interroge le serveur distant (via son API)
+                    pour charger les données historiques du portefeuille correspondant à la clef privée ci-dessous.
+                </li>
+                <li>La seconde étape consiste à charger les <b>widgets</b> déclarés sur ce formulaire.</li>
+            </ul>
+        </p>
+        <p>
+            Tous les widgets de cette page sont des éléments développés en open sourcce
+            proposés et accessibles via des javascripts déclarés en local (spécifique) ou sur le serveur (standard).
+            Leur nombre et leur fonction sont ajustables par le client.
+        </p>
+        <div class="form-inline  text-center">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Select a fund</div>
+                    <select id="PositionCode" name="code" class="form-control select-portfolios"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Date de valeur </label>
+                <input type="date" class="form-control" id="PositionDate" name="PositionDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+            <button type="button" class="btn btn-primary btn-liabilities">Afficher</button>
+        </div>
+
+    </div>
+</section>
+
+<section class="section-d">
+    <div class="container">
+        <h2>Historical NAV</h2>
+        <div class="table-responsive well" style="margin-top:40px;">
+            <table class="table table-bordered table-striped small">
+                <thead>
+                    <tr>
+                        <th colspan="5" class="text-center">Assets</th>
+                        <th colspan="2" class="text-center">Liabilities</th>
+                    </tr>
+                    <tr>
+                        <th>NAV Date</th>
+                        <th class="text-right">GAV</th>
+                        <th class="text-right">Cash amount</th>
+                        <th class="text-right">Fees</th>
+                        <th class="text-right">NAV</th>
+                        <th class="text-right">Total shares</th>
+                        <th class="text-right">NAV price</th>
+                    </tr>
+                </thead>
+                <tbody id="liabilities"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .td-img {
+        height: 1em;
+        width: 1em;
+    }
+
+    .key-number {
+        font-size: 5em;
+        font-weight: 600;
+        text-align: center;
+        float: none;
+        color: #30465e;
+    }
+</style>
+
+
+<section class="container">
+    
+    <h2>Implémentation</h2>
+
+    <p>
+        <strong>Step #1 :</strong> Pour restituer l'historique des données actif/passif d'un fonds,
+        nous interrogeons l'API, et plus particulièrement l'action <strong>Liabilities</strong> avec comme
+        paramètre la clef unique du fonds. Nous utiliserons ces quelques lignes de script:
+    </p>
+
+    <pre class="prettyprint"><xmp>
+        // On form loading or When we click on button named display, we call API
+        // only one parameter is required : the code of the fund 
+        var params = { code: $('#PositionCode').val() };
+        // Then, we get the historical liabilities (including asset gross and net values) from the server in Json format
+        $p.get('liabilities', params, function (data) {
+            // We populate the table with these returned data in Json format
+            populateLiabilities(data, '#liabilities');
+        });
+</xmp></pre>
+    
+    <p>
+        <strong>Step #2 :</strong> Pour remplir notre tableau conçu localement, et le remplir avec
+        les données précédemment collectées, nous utiliserons ce script:
+    </p>
+
+    <pre class="prettyprint"><xmp>
+        var populateLiabilities = function (data, div) {
+            $(div).empty();
+            $.each(data, function (i, item) {
+                var tr = $('<tr>').append(
+                    $('<td class="text-center">').text(item.NAVDate.ToShortDateString()),
+                    $('<td class="text-right">').text(item.GAV.toLocaleString("en-US", myLocalFormat)),
+                    $('<td class="text-right">').text(item.CashAmount.toLocaleString("en-US", myLocalFormat)),
+                    $('<td class="text-right">').text(item.CumulatedManagementFees.toLocaleString("en-US", myLocalFormat)),
+                    $('<td class="text-right">').text(item.NAV.toLocaleString("en-US", myLocalFormat)),
+                    $('<td class="text-right">').text(item.TotalShares),
+                    $('<td class="text-right">').text(item.NAVPrice.toLocaleString("en-US", myLocalFormat)),
+                );
+                tr.appendTo(div);
+            });
+        }
+</xmp></pre>
+
+</section>
+
+
+
+@section scripts {
+
+    <script>
+
+            $(document).ready(function () {
+
+                // First, we create a new instance of portfolios controller to get data from server with LILI API
+                $p = new LoyolApp.PortfolioController();
+
+                // populate the portfolio selector
+                $p.select($('.select-portfolios'), calldata);
+
+                // When we click for dataviz of current portfolio
+                $('.btn-liabilities').click(calldata);
+
+            });
+
+            var myLocalFormat = {
+                style: "currency",
+                currency: "USD"
+            }
+
+            /********************************************************/
+            /************ Call API for historical data **************/
+            /********************************************************/
+            var calldata = function () {
+                var params = { code: $('#PositionCode').val() };
+                // Get the hitorical liabilities from the server in Json format
+                $p.get('liabilities', params, function (data) {
+                    // Populate the table with liabilities
+                    populateLiabilities(data, '#liabilities');
+                });
+            }
+
+            /********************************************************/
+            /************ Liabilities table ****************************/
+            /********************************************************/
+            var populateLiabilities = function (data, div) {
+                $(div).empty();
+                $.each(data, function (i, item) {
+                    var tr = $('<tr>').append(
+                        $('<td class="text-center">').text(item.NAVDate.toString().substr(0,10)),
+                        $('<td class="text-right">').text(item.GAV.toLocaleString("en-US")),
+                        $('<td class="text-right">').text(item.CashAmount.toLocaleString("en-US")),
+                        $('<td class="text-right">').text(item.CumulatedManagementFees.toLocaleString("en-US")),
+                        $('<td class="text-right">').text(item.NAV.toLocaleString("en-US")),
+                        $('<td class="text-right">').text(item.TotalShares),
+                        $('<td class="text-right">').text(item.NAVPrice.toLocaleString("en-US"))
+                    );
+                    tr.appendTo(div);
+                });
+            }
+
+    </script>
+}

@@ -21,21 +21,27 @@
         </p>
         <div class="signin-container">
             <p>
-                To discover LILi services, please enter your username, your
+                To discover Lili services, please enter your username, your
                 password, or let <a href="mailto:admin@lili.am?subject=Credentials">email us</a>  to get credentials.
             </p>
 
             <form id="signin-form" class="signin-form" method="post">
                 <div class="form-group">
                     <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
+                        <input type="text" class="form-control" id="domain" name="domain" placeholder="Related domain" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                        <input type="text" class="form-control" id="username" name="username" placeholder="Votre identifiant" />
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" />
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Votre mot de passe" />
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Your password" />
                     </div>
                 </div>
                 <div id="ctnErr" class="well hide">
@@ -50,6 +56,9 @@
             <p class="small">
                 Your first experience starts with a sample of <a href="/Home/Allocations">client report</a> related to the portfolio linked to the connected user.
             </p>
+            <p>
+                <a href="#" class="btn-signout signoff-container">Signout</a>
+            </p>
         </div>
 
     </div>
@@ -60,6 +69,8 @@
 <script>
 
     $(document).ready(function () {
+
+        $("#domain").val(LoyolApp.Settings.domain);
 
         // Create a new instance of a controller sign in
         var sg = new LoyolApp.SignInController($('#signin-form'));

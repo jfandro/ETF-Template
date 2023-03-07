@@ -34,6 +34,16 @@ namespace Lili4me.Controllers
         {
             return View();
         }
+        public ActionResult Momentum()
+        {
+            return View();
+        }
+
+        public ActionResult Liabilities()
+        {
+            return View();
+        }
+
 
         public ActionResult Benchmark()
         {
@@ -64,6 +74,10 @@ namespace Lili4me.Controllers
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+        public ActionResult Aix()
+        {
             return View();
         }
     }

@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "Momentum";
+}
+<!-- The style of my web site for widgets -->
+<link href="~/Content/mydataviz.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://lili.am/Content/waterfall.css" />
+
+@section header {
+    <section class="jumbotron section-header header-image" style="background-image:url('http://www.pieuvre.ca/wp-content/uploads/2019/01/oc%C3%A9an.jpg')">
+        <div class="container">
+            <h1 class="text-center">Momentum</h1>
+        </div>
+    </section>
+}
+
+<section class="section-c">
+    <div class="container">
+        <p>
+            Pour cette expérience, vous devez disposer d'une clef privée valide de portefeuille. Vous pouvez reprendre celle que l'on vous propose
+            dans le cadre du <a href="/Home/Allocations">reporting client</a> ou reprendre celle du portefeuille que vous avez peut-être créé
+            lors de la <a href="/Home/Create">précédente expérience</a>.
+            Pour analyser votre portefeuille, renseignez cette clef et activez le bouton <span class="btn btn-xs btn-primary">Afficher</span> dont l'action se résume en 2 étapes :
+        </p>
+        <p>
+            <ul>
+                <li>
+                    La première étape interroge le serveur distant (via son API)
+                    pour charger les données historiques du portefeuille correspondant à la clef privée ci-dessous.
+                </li>
+                <li>La seconde étape consiste à charger les <b>widgets</b> déclarés sur ce formulaire.</li>
+            </ul>
+        </p>
+        <p>
+            Tous les widgets de cette page sont des éléments développés en open sourcce
+            proposés et accessibles via des javascripts déclarés en local (spécifique) ou sur le serveur (standard).
+            Leur nombre et leur fonction sont ajustables par le client.
+        </p>
+        <div class="form-inline  text-center">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon">Portefeuille/Modèle</div>
+                    <select id="PositionCode" name="code" class="form-control select-portfolios"></select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Date de valeur </label>
+                <input type="date" class="form-control" id="PositionDate" name="PositionDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+            </div>
+            <button type="button" class="btn btn-primary btn-positions">Afficher</button>
+        </div>
+
+    </div>
+</section>
+
+<section class="section-d">
+    <div class="container">
+        <h2>Moyennes Mobiles</h2>
+        <p>
+            Dans cette section, nous restituons les moyennes mobiles de tous les titres en position.
+            A chaque
+        </p>
+        <div class="table-responsive well" style="margin-top:40px;">
+            <table class="table table-bordered table-striped small">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th class="text-right">Moyenne mobile <input type="number" id="short" value="50" /></th>
+                        <th class="text-right">Moyenne mobile <input type="number" id="long" value="200" /></th>
+                        <th class="text-right">Signal</th>
+                        <th class="text-right">YTD</th>
+                        <th class="text-right">VaR95</th>
+                        <th class="text-right">Rsi(14)</th>
+                    </tr>
+                </thead>
+                <tbody id="momentums"></tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .td-img {
+        height: 1em;
+        width: 1em;
+    }
+
+    .key-number {
+        font-size: 5em;
+        font-weight: 600;
+        text-align: center;
+        float: none;
+        color: #30465e;
+    }
+    th input {
+        width:50px;
+        text-align:center;
+    }
+</style>
+
+
+@section scripts {
+
+    <script>
+
+            $(document).ready(function () {
+
+                // First, we create a new instance of portfolios controller to get data from server with LILI API
+                $p = new LoyolApp.PortfolioController();
+                $i = new LoyolApp.InstrumentController();
+
+                // populate the portfolio selector
+                $p.select($('.select-portfolios'), function () {
+                    // When we click for portfolio momentums
+                    $('.btn-positions').click(function () {
+
+                        var params = { code: $('#PositionCode').val(), valuedate: $('#PositionDate').val() };
+
+                        // Get the detailed positions from the server in Json format
+                        $p.get('holdings', params, function (data) {
+                            // Populate the table with holdings
+                            populateMomentums(data, '#momentums');
+                        });
+
+                    });
+                });
+
+            });
+
+        var myLocalFormat = {
+            style: "currency",
+            currency: "EUR"
+        }
+
+        /********************************************************/
+        /************ Momentums table ****************************/
+        /********************************************************/
+        var ma0 = function (c, l1, l2, tr) {
+            var params = { id: c, days1 : l1, days2: l2 };
+            $i.get('SimpleAverages', params, function (m) {
+                tr.append(
+                    $('<td class="text-right">').text(m.s1.toFixed(2)),
+                    $('<td class="text-right">').text(m.s2.toFixed(2)),
+                    $('<td class="text-center">').text(m.s1 > m.s2 ? 'Buy' : 'Sell')
+                );
+            });
+        } 
+
+        var ma = function (c, l1, l2, tr) {
+            $i.get('MovingAverage', { id: c, days: l1 }, function (m) {
+                tr.append($('<td class="text-right">').text(m.toFixed(2)));
+                $i.get('MovingAverage', { id: c, days: l2 }, function (n) {
+                    tr.append(
+                        $('<td class="text-right">').text(n.toFixed(2)),
+                        $('<td class="text-center">').text(m > n ? 'Buy' : 'Sell'));
+                    $i.get('kpi', { id: c, option: 'YTD' }, function (k) {
+                        tr.append(
+                            $('<td class="text-right">').text(parseFloat(100 * k.netreturn).toFixed(2) + "%"),
+                            $('<td class="text-right">').text(parseFloat(100 * k.var95).toFixed(2) + "%"));
+                        $i.get('RelativeStrength', { id: c }, function (r) {
+                            tr.append($('<td class="text-right">').text(r.toFixed(0)));
+                        });
+                    });
+                });
+            });
+        }
+
+        /********************************************************/
+        /************ Momentums table ****************************/
+        /********************************************************/
+        var populateMomentums = function (data, div) {
+            $(div).empty();
+            var d1 = $('#short').val(),
+                d2 = $('#long').val();
+            $.each(data.Holdings, function (i, item) {
+                var tr = $('<tr>').append(
+                    $('<td>').text(item.Asset.code),
+                    $('<td>').text(item.Asset.name));
+                ma(item.Asset.code, d1, d2, tr);
+                tr.appendTo(div);
+            });
+        }
+
+
+    </script>
+}

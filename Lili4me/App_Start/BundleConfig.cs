@@ -25,7 +25,7 @@ namespace Lili4me
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site-1.0.css"));
+                      "~/Content/site-1.1.css"));
         }
     }
 }

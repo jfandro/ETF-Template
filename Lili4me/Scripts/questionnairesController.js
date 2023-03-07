@@ -12,7 +12,7 @@ LoyolApp.QuestionnaireController.prototype.get = function (action, data, callbac
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-        url = LoyolApp.Settings.domain + '/api/Questionnaires/' + action;
+        url = session.domain + '/api/Questionnaires/' + action;
 
         $.ajax({
             type: 'GET',
@@ -39,7 +39,7 @@ LoyolApp.QuestionnaireController.prototype.post = function (action, data, callba
 
         var token = session.token,
             param = $.param(data),
-            url = LoyolApp.Settings.domain + '/api/Questionnaires/' + action;
+            url = session.domain + '/api/Questionnaires/' + action;
 
         $.ajax({
             type: 'POST',
@@ -66,7 +66,7 @@ LoyolApp.QuestionnaireController.prototype.openProject = function (callback) {
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-        url = LoyolApp.Settings.domain + '/api/InvestorProjects/CreateDefault';
+        url = session.domain + '/api/InvestorProjects/CreateDefault';
 
         $.ajax({
             type: 'GET',

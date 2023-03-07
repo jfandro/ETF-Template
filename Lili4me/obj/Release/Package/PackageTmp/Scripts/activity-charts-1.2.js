@@ -65,18 +65,19 @@ activityCharts.prototype.loaddata = function (data) {
 
     // parse data
     data.forEach(function (d, i) {
-        d.dd = d3.time.format('%Y/%m/%d').parse(d.date);
+        d.dd = me.dateFormat.parse(d.date);
         d.net = +me.numberFormat(d.net);
         //d.prf = (d.market) ? + numberFormat(d.market.performance) : 0;
-        d.pl = d.weight > 0 ? (d.market ? (d.market.pnl > 0 ? 'gain' : 'loss') : 'unknown') : (d.pnl > 0 ? 'gain' : 'loss');
+        //d.pl = d.weight > 0 ? (d.market ? (d.market.pnl > 0 ? 'gain' : 'loss') : 'unknown') : (d.pnl > 0 ? 'gain' : 'loss');
+        d.pl = d.pnl > 0 ? 'gain' : 'loss';
         d.weight = +100 * me.percentFormat(d.weight);
         d.aweight = +Math.abs(d.weight);
         d.pnl = +me.numberFormat(d.pnl);
         d.contrib = -d.netreturn * d.weight;
         d.exit = d.weight > 0 ? 0 : +(d.net - d.pnl);
         d.class = d.asset.class;
-        d.category = d.asset.category;
-        d.issuer = d.asset.issue ? d.asset.issue.issuer : 'unknown';
+        d.category = '?'; // d.asset.category;
+        d.issuer = d.asset.issuer;
     });
 
     // for barchart in order to include main date and mew date
@@ -466,16 +467,16 @@ widgetActivity.prototype.setTable = function (xdata) {
 
     this.chart
         .dimension(this.dimension)
-        .sortBy(function (d) { return d.dd; })
+        //.sortBy(function (d) { return d.dd; })
         .size(Infinity)
         .group(function (d) { return ''; })
         .columns([
-            function (d) { return dateFormat(d.dd); },
-            function (d) { return d.status;},
-            function (d) { return d.portfolio.name;},
+            function (d) { return d.dd ? dateFormat(d.dd) : ''; },
+            function (d) { return d.status; },
+            function (d) { return d.portfolio.name; },
             function (d) { return '<img class="img-td" src="https://lili.am/Assets/GetImage/' + d.asset.id + '" >'; },
             function (d) { return '<a target="_blank" href="https://lili.am/Assets/details/' + d.asset.code + '" >' + d.asset.name + '</a>'; },
-            function (d) { return d.asset.issue ? d.asset.issue.issuer : ''; },
+            function (d) { return d.asset ? d.asset.issuer : ''; },
             function (d) { return priceFormat(d.price); },
             function (d) { return numberFormat(d.weight) + '%';},
             function (d) { return d.weight > 0 ? '' : numberFormat(d.netreturn * 100) + '%'; },

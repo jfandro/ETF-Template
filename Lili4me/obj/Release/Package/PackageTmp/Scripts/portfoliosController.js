@@ -12,7 +12,7 @@ LoyolApp.PortfolioController.prototype.get = function (action, data, callback) {
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-        url = LoyolApp.Settings.domain + '/api/Portfolios/' + action;
+            url = session.domain + '/api/Portfolios/' + action;
 
         $.ajax({
             type: 'GET',
@@ -37,7 +37,7 @@ LoyolApp.PortfolioController.prototype.post = function (action, data, callback) 
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-            url = LoyolApp.Settings.domain + '/api/portfolios/' + action;
+            url = session.domain + '/api/portfolios/' + action;
 
         $.ajax({
             type: 'POST',
@@ -52,7 +52,7 @@ LoyolApp.PortfolioController.prototype.post = function (action, data, callback) 
             },
             success: callback,
             error: function (xhr, status, error) {
-                alert(error);
+                alert(status);
             }
         });
     }
@@ -64,7 +64,8 @@ LoyolApp.PortfolioController.prototype.select = function (divname, callback) {
         $.each(lst, function (i, item) {
             $('<option value="' + item.code + '">').text(item.name).appendTo(divname);
         });
-        callback;
+        if (callback)
+            callback();
     })
 }
 
@@ -73,8 +74,7 @@ LoyolApp.PortfolioController.prototype.exists = function (id, callback) {
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-            result = false,
-            url = LoyolApp.Settings.domain + '/api/Portfolios/Get';
+            url = session.domain + '/api/Portfolios/Get';
 
         $.ajax({
             type: 'GET',

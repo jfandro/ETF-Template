@@ -4,21 +4,21 @@ var numberFormat = d3.format('.2f');
 var percentFormat = d3.format('.4f');
 
 // A common color for all of the bar and row charts
-var colors = d3.scale.category10();
+var colors = d3.scaleOrdinal(d3.schemeTableau10);
 
-var ratingColors = d3.scale.ordinal()
+var ratingColors = d3.scaleOrdinal()
     .domain(['A', 'C', 'Z'])
     .range(['#109618', '#FF9900', '#DC3912']); //'#dfe9f1', 
 
-var riskColors = d3.scale.ordinal()
+var riskColors = d3.scaleOrdinal()
         .domain(["0", "1", "2", "3", "4", "5", "6", "7"])
         .range(['#f80707', '#9cbcd7', '#96ddce', '#addd96', '#e6e474', '#e6a074', '#df9393', '#f80707']);
 
-var complianceColors = d3.scale.ordinal()
+var complianceColors = d3.scaleOrdinal()
     .domain(['A', 'B', 'C', 'D', 'Z'])
     .range(['#deac01', '#bca659', '#b4a984', '#a3a19b', '#a3a19b']);
 
-var popularityColors = d3.scale.ordinal()
+var popularityColors = d3.scaleOrdinal()
     .domain(['Top', 'Followed', 'Not followed'])
     .range(['#b9c458', '#b5bc75', '#b4b798']);
 
@@ -477,8 +477,8 @@ kpiWidget.prototype.setPlots = function (xdata) {
         .renderVerticalGridLines(true)
         .xAxisLabel(this.xAxis)
         .yAxisLabel(this.yAxis)
-        .x(d3.scale.linear().domain(xRange))
-        .y(d3.scale.linear().domain(yRange))
+        .x(d3.scaleLinear().domain(xRange))
+        .y(d3.scaleLinear().domain(yRange))
         .symbolSize(8)
         .excludedOpacity(0.5)
         .dimension(this.dimension)
@@ -689,14 +689,14 @@ kpiWidget.prototype.setTable = function (xdata) {
                 label: '',
                 format: function (d) {
                     // ******************** Here, we call the images managed by the LILI server ****************************************************
-                    return '<img src="https://lili2.am/' + d.Type + 's/GetImage/' + d.ID + '" alt="' + d.Name + '" class="img-td-2 img-circle" /> ';
+                    return '<img src="https://lili.am/' + d.Type + 's/GetImage/' + d.ID + '" alt="' + d.Name + '" class="img-td-2 img-circle" /> ';
                 }
             },
             {
                 label: 'Fonds',
                 format: function (d) {
                     // ******************** Here, we call the link managed by the LILI server ****************************************************
-                    return '<a href="https://lili2.am/' + d.Type + 's/Details/' + d.Code + '" >' + d.Name + '</a><br/>' + d.Owner + '  (<em>' + d.AssetClass + '</em>)';
+                    return '<a href="https://lili.am/' + d.Type + 's/Details/' + d.Code + '" >' + d.Name + '</a><br/>' + d.Owner + '  (<em>' + d.AssetClass + '</em>)';
                 }
             },
             {

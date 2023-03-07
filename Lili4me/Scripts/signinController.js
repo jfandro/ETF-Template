@@ -9,6 +9,7 @@ LoyolApp.SignInController = function (frm) {
     this.$btnSubmit = $('button[type=submit]', frm);
     this.$txtUsername = $('#username', frm);
     this.$txtPassword = $('#password', frm);
+    this.$txtDomain = $('#domain', frm);
     this.$ctnErr = $("#ctn-err", frm);
     this.mainMenuPageId = null;
     this.invisibleStyle = 'hidden';
@@ -25,6 +26,7 @@ LoyolApp.SignInController = function (frm) {
 
         var emailAddress = me.$txtUsername.val().trim(),
             password = me.$txtPassword.val().trim(),
+            domain = me.$txtDomain.val().trim(),
             invalidInput = false,
             invisibleStyle = me.invisibleStyle,
             invalidInputStyle = me.invalidInputStyle;
@@ -68,16 +70,13 @@ LoyolApp.SignInController = function (frm) {
         };
 
         // Show loader
-        $.post(LoyolApp.Settings.signInUrl, loginData)
-            //.beforeSend(function () {
-            //    $.mobile.loading('show');
-            //})
+        $.post(LoyolApp.Settings.signInUrl(), loginData)
             .success(function (resp) {
                 // Create session in case of Success
-                var today = new Date();
                 var expirationDate = new Date();
                 expirationDate.setMinutes(expirationDate + parseInt(resp.expires_in));
                 LoyolApp.Session.getInstance().set({
+                    domain:domain,
                     token: resp.access_token,
                     userGuid: resp.userGuid,
                     username: resp.userName,
@@ -86,7 +85,6 @@ LoyolApp.SignInController = function (frm) {
                 });
                 // Go to next step
                 me.onSignin;
-                //$.mobile.navigate(me.mainMenuPageId);
             })
             .complete(function () {
                 me.onSignin();

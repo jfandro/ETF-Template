@@ -12,7 +12,7 @@ LoyolApp.InstrumentController.prototype.get = function (action, data, callback) 
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-        url = LoyolApp.Settings.domain + '/api/Instruments/' + action;
+        url = session.domain + '/api/Instruments/' + action;
 
         $.ajax({
             type: 'GET',
@@ -37,7 +37,7 @@ LoyolApp.InstrumentController.prototype.post = function (action, data, callback)
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-            url = LoyolApp.Settings.domain + '/api/Instruments/' + action;
+            url = session.domain + '/api/Instruments/' + action;
 
         $.ajax({
             type: 'POST',

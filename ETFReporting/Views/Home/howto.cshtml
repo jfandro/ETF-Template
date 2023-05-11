@@ -1,0 +1,49 @@
+
+
+@section header
+{
+    <style>
+        .cover-container {
+            max-width:initial;
+        }
+    </style>
+}
+
+
+<main>
+    <h1 class="visually-hidden">Mode d'emploi</h1>
+
+    <div class="container px-1">
+        <h2 class="pb-2 border-bottom">Format</h2>
+        <p>
+            Les données sont attendues dans un fichier au format csv avec comme séparateur le "point virgule". Les dates sont exprimées au format DD/MM/YY, le séparateur de décimales étant la "virgule". La première ligne du fichier est ignorée afin de laisser un titre ou une explication courte. Les colonnes sont de gauche à droite:
+            <ul>
+                <li>Le <u>code</u> de l'instrument. Il s'agit soit du code ISIN soit du ticker soit du code iso de la devise en cas de flux espèces;</li>
+                <li>La <u>date de valeur</u> du flux: data à partir de laquelle le flux est engagé dans le portefeuille (impact en trésorerie et en exposition)</li>
+                <li>La <u>valeur</u> associée au flux: cette valeur est requise et représente soit un montant, une quantité ou un pourcentage en fonction de la colonne unité ci-après;</li>
+                <li>Le <u>statut</u> du flux: laissez blanc par défaut. Indiquez IMP si le flux n'impacte pas votre trésorerie (cas d'une reprise de stock);</li>
+                <li>
+                    Le code <u>unité</u> associé à la valeur du flux:<ul>
+                        <li><b>S</b> indique que la valeur est une quantité de titres décimalisée et signée (positif pour un placement ou un achat) de titres/parts;</li>
+                        <li><b>M</b> indique que la valeur est un montant signé (négatif pour un placement) exprimé dans la devise identifiée mentionnée plus loin; </li>
+                        <li><b>P</b> indique que la valeur est un pourcentage donnant le poids cible de l'instrument dans le portefeuille (ex 20 signifie que le titre pèsera 20% du portefeuille après l'opération);</li>
+                        <li><b>X</b> indique que la valeur est un pourcentage appliqué au stock de l'instrument avant l'opération référencé (ex -50 signifie que vous divisez par 2 le stock courant) </li>
+                        <li><b>F</b> indique que la valeur est un nombre de titres sans impact sur les liquidités du portefeuille (frais ou attribution gratuite)</li>
+                        <li>Tout autre valeur sera assimilée à l'option S.</li>
+                    </ul>
+                </li>
+                <li>Le <u>prix</u> est une information optionnelle; si renseignée, la valeur sera retenue comme le prix d'éxécution de l'opération. Dans la cas contraire, c'est le cours de cloture à la date de valeur qui sera appliqué;</li>
+                <li>La <u>devise</u> est une information optionnelle; si renseignée, on prendra le code ISO renseigné (ex USD) comme la devise du prix d'éxécution de l'opération. Dans le cas contraire, c'est la devise de l'instrument qui sera retenu;</li>
+                <li>Un <u>commentaire</u> libre pour expliquer le flux</li>
+            </ul>
+        </p>
+    </div>
+    <div class="container px-1">
+        <h2 class="pb-2 border-bottom">Mode d'emploi</h2>
+        <p>
+            Pour obtenir votre rapport, chargez votre fichier sur la page <a href="/">page d'acceuil</a> en précisant votre adresse email afin
+            de sécuriser sa consultation. Au terme de sa production, vous recevrez une confirmation qui vous laissera 15 minutes.
+        </p>
+    </div>
+</main>
+

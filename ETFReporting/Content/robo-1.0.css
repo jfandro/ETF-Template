@@ -1,0 +1,86 @@
+﻿section .container h2 {
+    font-size:12rem;
+    font-weight:600;
+}
+section .container .half-container h2 {
+    font-size:6rem;
+    font-weight:600;
+}
+section .container .number-container h4 {
+    font-size:8rem;
+    font-weight:600;
+}
+
+.table-themes tbody tr > td {
+    border: none !important;
+}
+.table-themes tbody tr h3 {
+    font-size:5rem;
+    color:#faf5ff;
+    font-weight:600;
+}
+.table-themes tbody tr h5 {
+    font-weight:600;
+    color:#7a7a7a;
+}
+
+.table-themes td.td-img {
+    padding: 20px 0;
+}
+
+.table-themes .img-container {
+    width: 300px;
+    min-height: 150px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+}
+
+    .table-themes .img-container img {
+        left: 50%;
+        width: 300px;
+        margin-left: -150px;
+        position: absolute;
+    }
+
+.slider-container {
+    padding: 5px 50px;
+}
+
+    .slider-container .slider {
+        width: 100%;
+    }
+
+    .slider-container .slider-handle {
+        background: #666;
+    }
+
+    .slider-container .slider-selection {
+        background: #161106;
+    }
+
+/***********************************************************************************/
+/*********************** For gaujes built with d3.js *******************************/
+/***********************************************************************************/
+.gauges-container {
+    width:100px;
+    height:100px;
+    padding-top:25px;
+    padding-bottom:25px;
+}
+
+.gauges-container .svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+
+@media screen and (max-width: 480px) {
+section .container h2 {
+    font-size:5rem;
+    font-weight:400;
+}
+}

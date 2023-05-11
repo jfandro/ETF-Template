@@ -30,6 +30,10 @@ namespace Lili4me.Controllers
             return View();
         }
 
+        public ActionResult Upload()
+        {
+            return View();
+        }
         public ActionResult Positions()
         {
             return View();
@@ -44,6 +48,10 @@ namespace Lili4me.Controllers
             return View();
         }
 
+        public ActionResult Universes()
+        {
+            return View();
+        }
 
         public ActionResult Benchmark()
         {

@@ -8,8 +8,8 @@
 @section header {
     <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
         <div class="container">
-            <h1 class="text-center">Backtest</h1>
-            <p class="lead text-center">Création dynamique d'un portefeuille</p>
+            <h1 class="text-center">Create and Report</h1>
+            <p class="lead text-center">Analyse de portefeuille</p>
         </div>
     </section>
 }
@@ -201,54 +201,54 @@
 @section scripts {
 
     <!-- Latest version of d3 librairies -->
-    <script src="https://lili.am/scripts/d3/d3.js" type="text/javascript"></script>
-    <script src="https://lili.am/scripts/d3/waterfall-1.1.js" type="text/javascript"></script>
+    <script src="https://lili.am/Scripts/d3/v5/d3.js" type="text/javascript"></script>
+    <script src="https://lili.am/scripts/d3/v5/waterfall-5.1.js" type="text/javascript"></script>
 
     <script>
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        // First, we create a new instance of portfolios controller to get and post data with LILI API
-        var ptf = new LoyolApp.PortfolioController();
-        var ast = new LoyolApp.AssetsController();
+            // First, we create a new instance of portfolios controller to get and post data with LILI API
+            var ptf = new LoyolApp.PortfolioController();
+            var ast = new LoyolApp.AssetsController();
 
-        // render the select items
-        ptf.select($('.select-portfolios'));
-        ast.select($('.select-funds'));
+            // render the select items
+            ptf.select($('.select-portfolios'));
+            ast.select($('.select-funds'));
 
-        // This is for displaying smart switcher
-        $('.checkbox-switch').bootstrapSwitch();
+            // This is for displaying smart switcher
+            $('.checkbox-switch').bootstrapSwitch();
 
-        // When we submit for a creation of a portfolio
-        $('form.creation-form').submit(function () {
-            var params = $(this).serialize();
-            ptf.post('create', params, function (result) {
-                $('.portfolio-key').val(result.code);
-                ptf.select($('.select-portfolios'));
-            })
-            return false;
+            // When we submit for a creation of a portfolio
+            $('form.creation-form').submit(function () {
+                var params = $(this).serialize();
+                ptf.post('create', params, function (result) {
+                    $('.portfolio-key').val(result.code);
+                    ptf.select($('.select-portfolios'));
+                })
+                return false;
+            });
+
+            $('.operations-form').submit(function () {
+                var params = $(this).serialize();
+                ptf.post('upload', params, function (result) {
+                    $('#results1').addClass('text-success');
+                    $('#results1').html('Votre inventaire a été chargé sur le serveur Lili avec succès. Ce portefeuille est valorisé depuis sa date de départ et désormais interrogeable pour de nouvelles analyses graphiques présentées ci-dessous.');
+                    // Call data requested for a waterfall monthly results
+                    var params = { code: $('#PortfolioCode').val() };
+                    ptf.get('PnLBreakdowns', params, function (data) {
+                        // erase previous content
+                        $('#results').empty();
+                        // Then create a local widget for a waterfall
+                        var wf = new waterfall('#results');
+                        // and load data
+                        wf.load(data, function () { });
+                    });
+                })
+                return false;
+            });
+
         });
-
-        $('.operations-form').submit(function () {
-            var params = $(this).serialize();
-            ptf.post('upload', params, function (result) {
-                $('#results1').addClass('text-success');
-                $('#results1').html('Votre inventaire a été chargé sur le serveur Lili avec succès. Ce portefeuille est valorisé depuis sa date de départ et désormais interrogeable pour de nouvelles analyses graphiques présentées ci-dessous.');
-                // Call data requested for a waterfall monthly results
-                var params = { code: $('#PortfolioCode').val() };
-                ptf.get('PnLBreakdowns', params, function (data) {
-                    // erase previous content
-                    $('#results').empty();
-                    // Then create a local widget for a waterfall
-                    var wf = new waterfall('#results');
-                    // and load data
-                    wf.load(data, function () { });
-                });
-            })
-            return false;
-        });
-
-    });
 
     </script>
 }

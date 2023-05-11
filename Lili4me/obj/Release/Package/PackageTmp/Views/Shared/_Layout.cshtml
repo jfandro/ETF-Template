@@ -29,16 +29,23 @@
             </div>
             <div class="navbar-collapse collapse signoff-container">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Board", "Board", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Report", "Allocations", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Creation", "Create", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Robo", "Robo", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Positions", "Positions", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Operations", "Operations", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Benchmark", "Benchmark", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("KYC", "KYC", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Fonds", "MyFund", "Home", new { area = "" }, null)</li>
-                    <li><a href="#" class="btn-signout signoff-container">Signout</a></li>
+                    <li class="nav-item">@Html.ActionLink("Board", "Board", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ateliers <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li class="nav-item">@Html.ActionLink("Report", "Allocations", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Creation", "Create", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Chargement", "Upload", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Robo", "Robo", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Positions", "Positions", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Operations", "Operations", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Benchmark", "Benchmark", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("KYC", "KYC", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Fonds", "MyFund", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Univers", "Universes", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a href="#" class="nav-link btn-signout signoff-container">Signout</a></li>
                 </ul>
             </div>
         </div>

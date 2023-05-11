@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "Upload";
+    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://lili.am/Content/waterfall.css" />
+
+}
+
+@section header {
+    <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
+        <div class="container">
+            <h1 class="text-center">Upload</h1>
+            <p class="lead text-center">Création à la volée d'un portefeuille</p>
+        </div>
+    </section>
+}
+
+<section class="section-c">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-7">
+                <form id="upload-form" class="upload-form" method="post" enctype="multipart/form-data">
+                    <h2>Votre portefeuille</h2>
+
+                    <div class="form-group">
+                        <label>Nom du portefeuille</label>
+                        <input type="text" class="form-control" id="Name" name="Name" value="" placeholder="Donnez un nom à votre portefeuille" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Clef privée unique de votre portefeuille (lecture seule)</label>
+                        <input type="text" class="form-control portfolio-key" id="code" name="code" value="" disabled="disabled" />
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-sm-6">
+                            <label>Niveau de risques cible</label>
+                            <select class="form-control" id="RiskLevel" name="RiskLevel">
+                                <option value="3">Très prudent</option>
+                                <option selected value="4">Equilibré</option>
+                                <option value="5">Dynamique</option>
+                                <option value="6">Audacieux</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Fichier à analyser</label>
+                        <input type="file" class="form-control" id="file" name="file" placeholder="Sélectionnez un fichier ..." />
+                    </div>
+
+                    <p class="text-right">
+                        <button type="submit" class="btn btn-primary">Importer</button>
+                    </p>
+
+                    <input type="hidden" name="IsModel" value="false" />
+                    <input type="hidden" name="Minutes" value="5" />
+
+                </form>
+
+            </div>
+            <div class="col-lg-5">
+                <h2>Tracking</h2>
+                <ul id="results"></ul>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="section-b">
+    <div class="container">
+        <h2>Résultats sur 12 mois</h2>
+        <p>
+            Pour visualiser les résultats mensuels, nous prenons un waterfall, autrement un graphique en cascades. D'autres widgets pourraient être déployés sur cette étape,
+            c'est ce que nous allons voir dans la <a href="/Home/Positions">troisième expérience</a> centrée sur les technologies de datavisualisation.
+        </p>
+        <div id="pnl" class="waterfall-container"></div>
+    </div>
+</section>
+
+
+@section scripts {
+
+    <!-- Latest version of d3 librairies -->
+    <script src="https://lili.am/Scripts/d3/v5/d3.js" type="text/javascript"></script>
+    <script src="https://lili.am/scripts/d3/v5/waterfall-5.1.js" type="text/javascript"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            // First, we create a new instance of portfolios controller to get and post data with LILI API
+            var ptf = new LoyolApp.PortfolioController(),
+                ast = new LoyolApp.AssetsController(),
+                $lst = $('#results'),
+                $code = $('#code'),
+                $pnl = $('#pnl');
+
+
+            // render the select items
+            ptf.select($('.select-portfolios'));
+            ast.select($('.select-funds'));
+
+            // This is for displaying smart switcher
+            $('.checkbox-switch').bootstrapSwitch();
+
+            // get or create one portolio with its code
+            var getpf = function (callback) {
+                trackResult('Find portfolio');
+                var onfound = function (p) {
+                    $code.val(p.code);
+                    callback(p.code);
+                };
+                var onnotfound = function () {
+                    trackResult('Create a new portfolio');
+                    var frm = $('.upload-form');
+                    ptf.post('create', frm.serialize(), onfound);
+                };
+                ptf.get('get', { code: $code.val() }, onfound, onnotfound);
+            }
+
+            var trackResult = function (msg) {
+                var $item = $('<li>');
+                $item.html(msg);
+                $lst.append($item);
+            }
+
+            $('.upload-form').submit(function () {
+                $lst.empty();
+                $pnl.empty();
+                trackResult('Start');
+                getpf(function (code) {
+                    // create params for https post
+                    var data = new FormData();
+                    data.append("code", code);
+                    data.append("culture", "fr-FR"); // '@System.Globalization.CultureInfo.CurrentCulture.Name
+                    var file = $("#file")[0];
+                    data.append("file", file.files[0]);
+                    trackResult('Uploading file ...');
+                    ptf.postform('uploadfile', data, function (result) {
+                        trackResult('Backtest is completed');
+                        // Call data requested for a waterfall monthly results
+                        var params = { code: code };
+                        ptf.get('PnLBreakdowns', params, function (data) {
+                            trackResult('Displaying PnL...');
+                            // Then create a local widget for a waterfall
+                            var wf = new waterfall('#pnl');
+                            // and load data
+                            wf.load(data, function () {
+                                trackResult('Terminated');
+                            });
+                        });
+                    });
+                });
+                return false;
+            });
+
+        });
+
+    </script>
+}

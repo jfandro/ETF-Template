@@ -7,7 +7,7 @@ LoyolApp.PortfolioController = function () {
 }
 
 // Get all the data from API portfolios related to one portfolio
-LoyolApp.PortfolioController.prototype.get = function (action, data, callback) {
+LoyolApp.PortfolioController.prototype.get = function (action, data, callback, onerror) {
 
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
@@ -26,8 +26,10 @@ LoyolApp.PortfolioController.prototype.get = function (action, data, callback) {
             },
             success: callback,
             error: function (xhr, status, error) {
-                alert(error);
-            }
+                if (onerror)
+                    onerror(error);
+                else
+                    alert(status);            }
         });
     }
 }
@@ -44,6 +46,7 @@ LoyolApp.PortfolioController.prototype.post = function (action, data, callback) 
             url: url,
             data: data,
             dataType: 'json',
+            mimeType: 'multipart/form-data',
             cache: false,
             processData: false,
             crossDomain: true,
@@ -57,6 +60,36 @@ LoyolApp.PortfolioController.prototype.post = function (action, data, callback) 
         });
     }
 }
+
+// Post the data from form to the controller API portfolios
+LoyolApp.PortfolioController.prototype.postform = function (action, data, callback) {
+    var session = LoyolApp.Session.getInstance().get();
+    if (session && session.keepSignedIn && session.token) {
+        var token = session.token,
+            url = session.domain + '/api/portfolios/' + action;
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            contentType: false,
+            processData: false,
+            crossDomain: true,
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", 'Bearer ' + token);
+            },
+            fail: function () {
+                alert('fail');
+            },
+            success: callback,
+            error: function (xhr, status, error) {
+                alert(error);
+            }
+        });
+    }
+}
+
+
 
 // render select controls
 LoyolApp.PortfolioController.prototype.select = function (divname, callback) {

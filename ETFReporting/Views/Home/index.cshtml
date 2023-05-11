@@ -1,0 +1,103 @@
+
+@section header
+{
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .waterfall {
+            height: 200px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://lili.am/Content/waterfall.css" />
+
+}
+
+<main class="px-3">
+    <h1>ETF Reporting</h1>
+    <p class="lead">Analysez vos portefeuilles ETF comme un gestionnaire professionnel</p>
+    <form class="upload">
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="file">
+            <button type="submit" class="input-group-text" for="file">Analyser</button>
+        </div>
+        <div>
+            <input type="hidden" name="code" id="code" value="" />
+            <input type="hidden" name="IsModel" value="false" />
+            <input type="hidden" name="RiskLeval" value="5" />
+            <input type="hidden" name="Minutes" value="5" />
+            <input type="hidden" name="Name" id="Name" value="Mon portefeuille" />
+        </div>
+        @*<div id="pnl" class="w-100 waterfall"></div>*@
+    </form>
+</main>
+
+@section scripts
+{
+    <!-- Latest version of librairies -->
+    <script src="~/Scripts/jquery-3.6.4.min.js"></script>
+    <script src="https://lili.am/Scripts/d3/v5/d3.js" type="text/javascript"></script>
+    <script src="https://lili.am/scripts/d3/v5/waterfall-5.1.js" type="text/javascript"></script>
+
+    <script src="~/Scripts/settings.js"></script>
+    <script src="~/Scripts/signinController.js"></script>
+    <script src="https://lili4.me/scripts/portfoliosController.js" type="text/javascript"></script>
+    <script src="https://lili4.me/scripts/session.js" type="text/javascript"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+
+            // Create a new instance of a controller sign in
+            var $sg = LoyolApp.SignInController();
+
+            // First, we create a new instance of portfolios controller to get and post data with LILI API
+            var ptf = new LoyolApp.PortfolioController(),
+                $code = $('#code'),
+                $pnl = $('#pnl'),
+                $frm = $('form.upload');
+
+            // get or create one portolio with its code
+            var getpf = function (callback) {
+                var onfound = function (p) {
+                    $code.val(p.code);
+                    callback(p.code);
+                };
+                var onnotfound = function () {
+                    ptf.post('create', $frm.serialize(), onfound);
+                };
+                ptf.get('get', { code: $code.val() }, onfound, onnotfound);
+            }
+
+            $frm.submit(function () {
+                $pnl.empty();
+                getpf(function (code) {
+                    // create params for https post
+                    var data = new FormData();
+                    data.append("code", code);
+                    data.append("culture", "fr-FR"); // '@System.Globalization.CultureInfo.CurrentCulture.Name
+                    var file = $("#file")[0];
+                    data.append("file", file.files[0]);
+                    ptf.postform('uploadfile', data, function (result) {
+                        window.open(LoyolApp.Settings.domain + '/Portfolios/Share/' + code, '_blank');
+                        // Call data requested for a waterfall monthly results
+                        //var params = { code: code };
+                        //ptf.get('PnLBreakdowns', params, function (data) {
+                        //    // Then create a local widget for a waterfall
+                        //    var wf = new waterfall('#pnl');
+                        //    // and load data
+                        //    wf.load(data, function () {
+                        //    });
+                        //});
+                    });
+                });
+                return false;
+            });
+
+        });
+
+    </script>
+
+}

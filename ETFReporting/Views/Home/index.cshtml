@@ -5,98 +5,195 @@
         body {
             text-align: center;
         }
-
-        .waterfall {
-            height: 200px;
-        }
     </style>
-    <link rel="stylesheet" href="https://lili.am/Content/waterfall.css" />
-
 }
 
 <main class="px-3">
     <h1>ETF Reporting</h1>
-    <p class="lead">Analysez vos portefeuilles ETF comme un gestionnaire professionnel</p>
-    <form class="upload">
+    <p class="lead">@Html.Raw(Resources.Home.title)</p>
+    <form id="upload-frm" class="upload">
         <div class="input-group mb-3">
             <input type="file" class="form-control" id="file">
-            <button type="submit" class="input-group-text" for="file">Analyser</button>
+            <button type="submit" class="input-group-text" for="file">@Html.Raw(Resources.Home.analyze)</button>
         </div>
         <div>
             <input type="hidden" name="code" id="code" value="" />
             <input type="hidden" name="IsModel" value="false" />
-            <input type="hidden" name="RiskLeval" value="5" />
             <input type="hidden" name="Minutes" value="5" />
-            <input type="hidden" name="Name" id="Name" value="Mon portefeuille" />
         </div>
-        @*<div id="pnl" class="w-100 waterfall"></div>*@
+        <div id="option-modal" class="modal fade text-black" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog">
+                <div class="modal-content" style="text-align:left; font-size:smaller;text-shadow:none;">
+                    <div class="modal-header">
+                        <h5 class="modal-title">@Resources.Home.options</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>@Html.Raw(Resources.Home.labelOptions)</p>
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text">@Resources.Home.name</span>
+                            <input type="text" class="form-control" id="Name" name="Name" value="Mon Portefeuille">
+                        </div>
+                        <div class="row">
+                            <div class="col mb-3 input-group">
+                                <span class="input-group-text">@Resources.Home.riskprofile</span>
+                                <select class="form-select" aria-label="Default select example" id="RiskLevel" name="RiskLevel">
+                                    <option value="3">@Resources.Home.care</option>
+                                    <option selected value="4">@Resources.Home.balanced</option>
+                                    <option value="5">@Resources.Home.offensive</option>
+                                    <option value="6">@Resources.Home.agressive</option>
+                                </select>
+                            </div>
+                            <div class="col mb-3 input-group">
+                                <span class="input-group-text">@Resources.Home.fees</span>
+                                <input type="text" class="form-control text-end" id="ManagementFeesRate" name="ManagementFeesRate" value="0">
+                            </div>
+                        </div>
+                        <div class="mb-3 input-group">
+                            <span class="input-group-text">@Resources.Home.benchmark</span>
+                            <select class="form-select" aria-label="Default select example" id="BenchmarkID" name="BenchmarkID">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">@Resources.Home.close</button>
+                        <button type="button" class="btn btn-primary" onclick="saveOptions()">@Resources.Home.save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </main>
 
+
 @section scripts
 {
-    <!-- Latest version of librairies -->
+    <script src="~/Scripts/bootstrap.bundle.min.js"></script>
     <script src="~/Scripts/jquery-3.6.4.min.js"></script>
-    <script src="https://lili.am/Scripts/d3/v5/d3.js" type="text/javascript"></script>
-    <script src="https://lili.am/scripts/d3/v5/waterfall-5.1.js" type="text/javascript"></script>
 
+    <!-- Latest version of librairies -->
     <script src="~/Scripts/settings.js"></script>
     <script src="~/Scripts/signinController.js"></script>
     <script src="https://lili4.me/scripts/portfoliosController.js" type="text/javascript"></script>
+    <script src="https://lili4.me/scripts/assetsController.js" type="text/javascript"></script>
     <script src="https://lili4.me/scripts/session.js" type="text/javascript"></script>
+    <script src="https://lili.am/scripts/jquery.cookie.js" type="text/javascript"></script>
+
+
 
     <script>
 
-        $(document).ready(function () {
 
+        var saveOptions = function () {
+            $.cookie('name', $('#Name').val());
+            $.cookie('risk', $('#RiskLevel').val());
+            $.cookie('benchmark', $('#BenchmarkID').val());
+            $.cookie('fees', $('#ManagementFeesRate').val());
+        }
 
-            // Create a new instance of a controller sign in
-            var $sg = LoyolApp.SignInController();
+        var getOptions = function () {
+            var cookie = $.cookie('name');
+            if (cookie)
+                $('#Name').val(cookie);
+            cookie = $.cookie('risk');
+            if (cookie)
+                $('#RiskLevel').val(cookie);
+            cookie = $.cookie('benchmark');
+            if (cookie)
+                $('#BenchmarkID').val(cookie);
+            cookie = $.cookie('fees');
+            if (cookie)
+                $('#ManagementFeesRate').val(cookie);
+        }
 
-            // First, we create a new instance of portfolios controller to get and post data with LILI API
-            var ptf = new LoyolApp.PortfolioController(),
-                $code = $('#code'),
-                $pnl = $('#pnl'),
-                $frm = $('form.upload');
+    $(document).ready(function () {
 
-            // get or create one portolio with its code
-            var getpf = function (callback) {
-                var onfound = function (p) {
-                    $code.val(p.code);
-                    callback(p.code);
-                };
-                var onnotfound = function () {
-                    ptf.post('create', $frm.serialize(), onfound);
-                };
-                ptf.get('get', { code: $code.val() }, onfound, onnotfound);
-            }
+        // read options
+        getOptions();
 
-            $frm.submit(function () {
-                $pnl.empty();
-                getpf(function (code) {
-                    // create params for https post
-                    var data = new FormData();
-                    data.append("code", code);
-                    data.append("culture", "fr-FR"); // '@System.Globalization.CultureInfo.CurrentCulture.Name
-                    var file = $("#file")[0];
-                    data.append("file", file.files[0]);
-                    ptf.postform('uploadfile', data, function (result) {
-                        window.open(LoyolApp.Settings.domain + '/Portfolios/Share/' + code, '_blank');
-                        // Call data requested for a waterfall monthly results
-                        //var params = { code: code };
-                        //ptf.get('PnLBreakdowns', params, function (data) {
-                        //    // Then create a local widget for a waterfall
-                        //    var wf = new waterfall('#pnl');
-                        //    // and load data
-                        //    wf.load(data, function () {
-                        //    });
-                        //});
-                    });
+        var errModal = new bootstrap.Modal(document.getElementById('error-modal'), { keyboard: false });
+
+        // Create a new instance of a controller sign in
+        LoyolApp.SignInController();
+
+        // First, we create a new instance of portfolios controller to get and post data with LILI API
+        var $ptf = new LoyolApp.PortfolioController(),
+            $ast = new LoyolApp.AssetsController(),
+            $code = $('#code'),
+            $pnl = $('#pnl'),
+            $frm = $('form.upload');
+
+        $ast.get('SelectView', null, function (lst) {
+
+            var grp = lst.reduce(function (result, current) {
+                result[current.Group.Name] = result[current.Group.Name] || [];
+                result[current.Group.Name].push(current);
+                return result;
+            }, {});
+
+            $('<option selected>').text('Selectionnez un ETF ...').appendTo('#BenchmarkID');
+            $.each(grp, function (i, g) {
+                var label = $('<optgroup>').attr('label', i);
+                label.appendTo('#BenchmarkID');
+                $.each(g, function (j, item) {
+                    var o = $('<option value="' + item.Value + '">').text(item.Text);
+                    o.appendTo(label);
                 });
-                return false;
             });
-
+            var cookie = $.cookie('benchmark');
+            if (cookie)
+                $('#BenchmarkID').val(cookie);
         });
+
+        // get or create one portolio with its code
+        var getpf = function (callback) {
+            //var onfound = function (p) {
+            //    $code.val(p.code);
+            //    callback(p.code);
+            //};
+            //var onnotfound = function () {
+            //    var params = $frm.serialize();
+            //    $ptf.post('UpdateOrCreate', params, onfound);
+            //};
+            //$ptf.get('get', { code: $code.val() }, onfound, onnotfound);
+            var params = $frm.serialize();
+            $ptf.post('UpdateOrCreate', params, function (p) {
+                $code.val(p.code);
+                callback(p.code);
+            });
+        }
+
+        // on submit file
+        $frm.submit(function () {
+            $pnl.empty();
+            getpf(function (code) {
+                // create params for https post
+                var data = new FormData();
+                data.append("code", code);
+                data.append("culture", "fr-FR"); // '@System.Globalization.CultureInfo.CurrentCulture.Name
+                var file = $("#file")[0];
+                data.append("file", file.files[0]);
+                $ptf.postform('uploadfile', data, function (result) {
+                    if (result.Success)
+                        window.location = LoyolApp.Settings.domain + '/Portfolios/Reporting/' + code;
+                    else {
+                        var warnings = $('#error-message');
+                        warnings.empty();
+                        warnings.append('<span>' + result.Message + '</span>')
+                        var list = warnings.append('<ul></ul>');
+                        $.each(result.RuleViolations, function (i, r) {
+                            list.append('<li>' + r.ErrorMessage + '</li>');
+                        });
+                        warnings.attr('hidden', false);
+                        errModal.show();
+                    }
+                });
+            });
+            return false;
+        });
+
+    });
 
     </script>
 

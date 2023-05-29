@@ -284,3 +284,16 @@ table.benchmark-chart .img-td-2 {
     width: 40px;
     height: 40px;
 }
+table.universe-tip h4 {
+    margin:0;
+}
+table.universe-tip tr td {
+    padding: 10px;
+}
+table.universe-tip tr td:first-child {
+    width: 80px;
+    display:flex;
+}
+table.universe-tip img {
+    width:100%;
+}

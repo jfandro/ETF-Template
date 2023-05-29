@@ -1,0 +1,57 @@
+
+
+@section header
+{
+    <style>
+        .cover-container {
+            max-width:initial;
+        }
+    </style>
+}
+
+
+<main>
+    <h1 class="visually-hidden">Mode d'emploi</h1>
+
+    <div class="container px-1">
+        <h2 class="pb-2 border-bottom">Format du fichier</h2>
+        <p>
+            Les données sont attendues dans un fichier au format csv avec comme séparateur le "point virgule". Les dates sont exprimées au format DD/MM/YY, le séparateur de décimales étant la "virgule". La première ligne du fichier est ignorée afin de laisser un titre ou une explication courte. Les colonnes sont de gauche à droite:
+            <ul>
+                <li>Le <u>code</u> d'un ETF ou d'une devise. Dans le cas d'un ETF, il s'agit soit du code ISIN soit du symbole associé à sa place principale de négociation;</li>
+                <li>La <u>date</u> à partir de laquelle l'opération est engagée : impact en trésorerie et en exposition de marché;</li>
+                <li>La <u>valeur</u> négociée qui représente soit un montant, une quantité ou un pourcentage. Fonction de la colonne <u>unité</u> ci-après;</li>
+                <li>Le <u>statut</u> de l'opéation : blanc par défaut. Indiquez IMP si le flux n'impacte pas votre trésorerie (cas d'une reprise de stock);</li>
+                <li>
+                    Le code <u>unité</u> de l'opération qui permettra d'interpréter la colonne <u>valeur</u>:<ul>
+                        <li><b>S</b> indique la quantité de titres négociée (positif pour un achat, négatif pour une vente) de parts;</li>
+                        <li><b>M</b> indique le montant réglé (négatif pour un achat ou un retrait, positif pour une vente ou apport) exprimé dans la devise identifiée mentionnée plus loin; </li>
+                        <li><b>P</b> indique le poids cible du titre dans le portefeuille (ex 20 signifie que le titre pèsera 20% du portefeuille avec cette opération);</li>
+                        <li><b>X</b> indique le pourcentage appliqué au stock de l'instrument avant l'opération (ex -50 signifie que vous divisez par 2 le stock de ce titre) </li>
+                        <li><b>F</b> indique une quantité de titres sans impact sur la trésorerie du portefeuille (ex attribution gratuite)</li>
+                        <li>Tout autre valeur sera assimilée à l'option S.</li>
+                    </ul>
+                </li>
+                <li>Le <u>prix</u> est optionnel; si vous ne le renseignez pas, la valeur retenue sera le cours de cloture à la date indiquée;</li>
+                <li>La <u>devise</u> est optionnelle; si vous ne la renseignez pas, c'est la devise de l'ETF qui sera retenue;</li>
+                <li>Un <u>commentaire</u> libre pour expliquer votre opération</li>
+            </ul>
+        </p>
+
+        <h2 class="pb-2 border-bottom">Exemples</h2>
+        <p>
+            Nous proposons un premier exemple <a href="/Home/DownloadSample?name=sample.csv">à télécharger ici</a> pour reprendre un historique de portefeuille,
+            ou mieux <strong>l'agrégation de portefeuilles</strong> afin de vous donner une vision gloable et détaillée de vos encours. Dans cet exemple, les opérations
+            d'achat et de ventes sont exprimées en nombre de titres.
+        </p>
+        <p>
+            Nous proposons un second exemple <a href="/Home/DownloadSample?name=sample2.csv">à télécharger ici</a> pour opérer un backtest de type <strong>Buy and Hold</strong>. 
+            Renseignez votre allocation à une date passée exprimée en nombre de titres ou en % de votre de portefeuille.
+            Pour voir le résultat d'une approche <em>Dollar Cost Average</em>, cliquez sur <strong>Epargne et Rente</strong> une fois
+            le reporting généré. Vous aurez une idée précise du rendement d'une approche DCA.
+        </p>
+
+    </div>
+
+</main>
+

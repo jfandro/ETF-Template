@@ -8,8 +8,8 @@ LoyolApp.SignInController = function () {
     // Create login data
     var loginData = {
         grant_type: 'password',
-        username: 'lili',
-        password: 'Valmarfl@41'
+        username: 'etfreporter',
+        password: 'R€porter2023'
     };
 
     // Get token

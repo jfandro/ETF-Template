@@ -67,7 +67,6 @@ LoyolApp.AssetsController.prototype.post = function (action, data, callback) {
 LoyolApp.AssetsController.prototype.select = function (divname, callback) {
     this.get('Index', null, function (lst) {
         $.each(lst, function (i, item) {
-            //$('<option data-tokens="' + item.issue.symbol + '">').text(item.name).appendTo(divname);
             $('<option value="' + item.code + '">').text(item.name).appendTo(divname);
         });
         callback;

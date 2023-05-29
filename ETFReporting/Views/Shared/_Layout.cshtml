@@ -3,15 +3,16 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Hugo 0.84.0">
+    <meta name="copyright" content="ETFReporting is a registered trademark of LOYOL" />
+    <meta name="description" content="ETFReporting is a free service to get a profesional vision of any portfolio invested in ETF" />
+    <meta name="author" content="LOYOL SAS, France" />
+    <meta name="keywords" content="ETF Portfolio Models Savings Allocation Reporting Dataviz D3 Free" />
+    <meta name="robots" content="index,follow" />
+
     <title>ETF Reporting v2.0</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/cover.css" rel="stylesheet" />
-
     @RenderSection("header", false)
 </head>
 
@@ -19,19 +20,36 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
-                <h3 class="float-md-start mb-0">ETF Reporting</h3>
+                <h3 class="float-md-start mb-0">Lili Services</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                    <a class="nav-link" href="/Home/Features">Features</a>
-                    <a class="nav-link" href="/Home/HowTo">How to?</a>
+                    <a class="nav-link" aria-current="page" href="/">@Resources.Home.home</a>
+                    <a class="nav-link" href="/Home/Features">@Resources.Home.services</a>
+                    <a class="nav-link" href="/Home/HowTo">@Resources.Home.format</a>
                 </nav>
             </div>
         </header>
 
         @RenderBody()
 
+        <div id="error-modal" class="modal text-black text-start" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Erreur</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="error-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <footer class="mt-auto text-white-50">
-            <p>Service gratuit opéré par <a href="https://lili.am/" class="text-white">Lili</a> - Copyright LOYOL 2023</p>
+            <p>@Resources.Home.copyright</p>
         </footer>
     </div>
 </body>

@@ -1,0 +1,42 @@
+﻿
+<div class="mb-4">
+    <div class="row">
+        <div class="col-3">
+            <div class="mb-3 form-floating datepick">
+                <input type="date" class="form-control" id="PositionDate" name="PositionDate" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                <label for="valuedate">Date de valeur</label>
+                <input type="hidden" id="valuedate" name="valuedate" />
+            </div>
+        </div>
+    </div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary btn-positions">Afficher</button>
+    </div>
+    <div class="table-responsive py-3">
+        <table class="table table-hover table-sm small">
+            <thead>
+                <tr>
+                    <th colspan="6" class="text-center">Instrument</th>
+                    <th colspan="2" class="text-center">Résultat latent</th>
+                    <th colspan="3" class="text-center">Portefeuille</th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Code</th>
+                    <th>Nom</th>
+                    <th>Classe d'actifs</th>
+                    <th class="text-end">Qté</th>
+                    <th class="text-end">Achat</th>
+                    <th class="text-end">+/- values</th>
+                    <th class="text-end">Perf.</th>
+                    <th class="text-end">Marché</th>
+                    <th class="text-end">Valeur</th>
+                    <th class="text-end">Poids</th>
+                </tr>
+            </thead>
+            <tbody id="holdings"></tbody>
+        </table>
+    </div>
+
+</div>
+

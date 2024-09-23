@@ -1,0 +1,56 @@
+﻿@model Lili4me.Models.LeadDetails
+
+@{
+    ViewBag.Title = "Robo for Advisor";
+    Layout = "~/Views/Shared/_layout5.cshtml";
+}
+
+@section header {
+    <!-- The style of my web site for widgets -->
+    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
+}
+
+<section class="page-section min-vh-100 section-portfolio">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+        <h1 class="display-4">Prospect identifié</h1>
+        <article class="fst-italic text-bg-secondary">
+            A ce stade, votre prospect est identifié et enregistré dans 
+            un dossier de votre espace privé (atelier sur etfreporting).
+            Sur votre site, nous vous donnons les moyens techniques pour concevoir
+            un espace personnalisé destiné à chaque prospect identifié afin que ce dernier puisse
+            consulter les données qu'il vous a communiqué
+            ainsi que les principales caractéristiques de votre proposition.
+            Vous disposerez pour cela d'une librairie opensource permettant de concevoir
+            une expérience à votre image sans référence à notre service.
+        </article>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="container py-5">
+            <div class="py-5">
+                <h2>Bonjour <span class="name"></span>,</h2>
+                <p class="well">
+                    Merci pour votre confiance.
+                    Veuillez retrouvez ci-dessous votre questionnaire de connaissance client.
+                    Notre 1ère proposition a été conçue sur la base de ces premières informations
+                    et pourra être revue sensiblement lors de nos prochains entretiens.
+                </p>
+                <p>
+                    N'hésitez pas à me joindre au 06 06 06 06 06 si vous avez des questions ou des compléments
+                    à me fournir.
+                    D'ici là, je vous confie la référence de votre dossier <span class="text-bg-light">@Model.Code</span>.
+                    ainsi qu'un accès à votre <a href="/Lead/Client/@Model.Code">portail client</a>.
+                </p>
+                <p>Bonne journée.</p>
+            </div>
+            <div class="btn-group">
+                <a class="btn btn-light" href="/Client/Index/@Model.Code">Mon portail</a>
+                <a class="btn btn-light" href="/Lead/KYC/@Model.Code">Mon questionnaire</a>
+            </div>
+
+        </div>
+    </div>
+
+</section>

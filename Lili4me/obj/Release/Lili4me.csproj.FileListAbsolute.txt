@@ -120,3 +120,8 @@ C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Release\Lili4me.csproj.CopyCompl
 C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Release\Lili4me.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Release\Lili4me.pdb
 C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Release\Lili4me.csproj.AssemblyReference.cache
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Postal.dll
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\RazorEngine.dll
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Postal.xml
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\RazorEngine.pdb
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\RazorEngine.xml

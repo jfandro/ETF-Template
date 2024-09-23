@@ -127,10 +127,10 @@
     <value>Equilibré</value>
   </data>
   <data name="benchmark" xml:space="preserve">
-    <value>Référence</value>
+    <value>Fonds de référence (benchmark)</value>
   </data>
   <data name="care" xml:space="preserve">
-    <value>Prodent</value>
+    <value>Prudent</value>
   </data>
   <data name="close" xml:space="preserve">
     <value>Fermer</value>
@@ -139,22 +139,40 @@
     <value>Contact</value>
   </data>
   <data name="copyright" xml:space="preserve">
-    <value>Opéré par la plateforme de services Lili - Copyright LOYOL SAS 2023</value>
+    <value>Service opéré par la plateforme Lili - Copyright LOYOL SAS 2023</value>
+  </data>
+  <data name="divc" xml:space="preserve">
+    <value>Dividendes réinvestis</value>
+  </data>
+  <data name="domiciliation" xml:space="preserve">
+    <value>Pays de domiciliation (si imposition)</value>
   </data>
   <data name="fees" xml:space="preserve">
-    <value>Frais %</value>
+    <value>Frais gestion pilotée %</value>
   </data>
   <data name="format" xml:space="preserve">
     <value>Format</value>
+  </data>
+  <data name="fractionable" xml:space="preserve">
+    <value>Autorise la fraction de titres</value>
   </data>
   <data name="home" xml:space="preserve">
     <value>Accueil</value>
   </data>
   <data name="labelOptions" xml:space="preserve">
-    <value> Enregistrez vos paramètres (sous forme de cookies de votre navigateur) si vous souhaitez les retrouver par défaut lors de la prochaine interrogation.</value>
+    <value>Enregistrer vos paramètres (cookie de votre navigateur) si vous souhaitez les retrouver lors de la prochaine analyse. Les frais correspondent aux frais de gestion prélevés par votre assureur ou votre intermédiaire.</value>
   </data>
   <data name="name" xml:space="preserve">
-    <value>Nom</value>
+    <value>Nom de votre portefeuille</value>
+  </data>
+  <data name="nobenchmark" xml:space="preserve">
+    <value>Pas de benchmark</value>
+  </data>
+  <data name="nodomiciliation" xml:space="preserve">
+    <value>Pas de domiciliation </value>
+  </data>
+  <data name="nouniverse" xml:space="preserve">
+    <value>Compte titres ordinaire</value>
   </data>
   <data name="offensive" xml:space="preserve">
     <value>Offensif</value>
@@ -171,7 +189,16 @@
   <data name="services" xml:space="preserve">
     <value>Services</value>
   </data>
+  <data name="subtitle" xml:space="preserve">
+    <value>Analyse votre portefeuille ETF avec un oeil expert &lt;a href="#" data-bs-toggle="modal" data-bs-target="#option-modal"&gt;Options&lt;/a&gt;</value>
+  </data>
   <data name="title" xml:space="preserve">
-    <value>Analysez vos portefeuilles ETF avec un oeil expert &lt;a href="#" data-bs-toggle="modal" data-bs-target="#option-modal"&gt;Options&lt;/a&gt;</value>
+    <value>ETF investor essentials</value>
+  </data>
+  <data name="tradingrule" xml:space="preserve">
+    <value>Frais de courtage</value>
+  </data>
+  <data name="universe" xml:space="preserve">
+    <value>Univers d'investissement</value>
   </data>
 </root>

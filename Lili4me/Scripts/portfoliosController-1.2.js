@@ -12,12 +12,13 @@ LoyolApp.PortfolioController.prototype.get = function (action, data, callback, o
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-            url = session.domain + '/api/Portfolios/' + action;
+            url = LoyolApp.Settings.domain + '/api/Portfolios/' + action;
 
         $.ajax({
             type: 'GET',
             contentType: 'application/json; charset=utf-8',
             url: url,
+            async : false,
             data: data,
             crossDomain: true,
             cache: false,
@@ -39,7 +40,7 @@ LoyolApp.PortfolioController.prototype.post = function (action, data, callback) 
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-            url = session.domain + '/api/portfolios/' + action;
+            url = LoyolApp.Settings.domain + '/api/portfolios/' + action;
 
         $.ajax({
             type: 'POST',
@@ -53,7 +54,9 @@ LoyolApp.PortfolioController.prototype.post = function (action, data, callback) 
             beforeSend: function (request) {
                 request.setRequestHeader("Authorization", 'Bearer ' + token);
             },
-            success: callback,
+            success: function (data) {
+                callback(data);
+            },
             error: function (xhr, status, error) {
                 alert(status);
             }
@@ -66,7 +69,7 @@ LoyolApp.PortfolioController.prototype.postform = function (action, data, callba
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
-            url = session.domain + '/api/portfolios/' + action;
+            url = LoyolApp.Settings.domain + '/api/portfolios/' + action;
 
         $.ajax({
             type: 'POST',
@@ -88,8 +91,6 @@ LoyolApp.PortfolioController.prototype.postform = function (action, data, callba
         });
     }
 }
-
-
 
 // render select controls
 LoyolApp.PortfolioController.prototype.select = function (divname, callback) {
@@ -125,4 +126,71 @@ LoyolApp.PortfolioController.prototype.exists = function (id, callback) {
             }
         });
     }
+}
+
+LoyolApp.PortfolioController.prototype.populateHoldings = function (data, div) {
+
+    var myLocalFormat = { style: "currency", currency: "EUR" };
+
+    $(div).empty();
+    $.each(data.Holdings, function (i, item) {
+        var tr = $('<tr>').append(
+            $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.Asset.id)),
+            $('<td>').text(item.Asset.code),
+            $('<td>').text(item.Asset.name),
+            $('<td>').text(item.Asset.class),
+            $('<td class="text-end">').text(item.qty.toFixed(4)),
+            $('<td class="text-end">').text(item.costprice.toFixed(3)),
+            $('<td class="text-end">').text(item.unrealizedpnl.toLocaleString("fr-FR", myLocalFormat)),
+            $('<td class="text-end">').text(parseFloat(100 * item.return).toFixed(2) + "%"),
+            $('<td class="text-end">').text(item.marketprice),
+            $('<td class="text-end">').text(item.npv.toLocaleString("fr-FR", myLocalFormat)),
+            $('<td class="text-end">').text(item.weight + '%')
+        );
+        tr.appendTo(div);
+    });
+}
+
+// fill the documents tables
+LoyolApp.PortfolioController.prototype.populateDocuments = function (data, div) {
+    var tbody = div.find('tbody'),
+        title = div.data('document');
+    tbody.empty();
+    $.each(data, function (i, item) {
+        if (item.title == title) {
+            var a = $('<a>').attr('href', item.url).text(item.title);
+            var tr = $('<tr>').append(
+                $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com' + item.icon)),
+                $('<td>').text(item.code),
+                $('<td>').text(item.name),
+                $('<td>').append(a));
+            tr.appendTo(tbody);
+        }
+    });
+}
+
+// fill the indicators tables
+LoyolApp.PortfolioController.prototype.populateIndicators = function (data, div) {
+    div.empty();
+    $.each(data, function (i, obj) {
+        var net = (100 * obj.netreturn).toFixed(2),
+            std = (100 * obj.stddev).toFixed(2),
+            shp = obj.sharpe.toFixed(2),
+            mdd = (100 * obj.maxdrawdown).toFixed(2),
+            var95 = (100 * obj.var95).toFixed(2);
+        tr = $('<tr>').append(
+            $('<td class="text-center">').text(obj.depth),
+            $('<td class="text-end">').text(net + "%"),
+            $('<td class="text-end">').text(std + "%"),
+            $('<td class="text-end">').text(shp),
+            $('<td class="text-end">').text(mdd + "%"),
+            $('<td class="text-end">').text(var95 + "%")
+        );
+        tr.appendTo(div);
+        if (obj.depth == "STD") {
+            yld = (100 * obj.yield).toFixed(2),
+                $('.yld-container').text(yld);
+        }
+    });
+
 }

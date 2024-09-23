@@ -1,0 +1,663 @@
+﻿
+@{
+    ViewBag.Title = "KYC";
+    Layout = "~/Views/Shared/_layout5.cshtml";
+}
+
+<style>
+
+    .card-body {
+        height: inherit;
+    }
+
+    .container-options .form-check-input {
+        visibility: hidden;
+    }
+
+    .container-options .state-icon {
+        padding-right: 8px;
+    }
+
+    .container-options .selected-option {
+        color: #ad834d;
+    }
+
+    .h-60 {
+        height: 60vh;
+    }
+
+    .h-30 {
+        height: 30vh;
+    }
+
+    .lines-chart-container {
+        height: 250px;
+    }
+
+    .td-img {
+        height: 1em;
+        width: 1em;
+    }
+
+    .key-number {
+        font-size: 5em;
+        font-weight: 600;
+        text-align: center;
+        float: none;
+        color: #30465e;
+    }
+</style>
+
+
+@section header {
+    <!-- The style of my web site for widgets -->
+    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
+}
+
+@section title {
+    Espace client
+}
+
+@section menu {
+    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#credentials">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+    </ul>}
+
+
+<section id="section-start" class="page-section w-100">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark">
+        <h1 class="display-4 portfolioname">Mon portefeuille</h1>
+        <p class="fst-italic text-muted">Utilisation de l'API pour transmettre un ordre sur <a class="text-primary" href="https://etfreporting.com/" target="_blank">ETFReporting.com</a></p>
+    </div>
+
+    <div class="container-position bg-light p-4">
+        <h2>Inventaire</h2>
+        <p class="text-muted">
+            Ci-dessous la situation actuelle de votre portefeuille.
+        </p>
+        <div class="table-responsive">
+            <table class="table table-hover table-sm small">
+                <thead>
+                    <tr>
+                        <th colspan="6" class="text-center">Instrument</th>
+                        <th colspan="5" class="text-center">Portfolio</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Code</th>
+                        <th>Nom</th>
+                        <th>Categories</th>
+                        <th class="text-center">YTD</th>
+                        <th class="text-center">Marché</th>
+                        <th class="text-center">Stock</th>
+                        <th class="text-center">PRU</th>
+                        <th class="text-center">Perf.</th>
+                        <th class="text-center">Valeur</th>
+                        <th class="text-center">Poids</th>
+                    </tr>
+                </thead>
+                <tbody id="holdings"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+    <div class="container-book">
+        <div class="row">
+
+            <div class="col-md-6 my-4">
+                <div class="bg-light p-4">
+                    <h2 class="py-2">Nouvel ordre</h2>
+                    <form class="form-add">
+                        <div class="mb-3 form-floating">
+                            <input class="form-control form-control-md portfoliocode" list="portfolios" id="portfolioid" name="portfolioid" placeholder="Votre portefeuille...">
+                            <datalist id="portfolios">
+                            </datalist>
+                            <label for="assetid">Référence de mon compte</label>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <input class="form-control form-control-md" list="datalist" id="securityid" name="securityid" placeholder="Type to search...">
+                            <datalist id="datalist"></datalist>
+                            <label for="securityid">Titre négocié (ISIN, ticker)</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating datepick">
+                                    <input type="date" class="form-control" id="vd" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                                    <label for="valuedate">Date</label>
+                                    <input type="hidden" id="valuedate" name="valuedate" />
+                                </div>
+                            </div>
+                            @*<div class="col-md-4 col-xs-6">
+                                    <div class="mb-3 form-floating">
+                                        <select class="form-select" aria-label="Default select example" id="status" name="status">
+                                            <option value="">Arbitrage</option>
+                                            <option selected value="INV">Investissement</option>
+                                            <option value="EXT">Apport/Retrait</option>
+                                            <option value="IMP">Reprise de stock</option>
+                                        </select>
+                                        <label for="status">Type d'opération</label>
+                                    </div>
+                                </div>*@
+                            <input type="hidden" name="status" value="" />
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <select class="form-select" aria-label="Default select example" id="units" name="units">
+                                        <option selected value="S">Nombre de titres</option>
+                                        <option value="M">Montant</option>
+                                        <option value="P">% Portefeuille</option>
+                                        <option value="L">% Liquidités</option>
+                                        <option value="X">% Position</option>
+                                    </select>
+                                    <label for="units">Mode de saisie</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <input type="text" class="form-control text-end" id="value" name="value" value="100" step="0.01">
+                                    <label id="label-value" for="value">Nombre de titres</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <input type="number" class="form-control text-end" id="price" name="price" step="0.001" min="0" value="">
+                                    <label for="value">Prix unitaire (*)</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <select class="form-select" aria-label="Default select example" id="ccy" name="ccy">
+                                        <option selected value="EUR">Euro</option>
+                                        <option value="USD">US dollar</option>
+                                        <option value="GBP">GB Pound</option>
+                                    </select>
+                                    <label for="status">Devise</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <select class="form-select" aria-label="Default select example" id="programcode" name="programcode">
+                                        <option selected value="">Aucun</option>
+                                        <option value="1M">Chaque mois</option>
+                                        <option value="3M">Chaque trimestre</option>
+                                        <option value="6M">Chaque semestre</option>
+                                        <option value="12M">Chaque année</option>
+                                    </select>
+                                    <label for="status">Renouvellement</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="mb-3 form-floating">
+                                    <input type="text" class="form-control" id="comment" name="comment" value="">
+                                    <label for="comment">Commentaire de gestion</label>
+                                </div>
+                            </div>
+                            <em class="small">En l'absence de prix, c'est le cours de cloture qui sera pris comme prix de négociation ou de reprise.</em>
+                        </div>
+                        <div class="row">
+                            <div class="d-md-flex justify-content-md-end py-3">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-outline-dark btn-add">Insérer dans le carnet <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6 my-4">
+                <div class="bg-light p-4 h-100">
+                    <h2 class="py-2">Carnet d'Ordres</h2>
+                    <div class="scenario-container">
+                        <ul id="evaluations"></ul>
+                    </div>
+                    <form id="operations-upload" class="upload-book">
+                        <input name="portfoliocode" type="hidden" class="portfoliocode" />
+                        <input name="resetportfolio" type="hidden" value="false" />
+                        <input name="weigts" type="hidden" value="false" />
+                        <div class="table-responsive table-responsive-sm visually-hidden">
+                            <table><tbody></tbody></table>
+                        </div>
+                        <div class="d-md-flex justify-content-center py-5">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" type="submit">Soumettre <i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                        <p class="message fade">Veuillez patienter ...</p>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-operations bg-light p-4">
+        <h2>Opérations</h2>
+        <p class="text-muted">
+            Ci-dessous l'historique de vos opérations.
+        </p>
+        <div class="table-responsive">
+            <table id="operations-table" class="table table-hover table-sm small" data-chart="table" data-page-size="20" data-table="model">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th width="80">Code</th>
+                        <th>Instrument</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th class="text-center">Quantité</th>
+                        <th class="text-center">Prix</th>
+                        <th class="text-center">Brut</th>
+                        <th class="text-center">Frais</th>
+                        <th class="text-center">Net</th>
+                    </tr>
+                </thead>
+                <tbody id="operations"></tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+<div id="credentials" class="modal fade text-black" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content" style="text-align:left; font-size:smaller;text-shadow:none;">
+            <div class="modal-header">
+                <h5 class="modal-title">Identifiez-vous</h5>
+            </div>
+            <form method="post" class="form-credentials">
+                <div class="modal-body">
+                    <div class="mb-3 form-floating">
+                        <input type="email" class="form-control" id="email" name="Email" value="" placeholder="myname@aaaa.com">
+                        <label for="Name">Email adresse</label>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <input type="password" class="form-control" id="password" name="Password" value="Mon mot de passe">
+                        <label for="Name">Password</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-dark">Soumettre</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Contact-->
+<section class="page-section section-contact bg-secondary" id="contact">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">Vous avez une question?</h2>
+                <hr class="divider" />
+                <p class="text-white mb-5">
+                    Vous souhaitez en savoir plus sur cette proposition?
+                    Contactez-nous via le formulaire ci-joint. Nous vous répondrons le plus vite possible!
+                </p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                <div class="py-3">
+                    <form class="form-contact">
+                        <input type="hidden" id="portfolioquestionnaireid" name="questionnaireid" value="2031" />
+                        <input type="hidden" id="userid" name="userid" value="" />
+                        <input type="hidden" id="portfoliocode" name="code" value="" />
+
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="portfolio-name" name="name" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
+                            <label for="portfolio-name">Votre nom et prénom</label>
+                        </div>
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="email" name="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                            <label for="email">Votre adresse email</label>
+                        </div>
+                        <!-- Phone number input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="phone" name="phone" type="tel" placeholder="(33) 6-15-14-15-14" data-sb-validations="required" />
+                            <label for="phone">Votre numéro de téléphone</label>
+                        </div>
+                        <!-- Message input-->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" name="message" type="text" placeholder="Expliquez-nous vos attentes en quelques mots..." style="height: 10rem" data-sb-validations="required"></textarea>
+                            <label for="message">Vos attentes particulières</label>
+                        </div>
+
+                        <!-- Submit Button-->
+                        <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Soumettre</button></div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="warning" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Un email vient d'être émis afin de valider votre adresse.
+                    Cliquez sur le lien contenu dans le message afin de transmettre votre demande.
+                    Dans l'attente de parler de vive voix de votre projet, nous vous souhaitons une excellente journée.
+                </p>
+                <p><strong>John Doe</strong><br /><em>Conseiller en gestion de patrimoine</em></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="//d3js.org/queue.v1.min.js"></script>
+
+    <script>
+
+        var records = [];
+
+        var removerow = function (k) {
+            records.splice(k, 1);
+            $('#evaluations li').each(function (i, li) {
+                if ($(this).attr('id') == 'li-' + k)
+                    li.remove();
+            });
+        };
+
+        $(document).ready(function () {
+
+            var $ast = new LoyolApp.AssetsController(),
+                $ptf = new LoyolApp.PortfolioController(),
+                $cus = new LoyolApp.CustomerController(),
+                $ope = new LoyolApp.OperationsController();
+
+            // credential modal
+            var cModal = new bootstrap.Modal(document.getElementById('credentials'), {
+                keyboard: false
+            });
+
+            // warning modal
+            var wModal = new bootstrap.Modal(document.getElementById('warning'), {
+                keyboard: false
+            });
+
+            var email = $.cookie('credentials-u'),
+                pwd = $.cookie('credentials-p');
+
+            // populate portfolios
+            var populatePortfolios = function (portfolios) {
+                var list = $('#portfolios'),
+                    vd = $('#vd');
+                $.each(portfolios, function (j, item) {
+                    var o = $('<option value="' + item.Portfolio.code + '">').text(item.Portfolio.name);
+                    o.appendTo(list);
+                    if (j == 0) {
+                        $('.portfoliocode').val(item.Portfolio.code);
+                        $('.portfolioname').html(item.Portfolio.name);
+                        refreshHoldings(item.Portfolio.code, vd.val());
+                        refreshOperations(item.Portfolio.code);
+                    }
+                });
+            }
+
+            // refresh holding table
+            var refreshHoldings = function (code, vd) {
+                $ptf.get('holdings', { code: code, valuedate: vd }, function (holdings) {
+                    populateHoldings(holdings, '#holdings');
+                })
+            }
+
+            // refresh operation table
+            var refreshOperations = function (code) {
+                $ope.get('portfolioindex', { code: code }, function (operations) {
+                    populateOperations(operations, '#operations');
+                })
+            }
+
+            // on credentials submit
+            $('.form-credentials').submit(function () {
+                var params = $(this).serialize();
+                $cus.getreports(params, function (data) {
+                    if (data) {
+                        populatePortfolios(data);
+                        $.cookie('credentials-u', $('#email').val());
+                        $.cookie('credentials-p', $('#password').val())
+                        cModal.hide();
+                    }
+                });
+                return false;
+            })
+
+            if (!email || email == '' || !pwd || pwd == '') {
+                cModal.show();
+            }
+            else
+                $cus.getreports({ email: email, password: pwd }, function (data) {
+                    populatePortfolios(data);
+                });
+
+
+            // assets selector
+            $ast.get('SelectView', { id: 'Code' }, function (data) {
+                var list = $('#datalist');
+                $.each(data, function (j, item) {
+                    var o = $('<option value="' + item.Value + '">').text(item.Text);
+                    o.appendTo(list);
+                });
+            });
+
+            $('#status').on('change', function () {
+                if ($(this).val() == 'INV') {
+                    $('#units').val('M');
+                    $('#label-value').text('Montant');
+                }
+                else if ($(this).val() == 'EXT') {
+                    $('#units').val('M');
+                    $('#label-value').text('Apport/retrait');
+                }
+                else if ($(this).val() == 'IMP') {
+                    $('#units').val('S');
+                    $('#label-value').text('Nombre de titres');
+                }
+                else {
+                    $('#units').val('P');
+                    $('#label-value').text('% Portefeuille');
+                }
+            })
+
+            $('#units').on('change', function () {
+                var sel = $('#units option:selected').text();
+                $('#label-value').text(sel);
+            })
+
+            $('#securityid').on('keyup', function () {
+                if (this.value.toUpperCase() == 'EUR') {
+                    $('#units').val('M'); // default in amount
+                    $('#status').val('EXT'); // external
+                }
+            })
+
+            var addEval = function (result) {
+                var $li = $('<li>'),
+                    i = records.length;
+                $li.attr('id', 'li-' + i)
+                var del = '<a href="#edition" onclick="removerow(' + i + ')"> Supprimer</a>';
+                $li.html(result.Message + del);
+                $li.appendTo($('#evaluations'));
+                records.push(result.Object);
+            };
+
+            var additem = function (rec, name, value) {
+                return '<input type="text" value="' + value + '" name="' + rec + name + '">';
+            }
+
+            var recordsToTable = function () {
+                var tb = $('.upload-book table tbody:last-child');
+                tb.empty();
+                records.forEach(function (r, i) {
+                    var pref = 'Records[' + i + '].';
+                    var tr = $('<tr>').append(
+                        $('<td>').html(additem(pref, 'SecurityID', r.SecurityID)),
+                        $('<td>').html(additem(pref, 'ValueDate', r.ValueDate)),
+                        $('<td>').html(additem(pref, 'Status', r.Status == null ? 'PEN' : r.Status)),
+                        $('<td>').html(additem(pref, 'Value', r.Value)),
+                        $('<td>').html(additem(pref, 'Units', r.Units)),
+                        $('<td>').html(additem(pref, 'Price', r.Price)),
+                        $('<td>').html(additem(pref, 'Ccy', r.Ccy)),
+                        $('<td>').html(additem(pref, 'ProgramCode', r.ProgramCode == null ? '' : r.ProgramCode))
+                    );
+                    tr.attr('id', 'row-' + i);
+                    tr.appendTo(tb);
+                });
+            }
+
+            $('.form-add').submit(function () {
+                $('#valuedate').val($('#vd').val());
+                var params = $(this).serialize();
+                $ope.post('Eval', params, function (result) {
+                    if (result.Success)
+                        addEval(result);
+                    else
+                        alert(result.Message);
+                })
+                return false;
+            })
+
+            $('form.upload-book').submit(function () {
+                $('.message').removeClass('fade');
+                var $fro = $(this);
+                $fro.find('.btn').attr('disabled', 'disabled');
+                recordsToTable();
+                var params = $fro.serialize();
+                $ptf.post('uploadoperations', params, function (result) {
+                    $fro.find('.btn').removeAttr('disabled');
+                    $('.message').addClass('fade');
+                    if (result.Success) {
+                        records = []; // empty the array of records
+                        $('#evaluations').empty(); // and the display list
+                        refreshHoldings(result.Code, $('#vd').val()) // refresh the table of positions
+                        refreshOperations(result.Code) // refresh the table of operations
+                    }
+                    else {
+                        $('.form-container').show();
+                        var warnings = $('#error-message');
+                        warnings.empty();
+                        warnings.append('<span>' + result.Message + '</span>')
+                        var list = warnings.append('<ul></ul>');
+                        $.each(result.RuleViolations, function (i, r) {
+                            list.append('<li>' + r.ErrorMessage + '</li>');
+                        });
+                        warnings.attr('hidden', false);
+                        errModal.show();
+                    }
+                });
+                return false;
+            });
+
+            // return asset kpi
+            var assetkpi = function (node, depth) {
+                var v = null;
+                $.each(node.Stats, function (i, k) {
+                    if (k.depth == depth) {
+                        v = k;
+                        return false; // break
+                    }
+                })
+                return v;
+            }
+
+            var myLocalFormat = {
+                style: "currency",
+                currency: "EUR"
+            }
+
+            /********************************************************/
+            /************ Holdings table ****************************/
+            /********************************************************/
+            var populateHoldings = function (data, div) {
+                $(div).empty();
+                $.each(data.Holdings, function (i, item) {
+                    var mtd = assetkpi(item, 'MTD'),
+                        ytd = assetkpi(item, 'YTD'),
+                        tr = item.Asset.code == 'EUR' ?
+                            $('<tr>').append(
+                                $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.Asset.id)),
+                                $('<td>').text(item.Asset.code),
+                                $('<td>').text(item.Asset.name),
+                                $('<td>').text(item.Asset.class),
+                                $('<td>').attr('colspan', 5).addClass('text-center').text(''),
+                                $('<td>').addClass('text-end').text(item.npv.toLocaleString("fr-FR", myLocalFormat)),
+                                $('<td>').addClass('text-end').text(item.weight + '%'))
+                        :
+                            $('<tr>').append(
+                            $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.Asset.id)),
+                            $('<td>').text(item.Asset.code),
+                            $('<td>').text(item.Asset.name),
+                            $('<td>').text(item.Asset.class),
+                            $('<td>').addClass('text-end').text(ytd ? parseFloat(100 * ytd.netreturn).toFixed(2) + "%" : ''),
+                            $('<td>').addClass('text-end').text(item.marketprice),
+                            $('<td>').addClass('text-end').text(item.qty),
+                            $('<td>').addClass('text-end').text(item.costprice),
+                            $('<td>').addClass('text-end').text(parseFloat(100 * item.return).toFixed(2) + "%"),
+                            $('<td>').addClass('text-end').text(item.npv.toLocaleString("fr-FR", myLocalFormat)),
+                            $('<td>').addClass('text-end').text(item.weight + '%')
+                        );
+                    tr.appendTo(div);
+                });
+            }
+
+            /********************************************************/
+            /************ Operations table ****************************/
+            /********************************************************/
+            var populateOperations = function (data, div) {
+                $(div).empty();
+                $.each(data, function (i, item) {
+                    if (!item.IsExternal && item.asset.code != 'EUR') {
+                        var tr = $('<tr>').append(
+                            $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.asset.id)),
+                            $('<td>').attr('width', 80).text(item.asset.code),
+                            $('<td>').text(item.asset.name),
+                            $('<td>').text(item.date.substring(0, 10)),
+                            $('<td>').text(item.status),
+                            $('<td>').addClass('text-end').text(item.qty),
+                            $('<td>').addClass('text-end').text(item.price.toLocaleString("fr-FR", myLocalFormat)),
+                            $('<td>').addClass('text-end').text(item.gross.toLocaleString("fr-FR", myLocalFormat)),
+                            $('<td>').addClass('text-end').text(item.fees.toLocaleString("fr-FR", myLocalFormat)),
+                            $('<td>').addClass('text-end').text(item.net.toLocaleString("fr-FR", myLocalFormat)));
+                        tr.appendTo(div);
+                    }
+
+                });
+            }
+
+            // contact form
+            $('.form-contact').submit(function () {
+                var data = $(this).serialize();
+                robo.post(data, function (result) {
+                    wModal.show();
+                });
+                return false;
+            })
+
+        });
+
+
+    </script>
+}

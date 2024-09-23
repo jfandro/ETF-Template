@@ -15,6 +15,7 @@
     <link href="~/Content/prettify.css" rel="stylesheet" />
 
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/controllers")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -52,13 +53,6 @@
     <script src="~/Scripts/bootstrap-switch.js"></script>
 
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
-
-
-    <!-- Declare the following controllers to manage all the calls (get and post) to the LILI server with API -->
-    <script src="~/Scripts/signinController.js"></script>
-    <script src="~/Scripts/portfoliosController.js"></script>
-    <script src="~/Scripts/assetsController.js"></script>
-    <script src="~/Scripts/instrumentsController.js"></script>
 
     @RenderSection("scripts", required: false)
 

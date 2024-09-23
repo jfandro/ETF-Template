@@ -88,7 +88,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Référence.
+        ///   Recherche une chaîne localisée semblable à Fonds de référence (benchmark).
         /// </summary>
         public static string benchmark {
             get {
@@ -97,7 +97,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Prodent.
+        ///   Recherche une chaîne localisée semblable à Prudent.
         /// </summary>
         public static string care {
             get {
@@ -124,7 +124,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Opéré par la plateforme de services Lili - Copyright LOYOL SAS 2023.
+        ///   Recherche une chaîne localisée semblable à Service opéré par la plateforme Lili - Copyright LOYOL SAS 2023.
         /// </summary>
         public static string copyright {
             get {
@@ -133,7 +133,25 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Frais %.
+        ///   Recherche une chaîne localisée semblable à Dividendes réinvestis.
+        /// </summary>
+        public static string divc {
+            get {
+                return ResourceManager.GetString("divc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pays de domiciliation (si imposition).
+        /// </summary>
+        public static string domiciliation {
+            get {
+                return ResourceManager.GetString("domiciliation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Frais gestion pilotée %.
         /// </summary>
         public static string fees {
             get {
@@ -151,6 +169,15 @@ namespace Resources {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Autorise la fraction de titres.
+        /// </summary>
+        public static string fractionable {
+            get {
+                return ResourceManager.GetString("fractionable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Accueil.
         /// </summary>
         public static string home {
@@ -160,7 +187,7 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à  Enregistrez vos paramètres (sous forme de cookies de votre navigateur) si vous souhaitez les retrouver par défaut lors de la prochaine interrogation..
+        ///   Recherche une chaîne localisée semblable à Enregistrer vos paramètres (cookie de votre navigateur) si vous souhaitez les retrouver lors de la prochaine analyse. Les frais correspondent aux frais de gestion prélevés par votre assureur ou votre intermédiaire..
         /// </summary>
         public static string labelOptions {
             get {
@@ -169,11 +196,38 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Nom.
+        ///   Recherche une chaîne localisée semblable à Nom de votre portefeuille.
         /// </summary>
         public static string name {
             get {
                 return ResourceManager.GetString("name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pas de benchmark.
+        /// </summary>
+        public static string nobenchmark {
+            get {
+                return ResourceManager.GetString("nobenchmark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Pas de domiciliation .
+        /// </summary>
+        public static string nodomiciliation {
+            get {
+                return ResourceManager.GetString("nodomiciliation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Compte titres ordinaire.
+        /// </summary>
+        public static string nouniverse {
+            get {
+                return ResourceManager.GetString("nouniverse", resourceCulture);
             }
         }
         
@@ -223,11 +277,38 @@ namespace Resources {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Analysez vos portefeuilles ETF avec un oeil expert &lt;a href=&quot;#&quot; data-bs-toggle=&quot;modal&quot; data-bs-target=&quot;#option-modal&quot;&gt;Options&lt;/a&gt;.
+        ///   Recherche une chaîne localisée semblable à Analyse votre portefeuille ETF avec un oeil expert &lt;a href=&quot;#&quot; data-bs-toggle=&quot;modal&quot; data-bs-target=&quot;#option-modal&quot;&gt;Options&lt;/a&gt;.
+        /// </summary>
+        public static string subtitle {
+            get {
+                return ResourceManager.GetString("subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à ETF investor essentials.
         /// </summary>
         public static string title {
             get {
                 return ResourceManager.GetString("title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Frais de courtage.
+        /// </summary>
+        public static string tradingrule {
+            get {
+                return ResourceManager.GetString("tradingrule", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Univers d&apos;investissement.
+        /// </summary>
+        public static string universe {
+            get {
+                return ResourceManager.GetString("universe", resourceCulture);
             }
         }
     }

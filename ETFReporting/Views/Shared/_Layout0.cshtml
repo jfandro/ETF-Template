@@ -1,42 +1,62 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<!doctype html>
+<html lang="en" class="h-100">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="copyright" content="ETFReporting is a registered trademark of LOYOL" />
+    <meta name="description" content="ETFReporting is a free service to get a profesional vision of any portfolio invested in ETF" />
+    <meta name="author" content="LOYOL SAS, France" />
+    <meta name="keywords" content="ETF Portfolio Models Savings Allocation Reporting Dataviz D3 Free" />
+    <meta name="robots" content="index,follow" />
+
+    <title>ETF Reporting</title>
+    <link href="~/Resources/ETFReporting.jpg" rel="shortcut icon" type="image/x-icon">
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/cover.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/duyplus/fontawesome-pro@6.4.0/css/all.min.css">
+
+    @RenderSection("header", false)
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+<body class="d-flex h-100 text-white bg-dark">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <nav class="nav nav-masthead justify-content-center">
+                    <a class="nav-link" aria-current="page" href="/">@Resources.Home.home</a>
+                    <a class="nav-link" href="/Home/Features">@Resources.Home.services</a>
+                    <a class="nav-link" href="/Home/HowTo">@Resources.Home.format</a>
+                </nav>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+        </header>
+
+        @RenderBody()
+
+        <div id="error-modal" class="modal text-black text-start" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Erreur</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p id="error-message"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+
+        <footer class="mt-auto text-white-50">
+            <p>@Resources.Home.copyright</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
 </body>
+
+@RenderSection("scripts", false)
+
+
 </html>

@@ -127,11 +127,12 @@ var renderQuestion = function (panel, question, controller) {
         });
     });
 
-    $('.btn-project').click(function () {
-        var item = $(this);
+    $('.btn-next-questionnaire').click(function () {
+        var item = $(this),
+            questionnaireid = item.data('questionnaire');
         panel.fadeOut('slow', function () {
             // launch related survey
-            $k.get('Complete', { id: 2, objectid: item.data('rel') }, function (data) {
+            $k.get('Complete', { id: questionnaireid, objectid: item.data('rel') }, function (data) {
                 // title of the questionnaire
                 $('#questionnaire-name').html(data.Name);
                 // add a property to container
@@ -148,6 +149,17 @@ var renderQuestion = function (panel, question, controller) {
     var d = $('.checked-list-box input:checked')[0];
     $('.btn-question').attr('disabled', !d);
 
+}
+
+// get the next questionnaire
+var nextQuestionnaire = function (question, callback) {
+    $k.get('NextQuestionnaire', { id: question.QuestionnaireID }, function (result) {
+        if (result.ID > 0) {
+            // title of the new questionnaire
+            $('#questionnaire-name').html(result.Name);
+            callback(result);
+        }
+    })
 }
 
 // render a container with one question
@@ -202,20 +214,30 @@ var renderContainer = function (panel, question, controller) {
                 .attr('data-rel', panel.data('reference'))
                 .text('Suivant');
         actions.append(b2);
+        // add a new line for actions
+        list.append(actions);
+        // render the options by calling lili server script
+        renderQuestion(panel, question, controller);
     }
     else
     {
-        var b2 = $('<button></button>')
-        .addClass('btn btn-sm btn-project')
-        .attr('data-question', 0)
-        .attr('data-rel', panel.data('reference'))
-        .text('Mon Projet...');
-        actions.append(b2);
-    }
-    // add a new line for actions
-    list.append(actions);
+        nextQuestionnaire(question, function (questionnaire) {
+            if (questionnaire.ID > 0) {
+                var b2 = $('<button></button>')
+                    .addClass('btn btn-sm btn-next-questionnaire')
+                    .attr('data-question', 0)
+                    .attr('data-questionnaire', questionnaire.ID)
+                    .attr('data-rel', panel.data('reference'))
+                    .text(questionnaire.Name + '...');
+                actions.append(b2);
+                // add a new line for actions
+                list.append(actions);
+                // render the options by calling lili server script
+                renderQuestion(panel, question, controller);
+            }
+        })
 
-    // render the options by calling lili server script
-    renderQuestion(panel, question, controller);
+    }
+
 
 }

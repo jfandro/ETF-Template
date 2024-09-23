@@ -1,0 +1,83 @@
+﻿@model Lili4me.Models.ClientPortal
+
+@{
+    ViewBag.Title = "Operations dashboard";
+    Layout = "~/Views/Shared/_layout5.cshtml";
+}
+
+@section title {
+    Mes Opérations
+}
+
+@section header {
+    <!-- The style of my web site for widgets -->
+    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
+}
+
+<section class="page-section">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+        <h1 class="display-4">Connaissance Client</h1>
+        <article class="fst-italic text-bg-secondary">
+            Cet espace privé et sécurisé est centré sur l'activité opérationnelle de
+            votre client. Figurent tous les arbitrages (achats et ventes),
+            les opérations sur titres (fusions, divisions) ainsi que
+            les opérations programmées avec le courtier ou la compagnie d'assurance.
+        </article>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="container py-5">
+            <div class="container-kyc mx-5">
+                <h3>Vos opérations</h3>
+                <p>
+                    Retrouvez ci-dessous toutes les opérations enregistrées
+                    sur votre portefeuille. Sont présentes les opérations exécutées
+                    et celles en cours d'exécution. S'agissant de ces dernières,
+                    elles impacteront l'exposition et les liquidités de votre
+                    portfeuille uniquement après contrôle et validation
+                    de notre part.
+                </p>
+                <div class="py-2">
+                    @Html.Partial("_operations")
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            var domain = LoyolApp.Settings.domain;
+            var sg = new LoyolApp.SignInController(domain),
+                $ope = new LoyolApp.OperationsController();
+
+            //var session = LoyolApp.Session.getInstance().get();
+            var cred = { access_token: '@ViewBag.token', userGuid: 'xxx', userName: 'etfreporting', expires_in: @ViewBag.expires  }
+            sg.setcredentials(cred);
+
+            // refresh operations table
+            var refreshOperations = function (code) {
+                $ope.get('portfolioindex', { code: code }, function (operations) {
+                    $ope.populateTable(operations, '#operations', false);
+                })
+            }
+
+            // check report
+            credentialsControl('@Model.Code', function (report) {
+                $('.text-username').html(report.Portfolio.name);
+                refreshOperations(report.Portfolio.code);
+            })
+
+        });
+
+
+    </script>
+}

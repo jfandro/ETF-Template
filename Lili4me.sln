@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lili4me", "Lili4me\Lili4me.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETFReporting", "ETFReporting\ETFReporting.csproj", "{F99ACEA5-49CF-4C91-A165-3C848C64DDE2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ETFTemplate", "ETFTemplate\ETFTemplate.csproj", "{897832CD-39CC-40D2-A466-D314C6B7247F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F99ACEA5-49CF-4C91-A165-3C848C64DDE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F99ACEA5-49CF-4C91-A165-3C848C64DDE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F99ACEA5-49CF-4C91-A165-3C848C64DDE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{897832CD-39CC-40D2-A466-D314C6B7247F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{897832CD-39CC-40D2-A466-D314C6B7247F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{897832CD-39CC-40D2-A466-D314C6B7247F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{897832CD-39CC-40D2-A466-D314C6B7247F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

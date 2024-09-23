@@ -1,97 +1,522 @@
 ﻿
 @{
     ViewBag.Title = "KYC";
+    Layout = "~/Views/Shared/_layout5.cshtml";
 }
-<link href="~/Content/mydataviz.css" rel="stylesheet" />
-<style>
-    .container-question {
-        color:#000;
-    }
-</style>
+
 
 @section header {
-    <section class="jumbotron section-header header-image" style="background-image:url('https://i.pinimg.com/originals/ae/32/50/ae32501f76b85d2a3cc01ebdb5860385.jpg')">
-        <div class="container text-center">
-            <h1>Know Your Customer</h1>
-            <h2 id="questionnaire-name"></h2>
-            <p>N°Ticket <span id="ticket"></span></p>
-        </div>
-    </section>
+    <!-- The style of my web site for widgets -->
+    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
 }
 
-<section class="section-b" style="height:100vh;">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2">
-                <div class="container-question"></div>
+<style>
+
+    .card-body {
+        height:inherit;
+    }
+    .container-options .form-check-input {
+        visibility: hidden;
+    }
+
+    .container-options .state-icon {
+        padding-right: 8px;
+    }
+
+    .container-options .selected-option {
+        color: #ad834d;
+    }
+
+    .h-60 {
+        height: 60vh;
+    }
+
+    .h-30 {
+        height: 30vh;
+    }
+
+    .lines-chart-container {
+        height: 250px;
+    }
+
+    article::first-letter {
+        -webkit-initial-letter: 4 5;
+        initial-letter: 4 4;
+        color: rgba(var(--bs-primary-rgb), var(--bs-text-opacity)) !important;
+        font-weight: bold;
+        padding: 1em;
+    }
+
+</style>
+
+<section id="section-start" class="page-section w-100">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+        <h1 class="display-4">Mon robot conseiller</h1>
+        <article class="fst-italic text-bg-secondary">
+            L'expérience que nous vous proposons de vivre est celle d'une personne physique en quête 
+            d'une solution de placement financier. Si vous êtes un conseiller professionnel, cette expérience
+            vous concerne au premier chef puisqu'elle va vous montrer comment déployer facilement et à moindres coûts
+            votre automate pour capter de nouveaux clients sur la base de votre expertise et de vos produits.
+            Nous allons utiliser l'API <a class="text-primary" href="https://etfreporting.com/" target="_blank">ETFReporting.com</a>
+            pour déployer <u>sur votre site internet</u> un processus de connaissance client
+            conçu par vos soins. On se retourve au terme du questionnaire pour parler solution.
+            Rappel : l'expérience est anonyme et non intrusive.
+        </article>
+    </div>
+
+    <div class="holder d-flex align-items-center justify-content-center">
+        <div class="container">
+            <div class="row">
+                <div class="container-questionnaire col-md-8 mx-auto py-4">
+                    <div class="card rounded border-0 position-relative">
+                        <div class="card-header">
+                            <h4 class="text-uppercase fw-weight-bold mb-0 question-title"></h4>
+                            <p class="text-gray fst-italic mb-0 question-name"></p>
+                        </div>
+                        <div class="card-body container-question">
+                        </div>
+                        <div class="card-footer">
+                            <p class="small text-gray">
+                                Réponse <span class="question-mandatory"></span> - choix <span class="question-multiple"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container-kyc col-lg-7 mx-auto visually-hidden">
+                    <h2>Synthèse de votre profil</h2>
+                    <div class="py-3">
+                        <p>
+                            Avant de concevoir et de voir en détail notre proposition, nous vous invitons à valider les réponses
+                            données à notre questionnaire. Le niveau de risques ou l'impact du portefeuille
+                            que nous allons vous dépendent de celles-ci.
+                        </p>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="kyc" class="table">
+                            <thead>
+                                <tr>
+                                    <th>A la question</th>
+                                    <th>Vous avez répondu</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+
+                    <h2 class="py-3">Validation requise</h2>
+                    <div>
+                        <p>
+                            Avant de concevoir notre proposition et voir en détail ses différentes composantes, 
+                            nous vous invitons à <b>valider la synthèse</b> présentée ci-dessus. 
+                            Le niveau de risques ou l'impact du portefeuille en matière de durabilité
+                            qui seront retenus en dépendent. Merci.
+                        </p>
+                    </div>
+
+                    <form class="creation-form" method="post">
+
+                        <input type="hidden" id="StartDate" name="StartDate" value="2019-12-31" />
+                        <input type="hidden" id="RiskLevel" name="RiskLevel" value="4" />
+                        <input type="hidden" id="IsModel" name="IsModel" value="false" />
+                        <input type="hidden" id="Name" name="Name" value="Notre proposition" />
+                        <input type="hidden" id="Code" name="Code" value="" />
+                        <input type="hidden" id="minutes" name="minutes" value="60" />
+                        <input type="hidden" id="Persistence" name="Persistence" value="false" />
+                        <input type="hidden" id="PositionDate" name="PositionDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" />
+                        <p>
+                            Il est important de rappeller que
+                            la composition proposée pour ce portefeuille peut être revue totalement ou partiellement afin de
+                            prendre en compte d'autres points que vous nous partagerez lors d'un prochain entretien.
+                        </p>
+
+                        <div class="align-content-center">
+                            <button type="submit" class="btn btn-primary">Je valide cette synthèse</button>
+                            <button type="button" class="btn btn-primary btn-redo">Je recommence le questionnaire</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="section-portfolio" class="page-section min-vh-100 section-portfolio visually-hidden">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+        <h1 class="display-4">Construction du Portefeuille</h1>
+        <article class="fst-italic text-bg-secondary">
+            Le <b>questionnaire</b> validé, place à la construction de l'offre.
+            A cet instant, les informations collectées vous ont permis
+            de faire une proposition qui correspond au profil et aux besoins de votre interlocuteur.
+            Pour réaliser son portefeuille à la carte, vous avez choisi parmi vos modèles administrées sur
+            <a class="text-primary" href="https://etfreporting.com/" target="_blank">ETFReporting.com</a>
+            ceux qui répondent aux attentes de votre prospect (enveloppe, thématiques, niveau de durabilité), 
+            puis régler l'allocation afin de respecter son profil de risques.
+        </article>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="container py-5">
+            <div class="py-5">
+                <p class="well">
+                    Avant de découvrir notre proposition en détails, voici la liste de nos <b>portefeuilles modèles</b>
+                    que nous avons retenus pour répondre favorablement aux objectifs de votre projet.
+                    Ensuite nous avons ajuster le poids de chaque modèle
+                    afin de coller à votre profil de risques tel que
+                    nous l'avons compris via notre questionnaire.
+                    Si cette sélection ne correspond pas à vos attentes,
+                    n'hésitez pas à <a href="#" class="btn-redo">revenir sur le questionnaire</a>.
+                </p>
+                <div id="assets" class="assets-container card-group p-5"></div>
+            </div>
+
+
+            <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+                <h1 class="display-4">L'art de la Présentation</h1>
+                <article class="fst-italic text-bg-secondary">
+                    C'est l'étape la plus importante de l'expérience puisque que c'est ici que vous
+                    allez convaincre votre interlocuteur de votre expertise et de votre maîtrise.
+                    Présenter une proposition financière est un exercice délicat
+                    car son succès dépend essentiellement du niveau de connaissance de votre interlocuteur.
+                    Nous vous accompagnons en vous dotant d'une librairie de +50 graphiques interactifs branchés à nos API sont à votre disposition. 
+                    Opensource, ils se déploient et se personnalisent en quelques lignes de codes.
+                    A vous de laisser place à votre créativité et votre pouvoir de séduction.
+                </article>
+            </div>
+
+            <div class="row align-items-md-stretch">
+                <div class="col-lg-6 mx-auto">
+
+                    <div class="mb-4 p-3 bg-light">
+                        <h2>Allocation</h2>
+                        <div class="py-3">
+                            <p>Voici la composition actualisée de notre proposition:</p>
+                        </div>
+                        <div class="treemap-container w-100 h-60">
+                            <div id="tree1" class="portfolio-content treemap allocation-container"></div>
+                        </div>
+                        <div class="py-3">
+                            Aliquam posuere nulla erat, vitae cursus velit pellentesque quis. Vestibulum vitae sodales elit, sit amet ullamcorper nunc.
+                            Nunc ullamcorper lorem ut massa pretium viverra. Maecenas finibus vitae mauris in laoreet. Vivamus ac egestas ligula.
+                            Curabitur imperdiet sapien lorem,
+                            vitae egestas eros imperdiet vitae. Pellentesque fringilla ipsum id felis aliquam, vel tempor eros accumsan
+                        </div>
+                    </div>
+
+                    <div class="mb-4 p-3 bg-light">
+                        <h2>Performances</h2>
+                        <div class="py-3">
+                            <p>
+                                Voici la performance de ce portefeuille sur les 3 dernières années.
+                                Il est important de préciser à ce stade que les résultats passés
+                                ne préjugent en rien des résultats futurs, toutes les informations
+                                présentées dans ce rapport n'ayant pour objet de vous sensibiliser
+                                aux risques à prendre pour atteindre votre objectif de rendement.
+                            </p>
+                        </div>
+                        <div class="lines-chart-container py-5">
+                            <div id="navs" class="dc-chart lines-chart navs-container portfolio-content" data-option="YTD" data-animation="1000"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4 p-3 bg-light rounded-2">
+                        <h2>Risques et performances</h2>
+                        <p>
+                            Nous terminons la synthèse de cette proposition avec un tableau complet
+                            rassemblant tous les indicateurs de performances et de risques sur
+                            les exercices passés. Ces données sont calculées à partir des
+                            valeurs liquidatives du portefeuille depuis sa création.
+                        </p>
+                        <div class="table-responsive container-stats">
+                            <table class="table table-condensed table-dark small">
+                                <thead>
+                                    <tr>
+                                        <th>Option</th>
+                                        <th>Rendement</th>
+                                        <th>Volatilité</th>
+                                        <th>Ratio Sharpe</th>
+                                        <th>Perte max.</th>
+                                        <th>Var95</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <p>Ces indicateurs de risques et de performances ne préjugent pas des indicateurs futurs.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6 mx-auto">
+                    <div class="mb-4 p-3 bg-light">
+                        <h2>Exposition sectorielle</h2>
+                        <div class="py-3">
+                            D'un point de vue sectoriel, voici les principaux secteurs sur lesquels vous serez  par
+                            notre proposition.liquam feugiat magna diam, a faucibus enim interdum ut. Vivamus accumsan urna tristique diam maximus ullamcorper.
+                            Aliquam posuere nulla erat, vitae cursus velit pellentesque quis. Vestibulum vitae sodales elit, sit amet ullamcorper nunc.
+                            Nunc ullamcorper lorem ut massa pretium viverra. Maecenas finibus vitae mauris in laoreet. Vivamus ac egestas ligula.
+                            Curabitur imperdiet sapien lorem,
+                            vitae egestas eros imperdiet vitae. Pellentesque fringilla ipsum id felis aliquam, vel tempor eros accumsan
+                        </div>
+                        <div id="sectors" class="portfolio-content sectormap w-100 h-60" data-legend=""></div>
+                        <div class="py-3">
+                            A l'intar de la répartition sectorielle,
+                            Vous pouvez rajouter dans votre présentation d'autres distributions comme la taille de capitalisation,
+                            les émetteurs, les ratings ...etc.
+                        </div>
+                    </div>
+                    <div class="mb-4 p-3 bg-light">
+                        <h2>Expositions géographiques</h2>
+                        <div class="py-3">
+                            <p>
+                                Pour représenter vos risques d'expositions, rien de mieux qu'une map mode
+                                Intégrer un tel widget est assez simple. Veuillez d'abord déclarer une feuille de style pour les pays, les océans et des frontières.
+                                Attention, la couleur des expositions n'est pas gérée dans ce fihcier.
+                            </p>
+                        </div>
+                        <div id="world" class="geomap w-100 h-30" data-table="#geo-exposures"></div>
+                        <div class="py-3">
+                            <p>Un tableau peut accompagner la map monde afin de préciser les différentes expositions géographique de cette proposition</p>
+                            <div class="table-responsive w-100">
+                                <table class="table table-dark table-condensed w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>Zone géographique</th>
+                                            <th>Exposition actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="geo-exposures"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-4 p-3 bg-light">
+                        <h2>Impact sur l'environnement</h2>
+                        <div class="py-3">
+                            <p>
+                                Le radar ci-dessous affiche l'intensité des différentes thématiques
+                                engagées en matière d'environnement.
+                            </p>
+                        </div>
+                        <div id="radar-e" class="radar w-100 h-30" data-question="1085"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- Contact-->
+<section class="page-section section-contact bg-secondary visually-hidden" id="contact">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+        <h1 class="display-4">Mise en relation</h1>
+        <article class="fst-italic text-bg-secondary">
+            Jusqu'à cette étape, le parcours est resté <u>non intrusif</u> se restreignant
+            à un questionnaire <u>anonyme</u> pour instaurer un niveau de confiance élevé.
+            Il est temps d'entrer en relation après avoir échangé besoins et savoir-faire.
+            Le formulaire ci-après va permettre à votre prospect d'initier la mise en relation par
+            le biais un email (option SMS) de validation. 
+            C'est seulement après la validation de ce mail que tous les éléments produits
+            au cours de cette expérience
+            (compte utilisateur, questionnaire et portefeuille) seront conservés dans <u>votre atelier</u>.
+            Aussitôt informé, vous pourrez prendre connaissance de ces informations, pour ensuite reprendre
+            contact avec le prospect, compléter votre proposition ou produire un rapport personnalisé conçu
+            avec Power BI par exemple.
+        </article>
+    </div>
+
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">Rencontrons-nous!</h2>
+                <hr class="divider" />
+                <p class="text-white mb-5">
+                    Vous souhaitez en savoir plus sur cette proposition?
+                    Contactez-nous via le formulaire ci-joint. Nous vous répondrons le plus vite possible!
+                </p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                <div class="py-3">
+                    <form class="form-contact">
+                        <input type="hidden" id="portfolioquestionnaireid" name="questionnaireid" value="2031" />
+                        <input type="hidden" id="userid" name="userid" value="" />
+                        <input type="hidden" id="portfoliocode" name="code" value="" />
+
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="portfolio-name" name="name" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
+                            <label for="portfolio-name">Votre nom et prénom</label>
+                        </div>
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="email" name="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                            <label for="email">Votre adresse email</label>
+                        </div>
+                        <!-- Phone number input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="phone" name="phone" type="tel" placeholder="(33) 6-15-14-15-14" data-sb-validations="required" />
+                            <label for="phone">Votre numéro de téléphone</label>
+                        </div>
+                        <!-- Message input-->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" name="message" type="text" placeholder="Expliquez-nous vos attentes en quelques mots..." style="height: 10rem" data-sb-validations="required"></textarea>
+                            <label for="message">Vos attentes particulières</label>
+                        </div>
+
+                        <!-- Submit Button-->
+                        <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Soumettre</button></div>
+                    </form>
+                </div>
+
+                <div class="py-3">
+                    <p class="text-white mb-5">
+                        NOTA-BENA : Une fois la validation faite, votre prospect peut recevoir un lien sur le site
+                        <a href="https://etfreporting.com/" id="linketfreporting" target="_blank">etfreporting</a> afin
+                        qu'il découvre plus en détail votre proposition et la consulte ultérieurement avec des données
+                        de marchés actualisées.
+                    </p>
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 </section>
 
-<section class="container">
-    <h2>Implémentation</h2>
-</section>
 
+<!-- Modal -->
+<div class="modal fade" id="warning" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Un email vient d'être émis afin de valider votre adresse.
+                Cliquez sur le lien contenu dans le message afin de transmettre votre demande.
+                Dans l'attente de parler de vive voix de votre projet, nous vous souhaitons une excellente journée.</p>
+                <p><strong>John Doe</strong><br /><em>Conseiller en gestion de patrimoine</em></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section scripts {
 
-    <script src="~/Scripts/questionnairesController.js"></script>
-    <script src="~/Scripts/questionnaire.jquery-1.0.js"></script>
     <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="//d3js.org/queue.v1.min.js"></script>
+    <script src="~/Scripts/robo-2.0.js"></script>
 
     <script>
 
-            $(document).ready(function () {
+        var robo = [];
+        var startfrom = function (i) {
+            robo.startfrom(i, alert('yes'));
+        }
 
-                // First, we create a new instance of questionnaire controller to get data from server with LILI API
-                $k = new LoyolApp.QuestionnaireController();
+        $(document).ready(function () {
 
-                var cookie = "newuserid";
-                var userid = $.cookie(cookie);
-                var kycid = 1;
+            var domain = LoyolApp.Settings.domain;
+            var sg = new LoyolApp.SignInController(domain);
+            //var session = LoyolApp.Session.getInstance().get();
+            var cred = { access_token: '@ViewBag.token', userGuid: 'xxx', userName: 'etfreporting', expires_in: @ViewBag.expires  }
+            sg.setcredentials(cred, function () { });
 
-                // if the cookie not exists create one.
-                if (!userid) {
-                    // check if the browser supports cookie
-                    var test_cookie = 'testcookie';
-                    $.cookie(test_cookie, true);
-                    // browser supports cookie
-                    if ($.cookie(test_cookie)) {
-                        // delete the test cookie
-                        $.cookie(test_cookie, null);
-                        // create a new guid for the user
-                        userid = 'X-' + createGuid();
-                        // create a new cookie with created value
-                        $.cookie(cookie, userid);
-                    }
-                }
+            robo = new myRobo(LoyolApp, 2031, $('.container-question'));
+            robo.start(function () {
+                // keep user id for contact form
+                $('#userid').val(robo.userid);
+            })
 
-                $('#ticket').html(userid);
-
-                // launch kyc survey
-                $k.get('Complete', { id: kycid, objectid: userid }, function (data) {
-                    // title of the questionnaire
-                    $('#questionnaire-name').html(data.Name);
-                    // add a property to container
-                    var container = $('.container-question');
-                    container.attr('data-reference', data.ObjectID);
-                    // render the first question
-                    renderContainer(container, data.FirstQuestion, $k);
-                })
-
+            // when terminate we display a summary
+            window.addEventListener('terminate', function (e, questionnaire) {
+                var tbody = $('.container-kyc table tbody');
+                tbody.empty();
+                robo.getanswers(function (data) {
+                    $.each(data, function (i, q) {
+                        var tr = $('<tr>');
+                        var a = $('<a>').attr('href', '#').addClass('link-question').html(q.Question);
+                        a.attr('onclick', 'startfrom(' + q.ID + ')');
+                        var td = $('<td>');
+                        a.appendTo(td);
+                        td.appendTo(tr);
+                        var ta = $('<td>');
+                        var res = [];
+                        $.each(q.Answers, function (j, answer) {
+                            res.push(answer.Answer);
+                        });
+                        ta.html(res.join(", "));
+                        ta.appendTo(tr);
+                        tr.appendTo(tbody);
+                    });
+                    $('.container-questionnaire').hide();
+                    $('.container-kyc').removeClass('visually-hidden');
+                });
             });
 
+            // When we submit for a creation of a portfolio
+            $('.creation-form').submit(function () {
+                var params = $(this).serialize();
+                robo.create(params, '2019-12-31', function (result) {
+                    $('.section-portfolio .portfolio-content').empty();
+                    $('.section-portfolio').removeClass('visually-hidden');
+                    $('.section-contact').removeClass('visually-hidden');
+                    $('#portfoliocode').val(result);
+                    $('#linketfreporting').attr('href', domain + '/portfolios/reporting/' + result);
+                    robo.show(function () {
+                        $('html, body').animate({
+                            scrollTop: $("#section-portfolio").offset().top
+                        }, 1000);
+                    });
+                });
+                return false;
+            });
 
-            // Create a new guid
-            function createGuid() {
-                function _p8(s) {
-                    var p = (Math.random().toString(16) + "000000000").substr(2, 8);
-                    return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
-                }
-                var newid = _p8() + _p8(true) + _p8(true) + _p8();
-                return newid;
-            }
+            // when redo questionnaire
+            $('.btn-redo').click(function () {
+                robo.start(function () {
+                    $('.section-portfolio').addClass('visually-hidden');
+                    $('.section-contact').addClass('visually-hidden');
+                    $('.container-kyc').addClass('visually-hidden');
+                    $('.container-questionnaire').show();
+                    $('.container-question').show();
+                    $('html, body').animate({
+                        scrollTop: $("#section-start").offset().top
+                    }, 1000);
+                })
+           })
+
+            // warning modal
+            var wModal = new bootstrap.Modal(document.getElementById('warning'), {
+                keyboard: false
+            });
+
+            // contact form
+            $('.form-contact').submit(function () {
+                var data = $(this).serialize();
+                robo.post(data, function (result) {
+                    if (result.Success)
+                        $.post('/Lead/ToConfirm', result, function () {
+                            wModal.show();
+                        })
+                });
+                return false;
+            })
+
+        });
+
 
     </script>
 }

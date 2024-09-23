@@ -4,54 +4,172 @@
 {
     <style>
         .cover-container {
-            max-width:initial;
+            max-width: initial;
         }
     </style>
 }
 
 
 <main>
+
     <h1 class="visually-hidden">Mode d'emploi</h1>
 
-    <div class="container px-1">
-        <h2 class="pb-2 border-bottom">Format du fichier</h2>
-        <p>
-            Les données sont attendues dans un fichier au format csv avec comme séparateur le "point virgule". Les dates sont exprimées au format DD/MM/YY, le séparateur de décimales étant la "virgule". La première ligne du fichier est ignorée afin de laisser un titre ou une explication courte. Les colonnes sont de gauche à droite:
-            <ul>
-                <li>Le <u>code</u> d'un ETF ou d'une devise. Dans le cas d'un ETF, il s'agit soit du code ISIN soit du symbole associé à sa place principale de négociation;</li>
-                <li>La <u>date</u> à partir de laquelle l'opération est engagée : impact en trésorerie et en exposition de marché;</li>
-                <li>La <u>valeur</u> négociée qui représente soit un montant, une quantité ou un pourcentage. Fonction de la colonne <u>unité</u> ci-après;</li>
-                <li>Le <u>statut</u> de l'opéation : blanc par défaut. Indiquez IMP si le flux n'impacte pas votre trésorerie (cas d'une reprise de stock);</li>
-                <li>
-                    Le code <u>unité</u> de l'opération qui permettra d'interpréter la colonne <u>valeur</u>:<ul>
-                        <li><b>S</b> indique la quantité de titres négociée (positif pour un achat, négatif pour une vente) de parts;</li>
-                        <li><b>M</b> indique le montant réglé (négatif pour un achat ou un retrait, positif pour une vente ou apport) exprimé dans la devise identifiée mentionnée plus loin; </li>
-                        <li><b>P</b> indique le poids cible du titre dans le portefeuille (ex 20 signifie que le titre pèsera 20% du portefeuille avec cette opération);</li>
-                        <li><b>X</b> indique le pourcentage appliqué au stock de l'instrument avant l'opération (ex -50 signifie que vous divisez par 2 le stock de ce titre) </li>
-                        <li><b>F</b> indique une quantité de titres sans impact sur la trésorerie du portefeuille (ex attribution gratuite)</li>
-                        <li>Tout autre valeur sera assimilée à l'option S.</li>
-                    </ul>
-                </li>
-                <li>Le <u>prix</u> est optionnel; si vous ne le renseignez pas, la valeur retenue sera le cours de cloture à la date indiquée;</li>
-                <li>La <u>devise</u> est optionnelle; si vous ne la renseignez pas, c'est la devise de l'ETF qui sera retenue;</li>
-                <li>Un <u>commentaire</u> libre pour expliquer votre opération</li>
-            </ul>
-        </p>
+    <h1 class="text-center py-lg-5"><i class="fa fa-4x fa-gear"></i></h1>
+    <div class="container px-1 py-lg-5">
+        <div class="row">
+            <div class="col">
+                <h2 class="pb-2 border-bottom">Edition</h2>
 
-        <h2 class="pb-2 border-bottom">Exemples</h2>
-        <p>
-            Nous proposons un premier exemple <a href="/Home/DownloadSample?name=sample.csv">à télécharger ici</a> pour reprendre un historique de portefeuille,
-            ou mieux <strong>l'agrégation de portefeuilles</strong> afin de vous donner une vision gloable et détaillée de vos encours. Dans cet exemple, les opérations
-            d'achat et de ventes sont exprimées en nombre de titres.
-        </p>
-        <p>
-            Nous proposons un second exemple <a href="/Home/DownloadSample?name=sample2.csv">à télécharger ici</a> pour opérer un backtest de type <strong>Buy and Hold</strong>. 
-            Renseignez votre allocation à une date passée exprimée en nombre de titres ou en % de votre de portefeuille.
-            Pour voir le résultat d'une approche <em>Dollar Cost Average</em>, cliquez sur <strong>Epargne et Rente</strong> une fois
-            le reporting généré. Vous aurez une idée précise du rendement d'une approche DCA.
-        </p>
+                <div class="mb-3 form-floating">
+                    <input class="form-control" list="datalistOptions" id="assetid" name="assetid" placeholder="Type to search...">
+                    <datalist id="datalistOptions">
+                    </datalist>
+                    <label for="assetid">Titre négocié ou repris</label>
+                </div>
+                <div class="row">
+                    <div class="col mb-3">
+                        <div class="form-floating">
+                            <select class="form-select" aria-label="Default select example" id="unit" name="uni">
+                                <option value="S">Nombre de Parts</option>
+                                <option selected value="P">Poids cible</option>
+                                <option value="M">Montant</option>
+                                <option value="X">% du stock</option>
+                            </select>
+                            <label for="unit">Unité</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 form-floating">
+                            <input type="text" class="form-control text-end" id="value" name="value" value="0" step="0.01">
+                            <label for="value">Valeur</label>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="form-floating">
+                            <select class="form-select" aria-label="Default select example" id="status" name="status">
+                                <option selected value="">Actif</option>
+                                <option value="EXT">Apport/retrait</option>
+                                <option value="IMP">Reprise</option>
+                            </select>
+                            <label for="status">Statut</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3 form-floating">
+                            <input type="number" class="form-control text-end" id="price" name="price" step="0.001" value="">
+                            <label for="value">Prix unitaire</label>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3 form-floating">
+                            <input type="date" class="form-control" id="valuedate" name="valuedate">
+                            <label for="value">Date</label>
+                        </div>
+                    </div>
+                    <div class="col mb-3">
+                        <div class="form-floating">
+                            <select class="form-select" aria-label="Default select example" id="ccy" name="ccy">
+                                <option selected value="EUR">Euro</option>
+                                <option value="USD">US dollar</option>
+                                <option value="GBP">GB Pound</option>
+                            </select>
+                            <label for="status">Devise</label>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="align-content-end">
+                    <button type="button" class="btn btn-outline-dark btn-add">Insérer</button>
+                </div>
+            </div>
+            <div class="col">
+                <h2 class="border-bottom">Scenario</h2>
+                <form id="operations-upload">
+                    <input name="PortfolioName" value="Mon port" type="hidden" />
+                    <div class="table-responsive table-responsive-sm">
+                        <table class="table table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>Code</th>
+                                    <th>Date Valeur</th>
+                                    <th>Statut</th>
+                                    <th>Valeur</th>
+                                    <th>Unité</th>
+                                    <th>Prix</th>
+                                    <th>Devise</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button class="btn" type="submit">Upload</button>
+                </form>
+            </div>
+        </div>
 
     </div>
 
 </main>
 
+<script src="~/Scripts/bootstrap.bundle.min.js"></script>
+<script src="~/Scripts/jquery-3.6.4.min.js"></script>
+<script src="~/Scripts/settings.js"></script>
+<script src="~/Scripts/signinController.js"></script>
+<script src="~/Scripts/assetsController.js" type="text/javascript"></script>
+<script src="~/Scripts/portfoliosController.js" type="text/javascript"></script>
+<script src="~/Scripts/session.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.cookie-1.4.1.min.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.serialize.1.0.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        // Create a new instance of a controller sign in
+        LoyolApp.SignInController();
+
+        var $ast = new LoyolApp.AssetsController();
+        var ptf = new LoyolApp.PortfolioController();
+
+        // benchmarks selector
+        $ast.get('SelectView', { id: 'Code' }, function (data) {
+            var list = $('#datalistOptions');
+            $.each(data, function (j, item) {
+                var o = $('<option value="' + item.Value + '">').text(item.Text);
+                o.appendTo(list);
+            });
+        });
+
+        i = 0;
+        $('.btn-add').click(function () {
+            var tb = $('table tbody:last-child');
+            var pref = 'Records[' + i + '].';
+            var tr = $('<tr>').append(
+                $('<td class="text-center">').html(additem(pref, 'SecurityID', $('#assetid').val())),
+                $('<td class="text-center">').html(additem(pref, 'ValueDate', $('#valuedate').val())),
+                $('<td class="text-center">').html(additem(pref, 'Status', $('#status').val())),
+                $('<td class="text-end">').html(additem(pref, 'Value', $('#value').val())),
+                $('<td class="text-center">').html(additem(pref, 'Unit', $('#unit').val())),
+                $('<td class="text-end">').html(additem(pref, 'Price', $('#price').val())),
+                $('<td class="text-right">').html(additem(pref, 'Ccy', $('#ccy').val()))
+            );
+            tr.appendTo(tb);
+            i++;
+        })
+
+        var additem = function (rec, name, value) {
+            return '<input type="text" value="' + value + '" name="' + rec + name + '">';
+        }
+
+        $('#operations-upload').submit(function () {
+            var params = $(this).serialize();
+            ptf.post('upload', params, function (result) {
+                window.location = LoyolApp.Settings.domain + '/Portfolios/Reporting/' + result;
+            })
+            return false;
+        });
+    })
+</script>

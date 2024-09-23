@@ -1,0 +1,7 @@
+Code;valeur;date;statut;mode;prix;dev;com;prog
+EUR;5000;02/01/2020;EXT;M;;;Apport de 5000€;
+PUST;60;02/01/2020;;P;;;60% sur NASDAQ (rebalancement annuel);12M
+C40;40;02/01/2020;;P;;;40% sur CAC (rebalancement annuel);12M
+PUST;600;05/04/2022;;M;;;Vente de 600€ sur NASDAQ;
+C40;400;05/04/2022;;M;;;Vente de 400€ sur CAC40;
+EUR;-1000;06/04/2022;EXT;M;;;Retrait de 1000€;

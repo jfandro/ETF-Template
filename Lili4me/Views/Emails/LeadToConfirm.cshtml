@@ -1,0 +1,20 @@
+﻿@model Lili4me.Models.LeadToConfirmEmail
+
+@{
+    Layout = "~/Views/Emails/_layout.cshtml";
+}
+
+@section headers {
+    To: @Model.To
+    From: @Model.From
+    Subject: @Model.Title
+}
+
+<h3>Bonjour,</h3>
+<p>Pour traiter votre demande, nous avons besoin de valider votre adresse email.
+    Pour cela, nous vous invitons à cliquer sur ce <a href="@Model.Url">lien</a>.
+</p>
+<hr />
+<p>Au terme de cette validation, vous recevrez un récapitulatif de votre profil et de la
+    proposition jointe.</p>
+<p>Bonne journée,</p>

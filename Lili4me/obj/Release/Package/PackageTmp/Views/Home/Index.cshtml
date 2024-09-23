@@ -66,39 +66,87 @@
 
 
 @section scripts {
-<script>
+    <script>
 
-    $(document).ready(function () {
+        $(document).ready(function () {
 
-        $("#domain").val(LoyolApp.Settings.domain);
+            $("#domain").val(LoyolApp.Settings.domain);
 
-        // Create a new instance of a controller sign in
-        var sg = new LoyolApp.SignInController($('#signin-form'));
+            var loginsuccess = function (e) {
+                // get the state of current session
+                var session = LoyolApp.Session.getInstance().get();
+                if (session && session.keepSignedIn && session.token) {
+                    $('.signin-container').addClass('hidden');
+                    $('.signoff-container').removeClass('hidden');
+                } else {
+                    $('.signin-container').removeClass('hidden');
+                    $('.signoff-container').addClass('hidden');
+                }
+            };
 
-        // this function is call to refresh form
-        sg.onSignin = function () {
-            // get the state of current session
-            var session = LoyolApp.Session.getInstance().get();
-            if (session && session.keepSignedIn && session.token) {
-                $('.signin-container').addClass('hidden');
-                $('.signoff-container').removeClass('hidden');
-            } else {
-                $('.signin-container').removeClass('hidden');
-                $('.signoff-container').addClass('hidden');
+            var loginfailed = function (e) {
+                $ctnErr.html("<p>Oops! Lili had a problem and could not log you on.  Please try again in a few minutes.</p>");
+                $ctnErr.addClass("bi-ctn-err").slideDown();
+            };
+
+            var loginerror = function (e) {
+                $ctnErr.html("<p>Aie! Lili had a problem and could not log you on.  Please try again in a few minutes.</p>");
+                $ctnErr.addClass("bi-ctn-err").slideDown();
+            };
+
+            var login = function (usr, pwd) {
+                // Create a new instance of a controller signin related to the given domain
+                var sg = new LoyolApp.SignInController($("#domain").val());
+                sg.login(usr, pwd, loginsuccess, loginfailed, loginerror);
+                return false;
             }
-        }
 
-        // Call this fonction on loading current form to enable or disable elements of signin
-        sg.onSignin();
+            // The step of the authentication sequence in our app is to send the user credentials to the server,
+            // and wait for a response that will tell us if we can let the user in.
+            // We will perform this step inside a template method that we will call onSignInCommand.
+            // We will invoke this method when the user pushes the Sign In button in the Sign In Screen
+            $('.signin-form').submit(function () {
 
-        // Sign off = Remove access token from current session + call to refresh
-        $('.btn-signout').click(function () {
-            LoyolApp.Session.logOff();
-            sg.onSignin();
-        })
+                var $txtUsername = $('#username'),
+                    $txtPassword = $('#password');
 
-    });
+                var emailAddress = $txtUsername.val().trim(),
+                    password = $txtPassword.val().trim(),
+                    invalidInput = false;
 
-</script>
+                // Flag each invalid field.
+                if (emailAddress.length === 0) {
+                    invalidInput = true;
+                }
+
+                // Check password length
+                if (password.length === 0) {
+                    invalidInput = true;
+                }
+
+                // Make sure that all the required fields have values.
+                if (invalidInput) {
+                    $ctnErr.html("<p>Please enter all the required fields.</p>");
+                    $ctnErr.addClass("bi-ctn-err").slideDown();
+                    return;
+                }
+
+                return login(emailAddress, password);
+
+            })
+
+
+            // Sign off = Remove access token from current session + call to refresh
+            $('.btn-signout').click(function () {
+                LoyolApp.Session.logOff();
+                loginsuccess();
+            })
+
+            // run it to hide or display form sign-in
+            loginsuccess();
+
+        });
+
+    </script>
 
 }

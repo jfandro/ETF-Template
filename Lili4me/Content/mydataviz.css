@@ -297,3 +297,7 @@ table.universe-tip tr td:first-child {
 table.universe-tip img {
     width:100%;
 }
+
+.navs-container {
+    height: 400px !important;
+}

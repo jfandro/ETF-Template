@@ -1,0 +1,137 @@
+﻿
+<div class="row align-items-md-stretch">
+
+    <div class="col-lg-6 mx-auto">
+
+        <div class="mb-4 p-3 bg-light">
+            <h2>Allocation</h2>
+            <div class="py-3">
+                <p>
+                    Ci-dessous la composition actualisée du portefeuille.
+                    Cette composition est présentée en 3 niveaux hiérarchiques:
+                    <ol>
+                        <li>Thématique (modèle)</li>
+                        <li>Classe d'actifs</li>
+                        <li>ETF</li>
+                    </ol>
+                    La composition de ce portefeuille est revue quotidiennement afin de réfléter
+                    les mouvements de marché, les poids affichés peuvent changés mais
+                    de manière très faible. Si vous avez optez pour un rebalancement automatique,
+                    celui-ci est pris en compte à date anniversaire ou selon les conditions
+                    de déclenchement prévues à cet effet.
+                </p>
+            </div>
+            <div class="treemap-container w-100 h-60">
+                <div id="tree1" class="portfolio-content treemap allocation-container"></div>
+            </div>
+        </div>
+
+        <div class="mb-4 p-3 bg-light">
+            <h2>Classification SFDR</h2>
+            <div class="py-3">
+                <p>
+                    Ce règlement vise à renforcer les obligations de transparence concernant les enjeux ESG 
+                    que les professionnels de la gestion d'actifs prennent en compte, ou non, 
+                    pour concevoir les placements qu'ils vous proposent. 
+                    Ce sont des règles relatives à la publication d'informations sur la durabilité d'un placement. 
+                    Le règlement définit notamment 3 types de produits :
+                    <ul>
+                        <li>les placements dits <strong>« Article 9 »</strong> qui présentent un objectif d'investissement durable;</li>
+                        <li>les placements dits <strong>« Article 8 »</strong> qui déclarent la prise en compte de critères sociaux et/ou environnementaux;</li>
+                        <li>les placements dits <strong>« Article 6 »</strong> qui n'ont pas d'objectif d'investissement durable et ne déclarent pas prendre en compte les critères ESG. 
+                        Ce sont tous les autres placements qui ne sont ni « Article 8 » ni « Article 9 ».</li>
+                    </ul>              
+                </p>
+            </div>
+            <div id="sfdrmap" class="portfolio-content sectormap extra-breakdowns w-100 h-60" data-breakdown="SFDR"></div>
+        </div>
+
+        <div class="mb-4 p-3 bg-light">
+            <h2>Notations ESG</h2>
+            <div class="py-3">
+                <p>
+                    D'un point de vue ESG (Environnement Social et Gouvernance des entreprise),
+                    les fonds que vous détenez font l'objet d'analyses et de notes données
+                    par des organismes privés.
+                    Voici les principales notes sur lesquels
+                    notre proposition est exposée. Nous avons tenu compte de votre appétence aux
+                    risques ainsi qu'aux thématiques recherchées.
+                    Tout comme la grille d'allocation ci-contre, les poids sont revus quotidiennement
+                    en fonction des mouvements de marchés.
+                </p>
+            </div>
+            <div id="esgmap" class="portfolio-content sectormap breakdowns w-100 h-60" data-action="ESGRatingBreakdown" data-legend="#legend-esg"></div>
+            <div style="position:relative;">
+                <div id="legend-esg" class="legend-container"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-6 mx-auto">
+        <div class="mb-4 p-3 bg-light">
+            <h2>Exposition sectorielle</h2>
+            <div class="py-3">
+                <p>
+                    D'un point de vue sectoriel, voici les principaux secteurs sur lesquels
+                    notre proposition est exposée. Nous avons tenu compte de votre appétence aux
+                    risques ainsi qu'aux thématiques recherchées.
+                    Tout comme la grille d'allocation ci-contre, les poids sont revus quotidiennement
+                    en fonction des mouvements de marchés.
+                </p>
+            </div>
+            <div id="sectors" class="portfolio-content sectormap sectors w-100 h-60" data-action="SectorBreakdown" data-legend=""></div>
+        </div>
+        <div class="mb-4 p-3 bg-light">
+            <h2>Capitalisation des sociétés</h2>
+            <div class="py-3">
+                <p>
+                    Ci-dessous la répartition de vos encours en <b>actions</b> par taille des entreprises
+                    investies. Nous avons tenu compte de votre appétence aux
+                    risques ainsi que vos thématiques recherchées.
+                    Tout comme la grille d'allocation ci-contre, les poids sont revus quotidiennement
+                    en fonction des mouvements de marchés.
+                </p>
+            </div>
+            <div id="caps" class="portfolio-content sectormap breakdowns w-100 h-60" data-action="MarketCapBreakdown" data-legend=""></div>
+        </div>
+        <div class="mb-4 p-3 bg-light">
+            <h2>Expositions géographiques</h2>
+            <div class="py-3">
+                <p>
+                    Pour représenter vos risques d'expositions, rien de mieux qu'une map mode
+                    Intégrer un tel widget est assez simple. Veuillez d'abord déclarer une feuille de style pour les pays, les océans et des frontières.
+                    Attention, la couleur des expositions n'est pas gérée dans ce fihcier.
+                </p>
+            </div>
+            <div id="world" class="geomap w-100 h-30" data-table="#geo-exposures"></div>
+            <div class="py-3">
+                <p>Un tableau peut accompagner la map monde afin de préciser les différentes expositions géographique de cette proposition</p>
+                <div class="table-responsive mx-5">
+                    <table class="table table-light small">
+                        <thead>
+                            <tr>
+                                <th>Zone géographique</th>
+                                <th>Exposition actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="geo-exposures"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="mb-4 p-3 bg-light">
+            <h2>Impact sur l'environnement</h2>
+            <div class="py-3">
+                <p>
+                    Le radar ci-dessous affiche l'intensité des différentes thématiques
+                    engagées en matière d'environnement.
+                </p>
+            </div>
+            <div id="radar-e" class="radar w-100 h-30" data-question="1085"></div>
+        </div>
+
+    </div>
+
+</div>
+

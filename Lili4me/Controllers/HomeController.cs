@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,6 +10,9 @@ namespace Lili4me.Controllers
 {
     public class HomeController : Controller
     {
+        private const string baseUrl = "http://localhost:64629";
+        //private const string baseUrl = "https://etfreporting.com";
+
         public ActionResult Index()
         {
             return View();
@@ -66,10 +71,12 @@ namespace Lili4me.Controllers
         {
             return View();
         }
-        public ActionResult KYC()
+
+        public ActionResult Book()
         {
             return View();
         }
+            
         public ActionResult MyFund()
         {
             return View();
@@ -88,5 +95,6 @@ namespace Lili4me.Controllers
         {
             return View();
         }
+
     }
 }

@@ -1,0 +1,98 @@
+﻿@model Lili4me.Models.LeadConnectionStatus
+
+@{
+    ViewBag.Title = "Confirmation";
+    Layout = "~/Views/Shared/_layout5.cshtml";
+}
+
+@section sidebar {
+    <a href="/ClientPortal" role="link" class="nav-link active text-white">Mon portail</a>
+}
+
+@section header {
+    <!-- The style of my web site for widgets -->
+    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
+}
+
+<section class="page-section w-100 h-100">
+
+    <div class="p-4 p-md-5 mb-4">
+        <h1 class="display-4">C'est noté <span class="text-username"></span>!</h1>
+        <div class="row">
+            <div class="col-8">
+                <h2>Je vous recontacte dans 24 heures.</h2>
+                <p>
+                    D'ici là, je vais examiner votre profil, vos attentes et votre projet.
+                    La proposition financière conçue automatiquement sur la base de vos réponses
+                    porte la référence <b>@Model.Code</b>. Conservez-la si vous souhaitez
+                    la consulter à tout instant sur votre espace personnel.
+                </p>
+                <p class="text-center py-4">
+                    <a type="button" class="btn btn-dark" href="/ClientPortal">Consulter ma proposition sur mon portail</a>
+                </p>
+                <p>
+                    Bien évidemment, cette proposition (enveloppe, niveau de risque ou actifs sélectionnés)
+                    pourra faire l'objet d'ajustements et de changements en regard de
+                    notre prochain entretien.
+                    Je vous contacterais d'ici 24 heures. D'ici là, nous vous avons
+                    envoyé un email à <b>@Model.Email</b> récapitulant votre profil et votre projet.
+                    Ainsi qu'un lien vers notre proposition réactualisée des prix de marché.
+                </p>
+                <p>Je vous souhaite une excellente journée,</p>
+                <hr />
+            </div>
+            <div class="col-4">
+                <div class="p-2">
+                    <img class="w-100" src="https://www.passion-entrepreneur.com/wp-content/uploads/2023/12/trading-ia.jpg" />
+                </div>
+                <h4>John Doe</h4>
+                <em>Conseiller en gestion patrimoniale</em>
+                <p>8 rue de la Fortune</p>
+                <p>75000 PARIS</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="w-100">
+</section>
+
+@section scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            var domain = LoyolApp.Settings.domain;
+            var sg = new LoyolApp.SignInController(domain);
+
+            //var session = LoyolApp.Session.getInstance().get();
+            var cred = { access_token: '@ViewBag.token', userGuid: 'xxx', userName: 'etfreporting', expires_in: @ViewBag.expires  }
+            sg.setcredentials(cred);
+
+            // check report access
+            credentialsControl('@Model.Code', function (report) {
+                $('.text-username').html(report.Portfolio.name);
+                $('span.name').html(report.Portfolio.name);
+                $('#reportid').val(report.Portfolio.code);
+                $('.portfoliocode').val(report.Portfolio.code);
+                $('.portfolioname').html(report.Portfolio.name);
+            })
+
+            // contact form
+            $('.form-contact').submit(function () {
+                var data = $(this).serialize();
+                robo.post(data, function (result) {
+                    wModal.show();
+                });
+                return false;
+            })
+
+        });
+
+    </script>
+}
+

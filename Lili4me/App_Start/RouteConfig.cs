@@ -15,6 +15,10 @@ namespace Lili4me
 
             routes.MapRoute("Aix", "Aix", new { controller = "Home", action = "Aix" });
 
+            routes.MapRoute("Robot", "Robot", new { controller = "Lead", action = "Index" });
+            routes.MapRoute("ClientPortal", "ClientPortal", new { controller = "Client", action = "Index" });
+            routes.MapRoute("OrderBook", "OrderBook", new { controller = "Client", action = "Book" });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

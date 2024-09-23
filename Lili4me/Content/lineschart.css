@@ -1,0 +1,103 @@
+﻿.container .lines-chart-container,
+.container-fluid .lines-chart-container {
+/*    height: calc(100vh - 180px);
+*/}
+
+
+.lines-chart-container {
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+}
+
+    .lines-chart-container .dc-chart {
+        width: 100%;
+        height: 100%;
+    }
+
+    .lines-chart-container .overlay {
+        fill: none;
+        pointer-events: all;
+    }
+
+    .lines-chart-container .lines-chart path {
+        stroke-width: 2px;
+    }
+
+        .lines-chart-container .lines-chart path.line {
+            fill: none;
+        }
+
+        .lines-chart-container .lines-chart path.area {
+            stroke: none;
+        }
+
+    .lines-chart-container .lines-chart .axis path,
+    .lines-chart-container .lines-chart .axis line {
+        stroke: grey;
+        stroke-width: 1px;
+        shape-rendering: crispEdges;
+    }
+
+        .lines-chart-container .lines-chart .axis path.line,
+        .lines-chart-container .lines-chart .axis line {
+            fill: none;
+        }
+
+    .lines-chart-container .lines-chart .legend {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background-color: hsla(0,0%,100%,.9);
+        color: #666;
+        padding: 5px 10px 5px 10px;
+        border-radius: 5px;
+        display: table;
+    }
+
+        .lines-chart-container .lines-chart .legend .title {
+            margin-bottom: 2px;
+            font-weight: 900;
+        }
+
+        .lines-chart-container .lines-chart .legend .item {
+            display: table-row;
+            margin-right: 5px;
+            font-size: .75em;
+        }
+
+        .lines-chart-container .lines-chart .legend .swatch {
+            width: 10px;
+            height: 10px;
+            margin-top: 3px;
+            float: left;
+            margin-right: 5px;
+        }
+
+    .lines-chart-container .lines-chart .horizontalGrid {
+        fill: none;
+        shape-rendering: crispEdges;
+        stroke: lightgrey;
+        stroke-width: 1px;
+    }
+
+.commtip {
+    position: absolute;
+    padding: 5px;
+    background-color: #eee;
+    opacity: 0.9;
+    border: 1px solid #666;
+    border-radius: 5px;
+    width: 150px;
+    height: 100px;
+}
+
+    .commtip h5 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 5px 0;
+    }
+
+    .commtip p {
+        font-size: 12px;
+    }

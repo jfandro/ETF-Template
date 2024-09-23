@@ -23,9 +23,27 @@ namespace Lili4me
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/controllers", "~/bundles/controllers").Include(
+                          "~/Scripts/settings.js",
+                          "~/Scripts/session.js",
+                          "~/Scripts/signinController.js",
+                          "~/Scripts/questionnairesController-1.6.js",
+                          "~/Scripts/portfoliosController-1.2.js",
+                          "~/Scripts/instrumentsController.js",
+                          "~/Scripts/assetsController.js",
+                          "~/Scripts/leadsController-1.2.js",
+                          "~/Scripts/operationsController-1.2.js",
+                          "~/Scripts/customersController-1.3.js",
+                          "~/Scripts/universesController.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site-1.1.css"));
+
+            //bundles.Add(new StyleBundle("~/Content/css5").Include(
+            //          "~/Content/bootstrap5/bootstrap.min.css",
+            //          "~/Content/bootstrap5/styles-5.0.css",
+            //          "~/Content/site-1.1.css"));
         }
     }
 }

@@ -97,6 +97,8 @@ C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Antlr3.Runtime.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Microsoft.Web.Infrastructure.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Newtonsoft.Json.dll
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Postal.dll
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\RazorEngine.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.Helpers.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.Mvc.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.Optimization.dll
@@ -106,6 +108,9 @@ C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.WebPages.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.WebPages.Razor.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\WebGrease.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\Postal.xml
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\RazorEngine.pdb
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\RazorEngine.xml
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.Helpers.xml
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.Mvc.xml
 C:\Users\33618\source\repos\Lili4me\Lili4me\bin\System.Web.Optimization.xml
@@ -120,3 +125,4 @@ C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Debug\Lili4me.csproj.CopyComplet
 C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Debug\Lili4me.dll
 C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Debug\Lili4me.pdb
 C:\Users\33618\source\repos\Lili4me\Lili4me\obj\Debug\Lili4me.csproj.AssemblyReference.cache
+C:\Users\33618\source\repos\Lili4me\Lili4me\bin\fr\System.Web.Optimization.resources.dll

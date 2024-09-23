@@ -1,0 +1,503 @@
+﻿@model Lili4me.Models.ClientBook
+
+@{
+    ViewBag.Title = "Investor Order Book";
+    Layout = "~/Views/Shared/_layout5.cshtml";
+}
+
+@section header {
+}
+
+@section title {
+    Carnet d'Ordres Client    
+}
+
+@section menu {
+    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+        <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#credentials">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+    </ul>}
+
+
+<section id="section-start" class="page-section w-100">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+        <h1 class="display-4">Portail Client</h1>
+        <article class="fst-italic text-bg-secondary">
+            Sur votre site, nous vous donnons les moyens techniques pour permettre à vos
+            clients de passer par vos services et vos intermédiaires 
+            pour réaliser un arbitrage sur leurs portefeuilles.
+            Ce cas de figure est notamment intéressant dans le cadre de certains contrats 
+            où vous prendrez en charge l'éxecution au terme de laquelle
+            vous mettrez à jour les quantités et autres montants des ordres.
+        </article>
+    </div>
+
+
+    <div class="container-book p-4">
+        <h2>Carnet d'ordres</h2>
+        <p>
+            Nous vous offrons la possibilité de transmettre un ordre de que nous validerons
+            avant de le transmettre à notre courtier.
+        </p>
+        <div class="row">
+
+            <div class="col-md-6 my-4">
+                <div class="bg-light p-4">
+                    <h2 class="py-2">Nouvel ordre</h2>
+                    <form class="form-add">
+                        <div class="mb-3 form-floating">
+                            <input class="form-control form-control-md" id="reportid" name="reportid" placeholder="Votre n° de compte" value="@Model.ReportID">
+                            <label for="reportid">Référence de mon compte</label>
+                        </div>
+                        <div class="mb-3 form-floating">
+                            <input class="form-control form-control-md" list="datalist" id="securityid" name="securityid" placeholder="Type to search...">
+                            <datalist id="datalist"></datalist>
+                            <label for="securityid">Titre négocié (ISIN, ticker)</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating datepick">
+                                    <input type="date" class="form-control" id="vd" value="@DateTime.Today.ToString("yyyy-MM-dd")">
+                                    <label for="valuedate">Date</label>
+                                    <input type="hidden" id="valuedate" name="valuedate" />
+                                </div>
+                            </div>
+                            @*<div class="col-md-4 col-xs-6">
+                                    <div class="mb-3 form-floating">
+                                        <select class="form-select" aria-label="Default select example" id="status" name="status">
+                                            <option value="">Arbitrage</option>
+                                            <option selected value="INV">Investissement</option>
+                                            <option value="EXT">Apport/Retrait</option>
+                                            <option value="IMP">Reprise de stock</option>
+                                        </select>
+                                        <label for="status">Type d'opération</label>
+                                    </div>
+                                </div>*@
+                            <input type="hidden" name="status" value="" />
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <select class="form-select" aria-label="Default select example" id="units" name="units">
+                                        <option selected value="S">Nombre de titres</option>
+                                        <option value="M">Montant</option>
+                                        <option value="P">% Portefeuille</option>
+                                        <option value="L">% Liquidités</option>
+                                        <option value="X">% Position</option>
+                                    </select>
+                                    <label for="units">Mode de saisie</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <input type="text" class="form-control text-end" id="value" name="value" value="100" step="0.01">
+                                    <label id="label-value" for="value">Nombre de titres</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <input type="number" class="form-control text-end" id="price" name="price" step="0.001" min="0" value="">
+                                    <label for="value">Prix unitaire (*)</label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <select class="form-select" aria-label="Default select example" id="ccy" name="ccy">
+                                        <option selected value="EUR">Euro</option>
+                                        <option value="USD">US dollar</option>
+                                        <option value="GBP">GB Pound</option>
+                                    </select>
+                                    <label for="status">Devise</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-xs-6">
+                                <div class="mb-3 form-floating">
+                                    <select class="form-select" aria-label="Default select example" id="programcode" name="programcode">
+                                        <option selected value="">Aucun</option>
+                                        <option value="1M">Chaque mois</option>
+                                        <option value="3M">Chaque trimestre</option>
+                                        <option value="6M">Chaque semestre</option>
+                                        <option value="12M">Chaque année</option>
+                                    </select>
+                                    <label for="status">Renouvellement</label>
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="mb-3 form-floating">
+                                    <input type="text" class="form-control" id="comment" name="comment" value="">
+                                    <label for="comment">Commentaire de gestion</label>
+                                </div>
+                            </div>
+                            <em class="small">En l'absence de prix, c'est le cours de cloture qui sera pris comme prix de négociation ou de reprise.</em>
+                        </div>
+                        <div class="row">
+                            <div class="d-md-flex justify-content-md-end py-3">
+                                <div class="btn-group">
+                                    <button type="submit" class="btn btn-outline-dark btn-add">Insérer dans le carnet <i class="fa fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-md-6 my-4">
+                <div class="bg-light p-4 h-100">
+                    <h2 class="py-2">Mon Carnet</h2>
+                    <div class="scenario-container">
+                        <ul id="evaluations"></ul>
+                    </div>
+                    <form id="operations-upload" class="upload-book">
+                        <input name="portfoliocode" type="hidden" class="portfoliocode" />
+                        <input name="resetportfolio" type="hidden" value="false" />
+                        <input name="weigts" type="hidden" value="false" />
+                        <div class="table-responsive table-responsive-sm visually-hidden">
+                            <table><tbody></tbody></table>
+                        </div>
+                        <div class="d-md-flex justify-content-center py-5">
+                            <div class="btn-group">
+                                <button class="btn btn-primary" type="submit">Soumettre <i class="fa fa-check"></i></button>
+                            </div>
+                        </div>
+                        <p class="message fade">Veuillez patienter ...</p>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container-operations bg-light p-4">
+        <h2>Opérations en attente</h2>
+        <p class="text-muted">
+            Ci-dessous vos opérations en attente d'exécution ou de confirmation.
+            Les prix, les quantités et les montants indiqués sont suceptibles de
+            faire l'objet de modifications après leurs exécutions et leurs validations
+            par votre intermédiaire financier.
+            Toute ligne de ce tableau n'impacte
+            pas votre portefeuille telle que présentée dans <a href="~/Client/Index">votre portail client</a>.
+        </p>
+        <div class="py-2">
+            @Html.Partial("_operations")
+        </div>
+    </div>
+
+</section>
+
+
+<!-- Contact-->
+<section class="page-section section-contact bg-secondary" id="contact">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="mt-0">Vous avez une question?</h2>
+                <hr class="divider" />
+                <p class="text-white mb-5">
+                    Vous souhaitez en savoir plus sur cette proposition?
+                    Contactez-nous via le formulaire ci-joint. Nous vous répondrons le plus vite possible!
+                </p>
+            </div>
+        </div>
+        <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+            <div class="col-lg-6">
+                <div class="py-3">
+                    <form class="form-contact">
+                        <input type="hidden" id="portfolioquestionnaireid" name="questionnaireid" value="2031" />
+                        <input type="hidden" id="userid" name="userid" value="" />
+                        <input type="hidden" id="portfoliocode" name="code" value="" />
+
+                        <!-- Name input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="portfolio-name" name="name" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
+                            <label for="portfolio-name">Votre nom et prénom</label>
+                        </div>
+                        <!-- Email address input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="email" name="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                            <label for="email">Votre adresse email</label>
+                        </div>
+                        <!-- Phone number input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="phone" name="phone" type="tel" placeholder="(33) 6-15-14-15-14" data-sb-validations="required" />
+                            <label for="phone">Votre numéro de téléphone</label>
+                        </div>
+                        <!-- Message input-->
+                        <div class="form-floating mb-3">
+                            <textarea class="form-control" id="message" name="message" type="text" placeholder="Expliquez-nous vos attentes en quelques mots..." style="height: 10rem" data-sb-validations="required"></textarea>
+                            <label for="message">Vos attentes particulières</label>
+                        </div>
+
+                        <!-- Submit Button-->
+                        <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Soumettre</button></div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="warning" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Validation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Un email vient d'être émis afin de valider votre adresse.
+                    Cliquez sur le lien contenu dans le message afin de transmettre votre demande.
+                    Dans l'attente de parler de vive voix de votre projet, nous vous souhaitons une excellente journée.
+                </p>
+                <p><strong>John Doe</strong><br /><em>Conseiller en gestion de patrimoine</em></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_credentials")
+
+@section scripts {
+
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="//d3js.org/topojson.v1.min.js"></script>
+    <script src="//d3js.org/queue.v1.min.js"></script>
+    <script src="~/Scripts/credentials-1.0.js"></script>
+
+    <script>
+
+        var records = [];
+
+        var removerow = function (k) {
+            records.splice(k, 1);
+            $('#evaluations li').each(function (i, li) {
+                if ($(this).attr('id') == 'li-' + k)
+                    li.remove();
+            });
+        };
+
+        $(document).ready(function () {
+
+            var $ast = new LoyolApp.AssetsController(),
+                $ptf = new LoyolApp.PortfolioController(),
+                $ope = new LoyolApp.OperationsController();
+
+
+            // warning modal
+            var wModal = new bootstrap.Modal(document.getElementById('warning'), {
+                keyboard: false
+            });
+
+            // refresh holding table
+            var refreshHoldings = function (code, vd) {
+                $ptf.get('holdings', { code: code, valuedate: vd }, function (holdings) {
+                    populateHoldings(holdings, '#holdings');
+                })
+            }
+
+            // refresh pending operations table
+            var refreshOperations = function (code) {
+                $ope.get('portfolioindex', { code: code }, function (operations) {
+                    $ope.populateTable(operations, '#operations', true);
+                })
+            }
+
+            // check access
+            credentialsControl('@Model.ReportID', function (report) {
+                $('.text-username').html(report.Portfolio.name);
+                var vd = $('#vd');
+                $('span.name').html(report.Portfolio.name);
+                $('#reportid').val(report.Portfolio.code);
+                $('.portfoliocode').val(report.Portfolio.code);
+                $('.portfolioname').html(report.Portfolio.name);
+                refreshHoldings(report.Portfolio.code, vd.val());
+                refreshOperations(report.Portfolio.code);
+            })
+
+            // assets selector
+            $ast.get('SelectView', { id: 'Code' }, function (data) {
+                var list = $('#datalist');
+                $.each(data, function (j, item) {
+                    var o = $('<option value="' + item.Value + '">').text(item.Text);
+                    o.appendTo(list);
+                });
+            });
+
+            $('#status').on('change', function () {
+                if ($(this).val() == 'INV') {
+                    $('#units').val('M');
+                    $('#label-value').text('Montant');
+                }
+                else if ($(this).val() == 'EXT') {
+                    $('#units').val('M');
+                    $('#label-value').text('Apport/retrait');
+                }
+                else if ($(this).val() == 'IMP') {
+                    $('#units').val('S');
+                    $('#label-value').text('Nombre de titres');
+                }
+                else {
+                    $('#units').val('P');
+                    $('#label-value').text('% Portefeuille');
+                }
+            })
+
+            $('#units').on('change', function () {
+                var sel = $('#units option:selected').text();
+                $('#label-value').text(sel);
+            })
+
+            $('#securityid').on('keyup', function () {
+                if (this.value.toUpperCase() == 'EUR') {
+                    $('#units').val('M'); // default in amount
+                    $('#status').val('EXT'); // external
+                }
+            })
+
+            var addEval = function (result) {
+                var $li = $('<li>'),
+                    i = records.length;
+                $li.attr('id', 'li-' + i)
+                var del = '<a href="#edition" onclick="removerow(' + i + ')"> Supprimer</a>';
+                $li.html(result.Message + del);
+                $li.appendTo($('#evaluations'));
+                records.push(result.Object);
+            };
+
+            var additem = function (rec, name, value) {
+                return '<input type="text" value="' + value + '" name="' + rec + name + '">';
+            }
+
+            var recordsToTable = function () {
+                var tb = $('.upload-book table tbody:last-child');
+                tb.empty();
+                records.forEach(function (r, i) {
+                    var pref = 'Records[' + i + '].';
+                    var tr = $('<tr>').append(
+                        $('<td>').html(additem(pref, 'SecurityID', r.SecurityID)),
+                        $('<td>').html(additem(pref, 'ValueDate', r.ValueDate)),
+                        $('<td>').html(additem(pref, 'Status', r.Status == null ? 'PEN' : r.Status)),
+                        $('<td>').html(additem(pref, 'Value', r.Value)),
+                        $('<td>').html(additem(pref, 'Units', r.Units)),
+                        $('<td>').html(additem(pref, 'Price', r.Price)),
+                        $('<td>').html(additem(pref, 'Ccy', r.Ccy)),
+                        $('<td>').html(additem(pref, 'ProgramCode', r.ProgramCode == null ? '' : r.ProgramCode))
+                    );
+                    tr.attr('id', 'row-' + i);
+                    tr.appendTo(tb);
+                });
+            }
+
+            $('.form-add').submit(function () {
+                $('#valuedate').val($('#vd').val());
+                var params = $(this).serialize();
+                $ope.post('Eval', params, function (result) {
+                    if (result.Success)
+                        addEval(result);
+                    else
+                        alert(result.Message);
+                })
+                return false;
+            })
+
+            $('form.upload-book').submit(function () {
+                $('.message').removeClass('fade');
+                var $fro = $(this);
+                $fro.find('.btn').attr('disabled', 'disabled');
+                recordsToTable();
+                var params = $fro.serialize();
+                $ptf.post('uploadoperations', params, function (result) {
+                    $fro.find('.btn').removeAttr('disabled');
+                    $('.message').addClass('fade');
+                    if (result.Success) {
+                        records = []; // empty the array of records
+                        $('#evaluations').empty(); // and the display list
+                        refreshHoldings(result.Code, $('#vd').val()) // refresh the table of positions
+                        refreshOperations(result.Code) // refresh the table of operations
+                    }
+                    else {
+                        $('.form-container').show();
+                        var warnings = $('#error-message');
+                        warnings.empty();
+                        warnings.append('<span>' + result.Message + '</span>')
+                        var list = warnings.append('<ul></ul>');
+                        $.each(result.RuleViolations, function (i, r) {
+                            list.append('<li>' + r.ErrorMessage + '</li>');
+                        });
+                        warnings.attr('hidden', false);
+                        errModal.show();
+                    }
+                });
+                return false;
+            });
+
+            // return asset kpi
+            var assetkpi = function (node, depth) {
+                var v = null;
+                $.each(node.Stats, function (i, k) {
+                    if (k.depth == depth) {
+                        v = k;
+                        return false; // break
+                    }
+                })
+                return v;
+            }
+
+            var myLocalFormat = {
+                style: "currency",
+                currency: "EUR"
+            }
+
+            /********************************************************/
+            /************ Holdings table ****************************/
+            /********************************************************/
+            var populateHoldings = function (data, div) {
+                $(div).empty();
+                $.each(data.Holdings, function (i, item) {
+                    var mtd = assetkpi(item, 'MTD'),
+                        ytd = assetkpi(item, 'YTD'),
+                        tr = item.Asset.code == 'EUR' ?
+                            $('<tr>').append(
+                                $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.Asset.id)),
+                                $('<td>').text(item.Asset.code),
+                                $('<td>').text(item.Asset.name),
+                                $('<td>').text(item.Asset.class),
+                                $('<td>').attr('colspan', 5).addClass('text-center').text(''),
+                                $('<td>').addClass('text-end').text(item.npv.toLocaleString("fr-FR", myLocalFormat)),
+                                $('<td>').addClass('text-end').text(item.weight + '%'))
+                            :
+                            $('<tr>').append(
+                                $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.Asset.id)),
+                                $('<td>').text(item.Asset.code),
+                                $('<td>').text(item.Asset.name),
+                                $('<td>').text(item.Asset.class),
+                                $('<td>').addClass('text-end').text(ytd ? parseFloat(100 * ytd.netreturn).toFixed(2) + "%" : ''),
+                                $('<td>').addClass('text-end').text(item.marketprice),
+                                $('<td>').addClass('text-end').text(item.qty),
+                                $('<td>').addClass('text-end').text(item.costprice),
+                                $('<td>').addClass('text-end').text(parseFloat(100 * item.return).toFixed(2) + "%"),
+                                $('<td>').addClass('text-end').text(item.npv.toLocaleString("fr-FR", myLocalFormat)),
+                                $('<td>').addClass('text-end').text(item.weight + '%')
+                            );
+                    tr.appendTo(div);
+                });
+            }
+
+            // contact form
+            $('.form-contact').submit(function () {
+                var data = $(this).serialize();
+                robo.post(data, function (result) {
+                    wModal.show();
+                });
+                return false;
+            })
+
+        });
+
+
+    </script>
+}

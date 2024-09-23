@@ -255,7 +255,7 @@
     <script src="~/Scripts/d3dc/topojson.min.js"></script>
     <script src="~/Scripts/jquery.cookie.js"></script>
 
-    <link rel="stylesheet" href="https://lili.am/Content/treemap-1.3.css" />
+    <link rel="stylesheet" href="https://lili.am/Content/treemap-1.6.css" />
     <link rel="stylesheet" href="https://lili.am/Content/waterfall-1.1.css" />
     <link rel="stylesheet" href="https://lili.am/Content/bootstrap-slider.css" />
     <link rel="stylesheet" href="https://lili.am/Content/lineschart-1.3.css" />
@@ -431,9 +431,9 @@
             // load poitions in the related table
             var loadPositions = function (code, d) {
                 // Get the hitorical positions from the server
-                //$p.get('positions', { code: code, valuedate: d }, function (data) {
-                //    $b.loaddata(data.Positions);
-                //});
+                $p.get('positions', { code: code, valuedate: d }, function (data) {
+                    $b.loaddata(data.Positions);
+                });
             }
 
             // load expected srri

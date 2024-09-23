@@ -208,6 +208,9 @@
 
         $(document).ready(function () {
 
+            // Create a new instance of a controller sign in
+            LoyolApp.SignInController();
+
             // First, we create a new instance of portfolios controller to get and post data with LILI API
             var ptf = new LoyolApp.PortfolioController();
             var ast = new LoyolApp.AssetsController();

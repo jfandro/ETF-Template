@@ -24,7 +24,7 @@ $(document).ready(function () {
     var loadGrid = function (data) {
         var $cx = $('#myportfolios')
         $.each(data, function (i, p) {
-            var url = "url('" + LoyolApp.Settings.domain + "/" + p.ImageUrl + "')";
+            var url = "url('" + p.ImageUrl + "')";
             var $cd = $('<div>').addClass('card card-img col-sm-3').attr('style', "background-image:" + url);
             var $bd = $('<div>').addClass('card-body');
             var $tt = $('<h3>').html(p.Name);

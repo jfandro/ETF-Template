@@ -76,3 +76,5 @@ C:\Users\33618\source\repos\Lili4me\ETFReporting\obj\Debug\ETFReporting.csproj.C
 C:\Users\33618\source\repos\Lili4me\ETFReporting\obj\Debug\ETFReporting.csproj.CopyComplete
 C:\Users\33618\source\repos\Lili4me\ETFReporting\obj\Debug\ETFReporting.dll
 C:\Users\33618\source\repos\Lili4me\ETFReporting\obj\Debug\ETFReporting.pdb
+C:\Users\33618\source\repos\Lili4me\ETFReporting\obj\Debug\ETFReporting.Resources.Home.resources
+C:\Users\33618\source\repos\Lili4me\ETFReporting\obj\Debug\ETFReporting.csproj.GenerateResource.cache

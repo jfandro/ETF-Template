@@ -89,7 +89,35 @@ LoyolApp.PortfolioController.prototype.postform = function (action, data, callba
     }
 }
 
+// Post the contact from form to the controller API portfolios
+LoyolApp.PortfolioController.prototype.postcontact = function (data, callback) {
+    var session = LoyolApp.Session.getInstance().get();
+    if (session && session.keepSignedIn && session.token) {
+        var token = session.token,
+            url = session.domain + '/api/home/postcontact';
 
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            dataType: 'json',
+            mimeType: 'multipart/form-data',
+            cache: false,
+            processData: false,
+            crossDomain: true,
+            beforeSend: function (request) {
+                request.setRequestHeader("Authorization", 'Bearer ' + token);
+            },
+            fail: function () {
+                alert('fail');
+            },
+            success: callback,
+            error: function (xhr, status, error) {
+                alert(xhr.responseJSON.Message);
+            }
+        });
+    }
+}
 
 // render select controls
 LoyolApp.PortfolioController.prototype.select = function (divname, callback) {
@@ -125,4 +153,15 @@ LoyolApp.PortfolioController.prototype.exists = function (id, callback) {
             }
         });
     }
+}
+
+// render select trading rules
+LoyolApp.PortfolioController.prototype.selecttradingrules = function (divname, callback) {
+    this.get('TradingRules', null, function (lst) {
+        $.each(lst, function (i, item) {
+            $('<option value="' + item.id + '">').text(item.name).appendTo(divname);
+        });
+        if (callback)
+            callback();
+    })
 }

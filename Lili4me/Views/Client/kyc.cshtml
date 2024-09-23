@@ -1,0 +1,128 @@
+﻿
+@model Lili4me.Models.KYCDetails
+
+@{
+    ViewBag.Title = "KYC";
+    Layout = "~/Views/Shared/_layout5.cshtml";
+}
+
+@section title {
+    Connaissance Client
+}
+
+@section header {
+    <!-- The style of my web site for widgets -->
+    <link href="~/Content/mydataviz.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
+}
+
+<section class="page-section">
+
+    <div class="p-4 p-md-5 mb-4 text-white rounded bg-secondary">
+        <h1 class="display-4">Connaissance Client</h1>
+        <article class="fst-italic text-bg-secondary">
+            Cet espace privé et sécurisé est destiné à la connaissance client
+            et à tous les processus d'actualisation qui seront 
+            à réaliser pour respecter vos obligations réglementaires.
+            Ainsi le questionnaire que vous avez créé
+            pourra être envoyé automatiquement à chacun de vos clients
+            et vous libérez du temps.
+        </article>
+    </div>
+
+    <div class="d-flex align-items-center justify-content-center">
+        <div class="container py-5">
+            <h3>Votre questionnaire de connaissance client</h3>
+            <p>
+                Veuillez mettre à jour uniquement les informations concernées par un changement.
+                Sinon cliquez sur Suivant.
+            </p>
+            <div class="container-kyc">
+
+                <div id="container-questions" class="container-questions w-50 mx-auto" style="display:none; min-width:500px;">
+                    @Html.Partial("_questionnaire")
+                </div>
+
+                <div class="container-answers">
+                    <p>
+                        Retrouvez ci-dessous vos dernières réponses à notre
+                        questionnaire. Si une des réponses n'est plus d'actualité ou est
+                        à revoir, merci de procéder à sa mise à jour.
+                    </p>
+                    <div class="table-responsive">
+                        <table id="kyc" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>A la question</th>
+                                    <th>Vous avez répondu</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="py-3">
+                        <button type="button" class="btn btn-primary btn-update">Mise à jour</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+@section scripts {
+
+    <script>
+
+        $(document).ready(function () {
+
+            var domain = LoyolApp.Settings.domain;
+            var sg = new LoyolApp.SignInController(domain);
+
+            //var session = LoyolApp.Session.getInstance().get();
+            var cred = { access_token: '@ViewBag.token', userGuid: 'xxx', userName: 'etfreporting', expires_in: @ViewBag.expires  }
+            sg.setcredentials(cred);
+
+            // create a robot
+            var robo = new myRobo(LoyolApp, @Model.QuestionnaireID, $('.container-question'));
+            robo.code = '@Model.Code';
+
+            // check report
+            credentialsControl(robo.code, function (report) {
+                $('.text-username').html(report.Portfolio.name);
+                robo.code = report.Portfolio.code;
+                robo.userid = robo.code;
+                // get portfolio informations
+                robo.get(function (data) {
+                    robo.showReportAnswers($('.container-kyc table tbody'), function () { });
+                })
+            })
+
+            // when redo questionnaire
+            $('.btn-update').click(function () {
+                $('.container-answers').fadeOut(1000, function () {               
+                    robo.start(function () {
+                        $('.container-questions').fadeIn(1000, function () {
+                            $('html, body').animate({
+                                scrollTop: $("#container-questions").offset().top
+                            }, 1000);
+                        });
+                    })
+                });
+            });
+
+
+            // when terminate we display a summary
+            window.addEventListener('terminate', function (e) {
+                $('.container-questions').fadeOut(1000, function () {
+                    robo.showReportAnswers($('.container-kyc table tbody'), function () {
+                        $('.container-answers').fadeIn(1000);
+                    });
+                })
+            });
+        });
+
+
+    </script>
+}

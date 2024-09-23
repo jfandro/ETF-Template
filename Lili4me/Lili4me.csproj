@@ -51,6 +51,12 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Postal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=45719375b8b4d528, processorArchitecture=MSIL">
+      <HintPath>..\packages\Postal.Mvc5.1.2.0\lib\net45\Postal.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorEngine, Version=3.4.1.0, Culture=neutral, PublicKeyToken=9ee697374c7e744a, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorEngine.3.4.1\lib\net45\RazorEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -121,47 +127,112 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Client\Client.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LeadController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\UrlHelper.cs" />
+    <Compile Include="Lead\Answer.cs" />
+    <Compile Include="Lead\Lead.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-switch.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap5\bootstrap.css" />
+    <Content Include="Content\bootstrap5\bootstrap.min.css" />
+    <Content Include="Content\bootstrap5\bootstrap.rtl.css" />
+    <Content Include="Content\bootstrap5\bootstrap.rtl.min.css" />
+    <Content Include="Content\lineschart.css" />
+    <Content Include="Content\bootstrap5\styles-5.0.css" />
     <Content Include="Content\coming-soon.css" />
+    <Content Include="Content\fa\css\font-awesome.css" />
+    <Content Include="Content\fa\css\font-awesome.min.css" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\mydataviz.css" />
     <Content Include="Content\prettify.css" />
     <Content Include="Content\robo-1.0.css" />
+    <Content Include="Content\site-portal.css" />
     <Content Include="Content\videos\bg.mp4" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\site-1.1.css" />
     <Content Include="lili.ico" />
     <Content Include="Scripts\activity-charts-1.2.js" />
+    <Content Include="Scripts\allocation-1.5.js" />
     <Content Include="Scripts\assetsController.js" />
     <Content Include="Scripts\board-1.0.js" />
     <Content Include="Scripts\bootstrap-switch.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\bootstrap5\bootstrap.css.map" />
+    <Content Include="Content\bootstrap5\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap5\bootstrap.rtl.css.map" />
+    <Content Include="Content\bootstrap5\bootstrap.rtl.min.css.map" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fa\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fa\fonts\FontAwesome.otf" />
+    <Content Include="Content\fa\less\animated.less" />
+    <Content Include="Content\fa\less\bordered-pulled.less" />
+    <Content Include="Content\fa\less\core.less" />
+    <Content Include="Content\fa\less\fixed-width.less" />
+    <Content Include="Content\fa\less\font-awesome.less" />
+    <Content Include="Content\fa\less\icons.less" />
+    <Content Include="Content\fa\less\larger.less" />
+    <Content Include="Content\fa\less\list.less" />
+    <Content Include="Content\fa\less\mixins.less" />
+    <Content Include="Content\fa\less\path.less" />
+    <Content Include="Content\fa\less\rotated-flipped.less" />
+    <Content Include="Content\fa\less\screen-reader.less" />
+    <Content Include="Content\fa\less\stacked.less" />
+    <Content Include="Content\fa\less\variables.less" />
+    <Content Include="Content\fa\scss\font-awesome.scss" />
+    <Content Include="Content\fa\scss\_animated.scss" />
+    <Content Include="Content\fa\scss\_bordered-pulled.scss" />
+    <Content Include="Content\fa\scss\_core.scss" />
+    <Content Include="Content\fa\scss\_fixed-width.scss" />
+    <Content Include="Content\fa\scss\_icons.scss" />
+    <Content Include="Content\fa\scss\_larger.scss" />
+    <Content Include="Content\fa\scss\_list.scss" />
+    <Content Include="Content\fa\scss\_mixins.scss" />
+    <Content Include="Content\fa\scss\_path.scss" />
+    <Content Include="Content\fa\scss\_rotated-flipped.scss" />
+    <Content Include="Content\fa\scss\_screen-reader.scss" />
+    <Content Include="Content\fa\scss\_stacked.scss" />
+    <Content Include="Content\fa\scss\_variables.scss" />
+    <Content Include="Configuration\local.config" />
     <None Include="Properties\PublishProfiles\Lili4.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\bootstrap5\bootstrap.bundle.js" />
     <Content Include="Scripts\coming-soon.js" />
+    <Content Include="Scripts\credentials-1.0.js" />
     <Content Include="Scripts\d3dc\bubble.universes-1.2.js" />
     <Content Include="Scripts\d3dc\d3.min.js" />
+    <Content Include="Scripts\d3dc\myCharts.js" />
     <Content Include="Scripts\d3dc\queue-min.js" />
     <Content Include="Scripts\d3dc\sunburst-1.3.js" />
     <Content Include="Scripts\d3dc\topojson.min.js" />
     <Content Include="Scripts\d3dc\treemap2.js" />
     <Content Include="Scripts\instruments-local-charts.js" />
+    <Content Include="Scripts\customersController-1.3.js" />
     <Content Include="Scripts\jquery.cookie-1.4.1.min.js" />
     <Content Include="Scripts\jquery.cookie.js" />
+    <Content Include="Scripts\jquery.applcation-containers-1.0.js" />
+    <Content Include="Scripts\leadsController-1.2.js" />
     <Content Include="Scripts\navschart.js" />
+    <Content Include="Scripts\operationsController-1.2.js" />
+    <Content Include="Scripts\questionnairesController-1.6.js" />
+    <Content Include="Scripts\robo-2.2.js" />
+    <Content Include="Scripts\signinController.js" />
     <Content Include="Scripts\universesController.js" />
     <Content Include="Scripts\questionnaire.jquery-1.0.js" />
-    <Content Include="Scripts\questionnairesController.js" />
     <Content Include="Scripts\instrumentsController.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -171,13 +242,13 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\portfoliosController.js" />
+    <Content Include="Scripts\portfoliosController-1.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\session.js" />
     <Content Include="Scripts\settings.js" />
     <Content Include="Scripts\signin.js" />
-    <Content Include="Scripts\signinController.js" />
+    <Content Include="Scripts\jquery.signin-1.0.js" />
     <Content Include="Scripts\string.format.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
@@ -218,10 +289,37 @@
     <Content Include="Views\Shared\_LayoutNoMenu.cshtml" />
     <Content Include="Views\Home\Upload.cshtml" />
     <Content Include="Views\Home\Universes.cshtml" />
+    <Content Include="Views\Shared\_Layout5.cshtml" />
+    <Content Include="Views\Home\Book.cshtml" />
+    <Content Include="Views\Emails\_ViewStart.cshtml" />
+    <Content Include="Views\Emails\Web.config" />
+    <Content Include="Views\Emails\LeadToConfirm.cshtml" />
+    <Content Include="Views\Emails\_layout.cshtml" />
+    <Content Include="Views\Lead\confirm.cshtml" />
+    <Content Include="Views\Lead\index.cshtml" />
+    <Content Include="Views\Emails\LeadConfirmation.cshtml" />
+    <Content Include="Views\Shared\_portfolio.cshtml" />
+    <Content Include="Views\Lead\portfolio.cshtml" />
+    <Content Include="Views\Client\index.cshtml" />
+    <Content Include="Views\Shared\_positions.cshtml" />
+    <Content Include="Views\Shared\_results.cshtml" />
+    <Content Include="Views\Shared\_credentials.cshtml" />
+    <Content Include="Views\Shared\_operations.cshtml" />
+    <Content Include="Views\Shared\contact.cshtml" />
+    <Content Include="Views\Shared\_questionnaire.cshtml" />
+    <Content Include="Views\Shared\_documents.cshtml" />
+    <Content Include="Views\Client\_book.cshtml" />
+    <Content Include="Views\Client\_indicators.cshtml" />
+    <Content Include="Views\Client\_contact.cshtml" />
+    <Content Include="Views\Shared\_Layout5NoMenu.cshtml" />
+    <Content Include="Views\Shared\_cashflows.cshtml" />
+    <Content Include="Views\Client\_returns.cshtml" />
+    <Content Include="Views\Shared\_correlations.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Views\Application\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

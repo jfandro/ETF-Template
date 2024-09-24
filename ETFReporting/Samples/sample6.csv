@@ -1,7 +1,0 @@
-Code;valeur;date;statut;mode;prix;dev;com;prog
-EUR;5000;02/01/2020;EXT;M;;;Apport de 5000€;
-PUST;60;02/01/2020;;P;;;60% du portefeuille sera exposé NASDAQ;
-C40;20;02/01/2020;;S;88,75;;Achat de 20 ETF sur le CAC40 à 88,75;
-PUST;-500;05/02/2022;;M;;;Ventes pour 500€ sur le NASDAQ;
-C40;500;05/02/2022;;M;;;Achat pour 500€ de C40;
-WLD;100;01/03/2022;;L;;;100% des liquidités restantes sur WLD;

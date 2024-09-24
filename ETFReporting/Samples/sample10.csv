@@ -1,7 +1,0 @@
-Code;valeur;date;statut;mode;prix;dev;com;prog
-EUR;5000;02/01/2020;EXT;M;;;Apport initial de 5000EUR;
-PUST;60;02/01/2020;;P;;;60% investis sur NASDAQ 100 (rebalancement annuel);M12
-C40;40;02/01/2020;;P;;;40% investis sur le CAC40 (rebalancement annuel);M12
-EUR;500;02/02/2020;EXT;M;;;Apport de 500 EUR/mois;M
-PUST;-300;02/02/2020;;M;;;300 EUR/mois sur NASDAQ;M
-C40;-200;02/02/2020;;M;;;200 EUR/mois sur CAC;M

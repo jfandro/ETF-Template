@@ -1,12 +1,9 @@
-﻿@model Lili4me.Models.LeadConnectionStatus
+﻿@model ETFTemplate.Models.LeadConnectionStatus
+
 
 @{
     ViewBag.Title = "Confirmation";
-    Layout = "~/Views/Shared/_layout5.cshtml";
-}
-
-@section sidebar {
-    <a href="/ClientPortal" role="link" class="nav-link active text-white">Mon portail</a>
+    Layout = "~/Views/Shared/_layout5NoMenu.cshtml";
 }
 
 @section header {
@@ -21,23 +18,22 @@
         <h1 class="display-4">C'est noté <span class="text-username"></span>!</h1>
         <div class="row">
             <div class="col-8">
-                <h2>Je vous recontacte dans 24 heures.</h2>
+                <h2>Je vous recontacte au plus tard dans 24 heures.</h2>
                 <p>
-                    D'ici là, je vais examiner votre profil, vos attentes et votre projet.
+                    D'ici là, j'aurais examiné votre profil, vos attentes et votre projet.
                     La proposition financière conçue automatiquement sur la base de vos réponses
                     porte la référence <b>@Model.Code</b>. Conservez-la si vous souhaitez
                     la consulter à tout instant sur votre espace personnel.
                 </p>
                 <p class="text-center py-4">
-                    <a type="button" class="btn btn-dark" href="/ClientPortal">Consulter ma proposition sur mon portail</a>
+                    <a type="button" class="btn btn-dark" href="/ClientPortal">Accéder à mon portail</a>
                 </p>
                 <p>
-                    Bien évidemment, cette proposition (enveloppe, niveau de risque ou actifs sélectionnés)
-                    pourra faire l'objet d'ajustements et de changements en regard de
-                    notre prochain entretien.
-                    Je vous contacterais d'ici 24 heures. D'ici là, nous vous avons
+                    Bien évidemment, nous reverrons ensemble cette proposition (enveloppe, niveau de risque ou actifs sélectionnés)
+                    qui pourra faire l'objet d'ajustements ou de changements en regard de
+                    ce que vous me direz de vive voix.
+                    Je vous contacte d'ici 24 heures. D'ici là, je vous ai
                     envoyé un email à <b>@Model.Email</b> récapitulant votre profil et votre projet.
-                    Ainsi qu'un lien vers notre proposition réactualisée des prix de marché.
                 </p>
                 <p>Je vous souhaite une excellente journée,</p>
                 <hr />
@@ -55,9 +51,6 @@
 
     </div>
 
-</section>
-
-<section class="w-100">
 </section>
 
 @section scripts {
@@ -80,6 +73,7 @@
                 $('#reportid').val(report.Portfolio.code);
                 $('.portfoliocode').val(report.Portfolio.code);
                 $('.portfolioname').html(report.Portfolio.name);
+                $.cookie('credentials-u', report.Portfolio.code, { path: '/' });
             })
 
             // contact form

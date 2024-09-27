@@ -95,13 +95,13 @@ LoyolApp.OperationsController.prototype.download = function (data, callback) {
 }
 
 // Populate operations table
-LoyolApp.OperationsController.prototype.populateTable = function (data, tbody, status) {
+LoyolApp.OperationsController.prototype.populateTable = function (data, tbody, isexecuted) {
     var myLocalFormat = { style: "currency", currency: "EUR" };
     $(tbody).empty();
     $.each(data, function (i, item) {
         if (!item.IsExternal)
         {
-            if (item.status == status) {
+            if (item.isexecuted == isexecuted) {
                 var tr = $('<tr>').append(
                     $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.asset.id)),
                     $('<td>').attr('width', 80).text(item.asset.code),

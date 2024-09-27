@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Guide Implémentation";
+    ViewBag.Title = "Portail Guide Implémentation";
 }
 
 <div class="p-4 p-md-5 mb-4">
@@ -19,7 +19,7 @@
     <hr />
 
     <div class="p-2">
-        <h2 id="etfreporting" class="display-5">ETFReporting.com</h2>
+        <h2 id="main" class="display-5">Configuration</h2>
         <div class="py-1">
             <h3>Ouvrez un compte professionnel</h3>
             <p>
@@ -30,24 +30,19 @@
                 se charge de vous produire les factures.
             </p>
         </div>
-
-    </div>
-
-    <div class="p-2">
-        <h2 id="robot" class="display-5">Votre portail</h2>
         <div class="py-1">
             <h3>Opensource</h3>
             <p>
-                L'application où vous vous trouvez est notre application témoin.
+                Le portail où vous vous trouvez est une branche de notre application témoin.
                 Dotée d'une architecture ASP.NET des plus récentes, elle est proposée en open source.
                 Disponible sur Github, le service d'hébergement de code le plus populaire
                 parmi les développeurs et les programmeurs open source,
-                notre application est accessible au public afin d'être téléchargée,
+                notre portail est accessible au public afin d'être téléchargé,
                 modifiée puis déployée sur votre propre site.
             </p>
         </div>
         <div class="py-1">
-            <h3>Configuration générale</h3>
+            <h3>Configuration</h3>
             <p>
                 Une fois l'application téléchargée, pour interagir avec
                 les services web d'etfreproting.com, vous devez changer le fichier local.config dans le répertoire
@@ -55,39 +50,14 @@
                 <pre class="prettyprint bg-light mx-4">
                 <xmp>
                     <!-- Please setup your credentials on etfreporting.com -->
-                    <add key="UserName" value="john" />
-                    <add key="UserPassword" value="Ejsld47%s" />
+                <add key="UserName" value="john" />
+                <add key="UserPassword" value="Ejsld47%s" />
                     </xmp>
                 </pre>
             </p>
             <p>
                 A ce stade, l'application est connectée en toute sécurité avec les services Web.API
                 de la plateforme etfreporting. Le portail est déjà effectif.
-            </p>
-        </div>
-        <div class="py-1">
-            <h3>Services offerts</h3>
-            <p>
-                Voici la
-            </p>
-            <pre class="prettyprint bg-light mx-4">
-            <xmp>
-                    <!-- Questionnaire id used by robo KYC -->
-            <add key="LeadQuestionnaire" value="2031" />
-                </xmp>
-            </pre>
-        </div>
-
-        <div class="py-1">
-            <h3>Parcours utilisateur</h3>
-            <p>
-                Le code étant ouvert, vous personnaliserez ou revoir
-                le parcours, le style, les textes, ou plus généralement
-                tout ou partie de l'expérience utilisateur que nous vous proposons par défaut.
-                Le chantier peut être plus ou moins important
-                selon vos capacités, vos exigences et vos objectifs.
-                Vous solliciterez vos prestataires actuels ou futurs.
-                Vous pouvez aussi nous confier cette prestation qui fera l'objet d'un devis détaillé.
             </p>
         </div>
         <div class="py-1">
@@ -121,6 +91,48 @@
             </p>
         </div>
 
+    </div>
+
+    <div class="p-2">
+        <h2 id="main" class="display-5">Votre portail</h2>
+        <div class="py-1">
+            <h3>Présentation générale</h3>
+            <p>
+                Le portail se présente sous la forme d'un tableau de bord (ou dashboard)
+                classique avec:
+                <ul>
+                    <li>une barre de navigation latérale présentant l'ensemble des services</li>
+                    <li>une entête fixe permettant de vous identifier et la prise de contact.</li>
+                </ul>
+                Vous pourrez altérer, retirer ou ajouter de nouveaux services.
+            </p>
+        </div>
+
+        <div class="py-1">
+            <h3>Identification</h3>
+            <p>
+                Chacun de vos clients (y compris prospect validé) se verra attribuer:
+                <ul>
+                    <li>un compte personnel unique qui portera les diligences émises et revues au fil du temps,</li>
+                    <li>et un identifiant unique par dossier enregistré dans votre atelier, chaque dossier portant sur un portefeuille</li>
+                </ul>
+                Pour s'identifier, il faudra renseigner la référence dossier ainsi que le mot de passe associé. Aucune adresse
+                email n'est requise pour des besoins de confidentialité.
+            </p>
+        </div>
+
+        <div class="py-1">
+            <h3>Positions</h3>
+            <p>
+                Chacun de vos clients (y compris prospect validé) se verra attribuer:
+                <ul>
+                    <li>un compte personnel unique qui portera les diligences émises et revues au fil du temps,</li>
+                    <li>et un identifiant unique par dossier enregistré dans votre atelier, chaque dossier portant sur un portefeuille</li>
+                </ul>
+                Pour s'identifier, il faudra renseigner la référence dossier ainsi que le mot de passe associé. Aucune adresse
+                email n'est requise pour des besoins de confidentialité.
+            </p>
+        </div>
     </div>
 
 </div>

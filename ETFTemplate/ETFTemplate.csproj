@@ -166,6 +166,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\emailviews.png" />
+    <Content Include="Images\logo.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -228,12 +229,13 @@
     <Content Include="Content\fa\scss\_stacked.scss" />
     <Content Include="Content\fa\scss\_variables.scss" />
     <Content Include="Content\fa\scss\font-awesome.scss" />
+    <None Include="Properties\PublishProfiles\ETFTemplate - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\controllers\assetsController-1.2.js" />
     <Content Include="Scripts\controllers\credentialsController-1.0.js" />
     <Content Include="Scripts\controllers\customersController-1.3.js" />
     <Content Include="Scripts\controllers\instrumentsController-1.2.js" />
-    <Content Include="Scripts\controllers\containersController-2.2.js" />
+    <Content Include="Scripts\controllers\containersController-2.3.js" />
     <Content Include="Scripts\controllers\leadsController-1.2.js" />
     <Content Include="Scripts\controllers\operationsController-1.2.js" />
     <Content Include="Scripts\controllers\portfoliosController-1.2.js" />
@@ -295,6 +297,8 @@
     <Content Include="Views\Emails\LeadConfirmation.cshtml" />
     <Content Include="Views\Emails\LeadToConfirm.cshtml" />
     <Content Include="Views\Emails\_layout.cshtml" />
+    <Content Include="Views\Client\_compliances.cshtml" />
+    <Content Include="Views\Client\_help.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

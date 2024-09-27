@@ -169,6 +169,21 @@ LoyolApp.PortfolioController.prototype.populateDocuments = function (data, div) 
     });
 }
 
+// fill the documents tables
+LoyolApp.PortfolioController.prototype.populateCompliances = function (data, div) {
+    var tbody = div.find('tbody');
+    tbody.empty();
+    $.each(data, function (i, w) {
+        var tr = $('<tr>').append(
+            $('<td>').text(w.name),
+            $('<td class="text-center">').text(w.status),
+            $('<td class="text-end">').text(w.minvalue.toFixed(2)),
+            $('<td class="text-end">').text(w.maxvalue.toFixed(2)),
+            $('<td class="text-end">').text(w.value.toFixed(2)));
+        tr.addClass(w.isbreached ? 'table-warning' : 'table-success');
+        tr.appendTo(tbody);
+    });
+}
 // fill the indicators tables
 LoyolApp.PortfolioController.prototype.populateIndicators = function (data, div) {
     div.empty();

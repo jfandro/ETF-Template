@@ -1,4 +1,10 @@
-﻿myAppContainers = function (app, code) {
+﻿/**
+ * Script focus on containers feed 
+ *
+ * 
+ **/
+
+myAppContainers = function (app, code) {
 
     this.settings = app.Settings;
     this.code = code;
@@ -16,7 +22,6 @@
 myAppContainers.prototype.showDataviz = function (aftershow) {
 
     var me = this;
-
     me.showAllocation(function () {
         me.showNavs();
         me.showStats();
@@ -459,8 +464,17 @@ myAppContainers.prototype.showTreasury = function () {
     })
 }
 
+// refresh compliances/warnings table
+myAppContainers.prototype.showCompliances = function (withcheck) {
+    var $p = this.pc,
+        code = this.code;
+    $p.get('warnings', { code: code, withcheck: withcheck }, function (warnings) {
+        $p.populateCompliances(warnings, $('.table-compliances'));
+    });
+}
+
 // refresh positions
-myAppContainers.prototype.showHoldings = function (div, d) {
+myAppContainers.prototype.showHoldings = function (div, d, callback) {
     var $p = this.pc,
         code = this.code;
     // Get the historical holdings
@@ -469,16 +483,17 @@ myAppContainers.prototype.showHoldings = function (div, d) {
         $p.get('holdings', params, function (data) {
             $p.populateHoldings(data, div);
             $(div).fadeIn(500);
+            callback();
         });
     })
 }
 
 // refresh operations table
-myAppContainers.prototype.showOperations = function (div, status) {
+myAppContainers.prototype.showOperations = function (div, executed) {
     var $o = this.oc,
         code = this.code;
 
     $o.get('portfolioindex', { code: code }, function (operations) {
-        $o.populateTable(operations, div + ' tbody', status);
+        $o.populateTable(operations, div + ' tbody', executed);
     })
 }

@@ -25,18 +25,23 @@ namespace ETFTemplate
             bundles.Add(new ScriptBundle("~/bundles/controllers", "~/bundles/controllers").Include(
               "~/Scripts/settings.js",
               "~/Scripts/session.js",
-              "~/Scripts/controllers/signinController-1.0.js",
-              "~/Scripts/controllers/credentialsController-1.0.js",
-              "~/Scripts/controllers/questionnairesController-1.6.js",
-              "~/Scripts/controllers/portfoliosController-1.2.js",
-              "~/Scripts/controllers/instrumentsController-1.2.js",
-              "~/Scripts/controllers/assetsController-1.2.js",
-              "~/Scripts/controllers/leadsController-1.2.js",
-              "~/Scripts/controllers/operationsController-1.2.js",
-              "~/Scripts/controllers/customersController-1.3.js",
-              "~/Scripts/controllers/roboController-2.2.js",
-              "~/Scripts/controllers/containersController-2.2.js",
-              "~/Scripts/controllers/universesController-1.2.js"));
+              "~/Scripts/controllers/*.js"));
+
+            //bundles.Add(new ScriptBundle("~/bundles/controllers", "~/bundles/controllers").Include(
+            //      "~/Scripts/settings.js",
+            //      "~/Scripts/session.js",
+            //      "~/Scripts/controllers/signinController-1.0.js",
+            //      "~/Scripts/controllers/credentialsController-1.0.js",
+            //      "~/Scripts/controllers/questionnairesController-1.6.js",
+            //      "~/Scripts/controllers/portfoliosController-1.2.js",
+            //      "~/Scripts/controllers/instrumentsController-1.2.js",
+            //      "~/Scripts/controllers/assetsController-1.2.js",
+            //      "~/Scripts/controllers/leadsController-1.2.js",
+            //      "~/Scripts/controllers/operationsController-1.2.js",
+            //      "~/Scripts/controllers/customersController-1.3.js",
+            //      "~/Scripts/controllers/roboController-2.2.js",
+            //      "~/Scripts/controllers/containersController-2.3.js",
+            //      "~/Scripts/controllers/universesController-1.2.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/Local/mybootstrap-5.0.css",

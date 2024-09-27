@@ -1,0 +1,287 @@
+﻿
+@RenderSection("headers")
+
+<html>
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="HandheldFriendly" content="true">
+
+    <title>Diligence</title>
+
+
+    <style type="text/css">
+        /* Force Hotmail to display emails at full width */
+        .ReadMsgBody {
+            width: 100%;
+            background-color: #eeeeee;
+        }
+
+        /* Force Hotmail to display emails at full width */
+        .ExternalClass {
+            width: 100%;
+            background-color: #eeeeee;
+        }
+
+            /* Forces Hotmail to display normal line spacing. */
+            .ExternalClass,
+            .ExternalClass p,
+            .ExternalClass span,
+            .ExternalClass font,
+            .ExternalClass td,
+            .ExternalClass div {
+                line-height: 100% !important;
+            }
+
+        /* Resolves webkit padding issue. */
+        table {
+            border-spacing: 0;
+        }
+
+            /* Resolves the Outlook 2007, 2010, and Gmail td padding issue. */
+            table td {
+                border-collapse: collapse;
+            }
+
+        /* Yahoo auto-sensing link color and border */
+        .yshortcuts a {
+            border-bottom: none !important;
+        }
+
+
+        body {
+            font-weight: 100;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -webkit-text-size-adjust: none;
+            text-size-adjust: none;
+            background-color: #d0d0d0;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+            body > table {
+                width: 100%;
+            }
+
+        .page {
+            position: relative;
+            padding: 20px 10px;
+            background-color: #fff;
+        }
+
+            .page .page-margin {
+            }
+
+            .page .team-logo img {
+                width: 300px;
+                height: 300px;
+                margin: 50px auto;
+            }
+
+        .email-container {
+            width: 640px;
+        }
+
+        .page p {
+            font-size: 12px;
+        }
+
+        .page ul li {
+            font-size: 12px;
+        }
+
+        .page h2 {
+            font-size: 16px;
+            color: #434858;
+        }
+
+        .page .sponsor img {
+            width: 50%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+        .copyright {
+            width: 100%;
+            color: #666;
+            padding: 40px 10px;
+            background-color: transparent;
+            font-family: Arial, sans-serif;
+        }
+
+        .loyol-comments {
+            font-size: 10px;
+            color: #888 !important;
+        }
+
+        .copyright p {
+            font-size: 8px;
+        }
+
+        .copyright h2 {
+            font-size: 10px;
+        }
+
+        .button {
+            text-decoration: none !important;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 10px;
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            background-color: #ccc;
+            border: 1px transparent solid;
+            color: #353535;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 0;
+            cursor: pointer;
+            width: auto;
+            *zoom: 1;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-left {
+            text-align: left;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-justify {
+            text-align: justify;
+        }
+
+        .text-nowrap {
+            white-space: nowrap;
+        }
+
+        .text-lowercase {
+            text-transform: lowercase;
+        }
+
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        .text-capitalize {
+            text-transform: capitalize;
+        }
+
+        .text-muted {
+            color: #777;
+        }
+
+        .text-primary {
+            color: #337ab7;
+        }
+
+        .table-positions {
+            background-color: #eee;
+            font-size: 11px;
+            color: #666;
+            width: 100%;
+        }
+
+            .table-positions .header,
+            .table-positions .footer {
+                background-color: #434858;
+                color: #fff;
+            }
+
+                .table-positions .header tr th,
+                .table-positions .footer tr td {
+                    padding: 6px 2px;
+                }
+
+            .table-positions .small {
+                font-size: 6px;
+            }
+
+        .table-trends {
+            background-color: #eee;
+            color: #666;
+            width: 100%;
+        }
+
+            .table-trends .buy {
+                background-color: lightgreen;
+                font-weight: 600;
+                padding: 0 7px;
+                text-transform: uppercase;
+            }
+
+            .table-trends .sell {
+                background-color: salmon;
+                font-weight: 600;
+                padding: 0 7px;
+                text-transform: uppercase;
+            }
+
+            .table-trends td {
+                margin: 10px 5px;
+            }
+
+            .table-trends .small {
+                font-size: 8px;
+                color: #050423;
+            }
+
+        .column-container {
+            width: 100% !important;
+            display: block !important;
+        }
+
+        @@media only screen and (max-device-width: 641px) {
+            .email-container {
+                width: 100% !important;
+                margin: 20px 10px;
+            }
+
+            .visible-mobile {
+                display: block !important;
+            }
+        }
+    </style>
+
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" style="margin:0; padding:0;-webkit-text-size-adjust:none; -ms-text-size-adjust:none;">
+
+    @RenderSection("pageheader", false)
+
+    <table border="0" cellspacing="0" cellpadding="0" width="100%">
+
+        <tr>
+            <td align="center" valign="top" height="40"></td>
+        </tr>
+
+        <tr>
+            <td align="center" valign="top" class="column-container">
+                <table align="center" width="750" style="min-width:290px;">
+                    <tr>
+                        <td class="page">
+                            @RenderBody()
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+    @RenderSection("pagefooter", false)
+
+</body>
+
+</html>

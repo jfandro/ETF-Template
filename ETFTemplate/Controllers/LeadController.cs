@@ -16,6 +16,7 @@ namespace ETFTemplate.Controllers
     {
         private readonly int questionnaireid = Convert.ToInt32(ConfigurationManager.AppSettings.Get("LeadQuestionnaire"));
         private readonly string issuer = ConfigurationManager.AppSettings.Get("LeadEmail");
+        private readonly string domain = ConfigurationManager.AppSettings.Get("ServicesUrl");
 
         /// <summary>
         /// Open robo advisor
@@ -26,6 +27,8 @@ namespace ETFTemplate.Controllers
             var tokenDetails = GetToken();
             ViewBag.token = tokenDetails["access_token"];
             ViewBag.expires = tokenDetails["expires_in"];
+            ViewBag.Domain = domain;
+
             return View(new LeadConnection() { QuestionnaireID = questionnaireid });
         }
 

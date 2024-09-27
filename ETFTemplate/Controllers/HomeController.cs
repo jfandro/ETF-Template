@@ -15,8 +15,16 @@ namespace ETFTemplate.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            return View();
+        }
 
+        public ActionResult Robot()
+        {
+            return View();
+        }
+
+        public ActionResult Portal()
+        {
             return View();
         }
 

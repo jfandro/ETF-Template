@@ -50,19 +50,6 @@
     height: 250px;
 }
 
-section .container h2 {
-    font-size:12rem;
-    font-weight:600;
-}
-section .container .half-container h2 {
-    font-size:6rem;
-    font-weight:600;
-}
-section .container .number-container h4 {
-    font-size:8rem;
-    font-weight:600;
-}
-
 .table-themes tbody tr > td {
     border: none !important;
 }
@@ -111,28 +98,4 @@ section .container .number-container h4 {
         background: #161106;
     }
 
-/***********************************************************************************/
-/*********************** For gaujes built with d3.js *******************************/
-/***********************************************************************************/
-.gauges-container {
-    width:100px;
-    height:100px;
-    padding-top:25px;
-    padding-bottom:25px;
-}
 
-.gauges-container .svg-container {
-    display: inline-block;
-    position: relative;
-    width: 100%;
-    vertical-align: middle;
-    overflow: hidden;
-}
-
-
-@media screen and (max-width: 480px) {
-section .container h2 {
-    font-size:5rem;
-    font-weight:400;
-}
-}

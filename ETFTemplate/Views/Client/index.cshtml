@@ -34,6 +34,7 @@
 
 @section header {
     <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
+    @*<link href="~/Content/site-portal.css" rel="stylesheet" />*@
 }
 
 
@@ -368,6 +369,7 @@
 
         $(document).ready(function () {
 
+            LoyolApp.Settings.domain = '@ViewBag.Domain';
             var domain = LoyolApp.Settings.domain;
             var sg = new LoyolApp.SignInController(domain);
             var pc = new LoyolApp.PortfolioController();
@@ -455,12 +457,12 @@
                     var $a = robo.appContainers;
                     $a.code = report.Portfolio.code;
                     $a.showHoldings('#holdings', $('#PositionDate').val());
-                    $a.showDataviz(function () { });
+                    $a.showPortfolioSynthesis('.synthesis-item');
                     $a.showOperations('.container-operations', 'Exécuté');
                     $a.showOperations('.container-pendings', 'En cours');
                     $a.showTreasury();
                     $a.showDocuments();
-                    $a.showPortfolioSynthesis('.synthesis-item');
+                    $a.showDataviz(function () { });
                 })
             })
 

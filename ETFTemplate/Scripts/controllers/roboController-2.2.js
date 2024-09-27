@@ -155,12 +155,12 @@ myRobo.prototype.allocation = function (valuedate, callback) {
             return q == null ? 0 : q.Answers;
         }
 
-        // retourne les réponses suivante
+        // retourne les réponses aux questions suivantes
         var sri = answer('QESG').Rank, // le niveau de sensibilité esg
             age = answer('QAGE').Rank, // la tranche d'ages
             exp = answer('QEXP').Rank, // le niveau d'expériences
             rsk = answer('QDRW').Code, // code en cas de baisse des marchés
-            thm = manswers('QTHM');
+            thm = manswers('QTHM'); // codes des thématiques retenues
 
         // montant initial investi
         var init = function (ratio) {
@@ -239,7 +239,7 @@ myRobo.prototype.allocation = function (valuedate, callback) {
             return assets;
         }
 
-        // allocation profilée
+        // fonction qui détermine la meilleure allocation profilée en fonction de l'age et de l'expérience
         var riskallocation = function (wa, wb) {
 
             // si l'expérience est forte, on augmente de 5% la partie risquée

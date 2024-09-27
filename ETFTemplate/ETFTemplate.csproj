@@ -162,8 +162,10 @@
     <Content Include="Content\Local\mydataviz-5.0.css" />
     <Content Include="Content\Local\mybootstrap-5.0.css" />
     <Content Include="Content\Local\myrobo-5.0.css" />
+    <Content Include="Content\prettify.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Images\emailviews.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -265,7 +267,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\robot.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
@@ -288,6 +290,11 @@
     <Content Include="Views\Lead\index.cshtml" />
     <Content Include="Views\Lead\portfolio.cshtml" />
     <Content Include="Views\Shared\_Layout5NoMenu.cshtml" />
+    <Content Include="Views\Client\_operations.cshtml" />
+    <Content Include="Views\Home\portal.cshtml" />
+    <Content Include="Views\Emails\LeadConfirmation.cshtml" />
+    <Content Include="Views\Emails\LeadToConfirm.cshtml" />
+    <Content Include="Views\Emails\_layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

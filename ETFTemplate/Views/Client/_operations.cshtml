@@ -1,0 +1,50 @@
+﻿
+
+<div class="table-responsive">
+    <table class="table table-hover table-sm small" data-chart="table" data-page-size="20" data-table="model">
+        <thead>
+            <tr>
+                <th></th>
+                <th width="80">Code</th>
+                <th>Instrument</th>
+                <th>Date</th>
+                <th>Statut</th>
+                <th class="text-center">Quantité</th>
+                <th class="text-center">Prix</th>
+                <th class="text-center">Brut</th>
+                <th class="text-center">Frais</th>
+                <th class="text-center">Net</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+
+    /********************************************************/
+    /************ Operations table ****************************/
+    /********************************************************/
+    var populateOperations = function (data, div) {
+        $(div).empty();
+        $.each(data, function (i, item) {
+            if (!item.IsExternal && item.status == 'En cours') {
+                var tr = $('<tr>').append(
+                    $('<td>').append($('<img>').addClass('td-img').attr('src', 'https://etfreporting.com/Assets/GetImage/' + item.asset.id)),
+                    $('<td>').attr('width', 80).text(item.asset.code),
+                    $('<td>').text(item.asset.name),
+                    $('<td>').text(item.date.substring(0, 10)),
+                    $('<td>').text(item.status),
+                    $('<td>').addClass('text-end').text(item.qty),
+                    $('<td>').addClass('text-end').text(item.price.toLocaleString("fr-FR", myLocalFormat)),
+                    $('<td>').addClass('text-end').text(item.gross.toLocaleString("fr-FR", myLocalFormat)),
+                    $('<td>').addClass('text-end').text(item.fees.toLocaleString("fr-FR", myLocalFormat)),
+                    $('<td>').addClass('text-end').text(item.net.toLocaleString("fr-FR", myLocalFormat)));
+                tr.appendTo(div);
+            }
+
+        });
+    }
+
+</script>
+

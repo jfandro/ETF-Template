@@ -240,6 +240,7 @@
 
         $(document).ready(function () {
 
+            LoyolApp.Settings.domain = '@ViewBag.Domain';
             var domain = LoyolApp.Settings.domain;
             var sg = new LoyolApp.SignInController(domain);
             var $cus = new LoyolApp.CustomerController();

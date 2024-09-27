@@ -1,0 +1,323 @@
+﻿@{
+    ViewBag.Title = "Guide Implémentation";
+}
+
+<div class="p-4 p-md-5 mb-4">
+    <h1 class="display-1">Guide d'implémentation</h1>
+    <p>
+        Voici les différentes étapes à respecter pour développer et déployer sur votre propre site web
+        en moins de 24 heures votre propre <em>robadvisor</em>.
+        Le robot conseiller et <a href="/Home/Portal">le portail client</a> sont deux projets proposés dans
+        une seule et même application, indépendantes l'une de l'autre.
+    </p>
+    <ul>
+        <li><a href="#etfreporting">Inscrivez-vous sur etfreporting</a></li>
+        <li><a href="#robot">Deploiement de votre robot</a></li>
+        <li><a href="#licence">Maintenance</a></li>
+    </ul>
+
+    <hr />
+
+    <div class="p-2">
+        <h2 id="etfreporting" class="display-5">ETFReporting.com</h2>
+        <div class="py-1">
+            <h3>Ouvrez un compte professionnel</h3>
+            <p>
+                La première étape est d'ouvrir un compte professionnel sur <a href="https://etfreporting.com">ETF reporting</a>.
+                Parmi les différents droits obtenus, figure celui de faire usage de sa <strong>WebAPI</strong>
+                afin d'obtenir et de poster des données.
+                Le mode économique est SaaS, la facturation étant opérée par notre partenaire Stripe qui
+                se charge de vous produire les factures.
+            </p>
+        </div>
+
+        <div class="py-1">
+            <h3>Vos modèles</h3>
+            <p>
+                Une fois votre compte professionnel ouvert sur <a href="https://etfreporting.com">ETF reporting</a>,
+                créez vos allocations modèles qui seront le reflet de votre expertise en matière de captation des
+                rendements et de votre gestion des risques.
+                Raisonnez en poche, c'est à dire que la composition et l'enveloppe
+                d'une proposition que vous ferez à un prospect ou un client
+                sera le résultat d'une agrégation de modèles.
+            </p>
+        </div>
+
+        <div id="questionnaire" class="py-1">
+            <h3>Vos questionnaires</h3>
+            <p>
+                Commencez ensuite par la création d'un premier questionnaire de connaissance client (KYC).
+                Posez toutes les questions réglementaires ainsi que celles qui
+                vous permettrons de comprendre le profil de risques et les attentes de votre interlocuteur.
+                Les questions peuvent faire appel à des classifications qui vous sont propres.
+                Privilégiez les questions à choix multiples (QCM) qui peuvent
+                orienter la personne vers des questions différentes.
+                Les réponses obtenues seront par la suite analysées par votre application.
+            </p>
+        </div>
+
+
+        <div id="diligence" class="py-1">
+            <h3>Vos diligences</h3>
+            <p>
+                Quand votre <a href="#robot">robot</a> sera configuré puis déployé sur votre site,
+                chaque fois qu'un prospect souhaitera entrer en contact avec vous,
+                le service créera après vérification de l'adresse email renseignée
+                une diligence, un conteneur numérique contenant toutes les réponses données
+                au question de connaissance. Cette diligence fait l'objet 
+                d'un processus de validation (vous pouvez en effet refuser un prospect), 
+                et d'un processus automatique de mise à jour.
+            </p>
+        </div>
+
+        <div class="py-3">
+            <h3>Vos prospects</h3>
+            <p>
+                Chaque demande déclenche l'ouverture automatique d'un dossier enregistré dans votre atelier. 
+                Chaque dossier contient la <a href="#diligence">diligence</a> conservée ainsi que 
+                la proposition de portefeuille réalisé au terme du parcours de 
+                connaissance client.
+            </p>
+        </div>
+    </div>
+
+    <div class="p-2">
+        <h2 id="robot" class="display-5">Votre robot</h2>
+        <div class="py-1">
+            <h3>Opensource</h3>
+            <p>
+                L'application où vous vous trouvez est notre application témoin.
+                Dotée d'une architecture ASP.NET des plus récentes, elle est proposée en open source.
+                Disponible sur Github, le service d'hébergement de code le plus populaire
+                parmi les développeurs et les programmeurs open source,
+                notre application est accessible au public afin d'être téléchargée,
+                modifiée puis déployée sur votre propre site.
+            </p>
+        </div>
+        <div class="py-1">
+            <h3>Configuration générale</h3>
+            <p>
+                Une fois l'application téléchargée, pour interagir avec
+                les services web d'etfreproting.com, vous devez changer le fichier local.config dans le répertoire
+                Configuration du projet afin de renseigner votre nom d'utilisateur et mot de passe.
+                <pre class="prettyprint bg-light mx-4">
+                <xmp>
+                    <!-- Please setup your credentials on etfreporting.com -->
+                <add key="UserName" value="john" />
+                <add key="UserPassword" value="Ejsld47%s" />
+                    </xmp>
+                </pre>
+            </p>
+            <p>
+                Dans le même fichier local.config,
+                renseignez l'adresse qui signera les emails de validation et de notification auprès de vos prospects.
+                Cette configuration nécessite une mise à jour des paramètres SMTP disponibles
+                dans votre fichier Web.Config
+                <pre class="prettyprint bg-light mx-4">
+                <xmp>
+                    <!-- Email account for leads -->
+                <add key="LeadEmail" value="jf.andro@loyol.fr" />
+                    </xmp>
+                </pre>
+            </p>
+            <p>
+                Enfin, ouvrez les fichiers LeadConfirmation et LeadToConfirm du répertoire /Views/Emails
+                afin de personnaliser (texte et style) le contenu des emails qui seront envoyés automatiquement
+                pour valider leurs adresses et les guider vers leurs futurs espace client (même s'ils ne le sont
+                pas encore)
+            </p>
+            <img class="rounded mx-auto d-block w-50" src="~/Images/emailviews.png" />
+            <p>
+                A ce stade, l'application est connectée en toute sécurité avec les services Web.API
+                de la plateforme etfreporting.
+            </p>
+        </div>
+        <div class="py-1">
+            <h3>Branchement du questionnaire de connaissance</h3>
+            <p>
+                La configuration livrée par défaut utilise un <a href="#questionnaire">questionnaire</a>  unique pour tous les prospects et tous les projets
+                auxquels vous tenterez d'apporter une réponse pertinente.
+                Nous recommendons l'usage de questionnaires à choix simples ou multiples
+                intégrant des règles conditionnelles de routage (<em>si choix A alors question suivante Q10 sinon Q12</em>)
+                pour couvrir le plus grand nombre de cas possibles selon le profil, le projet ou l'enveloppe retenue.
+                Ce questionnaire unique est configuré dans le fichier local.config
+            </p>
+            <pre class="prettyprint bg-light mx-4">
+            <xmp>
+                    <!-- Questionnaire id used by robo KYC -->
+            <add key="LeadQuestionnaire" value="2031" />
+                </xmp>
+            </pre>
+        </div>
+        <div class="py-1">
+            <h3>Interprétation des réponses au questionnaire de connaissance</h3>
+            <p>
+                Pour construire votre proposition,
+                vous allez lire les réponses collectées via votre <a href="#questionnaire">questionnaire</a>,
+                et puis construire votre portefeuille dans l'enveloppe adhoc
+                à partir de votre bibiothèque de modèles,
+                les ingrédients et leurs pondérations étant fonction des réponses et potentiellement
+                du contexte.
+                Toute cette logique est décrite en langage <em>javascript</em> localisé dans
+                votre controller roboController.js. 3 extraits ci-dessous de ce qui est mis en oeuvre
+                dans cette application témoin:
+            </p>
+            <div class="p-4 bg-light mx-4">
+                <h6>Lecture des réponses</h6>
+                <pre class="prettyprint">
+                <xmp>
+                        // définit des variables associées aux réponses des questions suivantes:
+                        var sri = answer('QESG').Rank, // le niveau de sensibilité esg
+                        age = answer('QAGE').Rank,  // la tranche d'age
+                        exp = answer('QEXP').Rank,  // le niveau d'expériences (1 à 4)
+                        rsk = answer('QDRW').Code,  // code en cas de baisse des marchés
+                        thm = manswers('QTHM');     // tableau des thématiques retenues
+                    </xmp>
+                </pre>
+            </div>
+
+            <div class="p-4 bg-light mx-4">
+                <h6>Sélection de modèles thématiques pour l'enveloppe choisie</h6>
+                <pre class="prettyprint">
+                <xmp>
+                        // retourne les modèles correspondant aux thématiques retenues
+                        var mythematics = function (key) {
+
+                        switch (key) {
+
+                            case "TEC":
+                            return '7f410c5d-1517-4da1-96d5-cae9e58e68d6';
+                            break;
+
+                            case "SMT":
+                            return '4124fe36-68f4-448b-96c2-4773ab662875';
+                            break;
+
+                            case "ENG":
+                            return '286f6b20-3ebf-46dd-a507-abd8291551a4';
+                            break;
+
+                            case "RUS":
+                            return '8e797049-c05d-46a7-88b7-f81a5dca5424';
+                            break;
+
+                            default:
+                            return '77a07a53-140c-4ef6-83d5-632593aee7d4';
+                            }
+                        }
+                    </xmp>
+                </pre>
+            </div>
+
+            <div class="p-4 bg-light mx-4">
+                <h6>Construction d'une allocation profilée type</h6>
+
+                <pre class="prettyprint">
+                <xmp>
+                    // creation d'une allocation en fonction de son comportement face à une baisse des marchés
+                    alloc = new myAllocation(cp, valuedate);
+
+                    // suivant le risque
+                    switch (rsk) {
+
+                    case 'SAL': // profil prudent
+                        riskallocation(40, 60);
+                        break;
+
+                    case 'WAI': // profil equilibré
+                        riskallocation(60, 40);
+                        break;
+
+                    case 'INV': // profil agressif
+                        riskallocation(100, 0);
+                        break;
+
+                    default: // profil audacieux
+                        riskallocation(80, 20);
+                        break;
+
+                    }
+            </xmp>
+            </pre>
+            </div>
+
+            <div class="p-4 bg-light mx-4">
+                <h6>Ajustement de l'allocation</h6>
+                <pre class="prettyprint">
+                <xmp>
+                    // ici on ajuste l''allocation actions/taux en fonction de l'age et de l'expérience
+                    var riskallocation = function (wa, wb) {
+
+                    // si l'expérience est forte, on augmente de 5% la partie risquée
+                    if (exp > 1) {
+                    wa += 5;
+                    wb -= 5;
+                    }
+                    // si +40 ans on baisse de 7% la partie risquée
+                    if (age > 1) {
+                    wa -= 7;
+                    wb += 7;
+                    }
+                    // poche actions
+                    equities(wa).forEach(function(x) {
+                    alloc.Records.push(item(x.SecurityID, x.Weight));
+                    });
+                    // poche obligation
+                    fixedincomes(wb).forEach(function (x) {
+                    alloc.Records.push(item(x.SecurityID, x.Weight));
+                    });
+                    }
+
+                </xmp>
+            </pre>
+
+            </div>
+        </div>
+        <div class="py-1">
+            <h3>Parcours utilisateur</h3>
+            <p>
+                Le code étant ouvert, vous personnaliserez ou revoir
+                le parcours, le style, les textes, ou plus généralement
+                tout ou partie de l'expérience utilisateur que nous vous proposons par défaut.
+                Le chantier peut être plus ou moins important
+                selon vos capacités, vos exigences et vos objectifs.
+                Vous solliciterez vos prestataires actuels ou futurs.
+                Vous pouvez aussi nous confier cette prestation qui fera l'objet d'un devis détaillé.
+            </p>
+        </div>
+        <div class="py-1">
+            <h3>Déploiement</h3>
+            <p>
+                Quand à la phase de déploiement,
+                vous choisirez l'hébergeur.
+                Tout comme la tâche de personnalisation,
+                nous vous proposerons d'héberger votre application chez Microsoft Azure ou
+                chez Amazon AWS, les deux leaders en terme d'administration et de maintenance.
+            </p>
+        </div>
+
+        <div class="py-1">
+            <h3>Domaine</h3>
+            <p>
+                Vous devrez disposer d'un nom de domaine. Nous vous recommandons
+                d'être détenteur d'un certificat vous permettant l'usage des sous domaines.
+                Si votre site internet est mycompany.fr, assurez vous de disposer des droits
+                pour portal.mycompany.fr ou robo.mycompany.fr
+            </p>
+        </div>
+
+        <div class="py-2">
+            <h2 id="robot" class="display-5">Maintenance applicative</h2>
+            <p>
+                L'application est proposée en Open source. Le code est en accès libre.
+                Toutes les prestations que vous nous confierez seront accompagnées
+                d'un contrat de maintenance applicative garantissant
+                le bon fonctionnement de l'application et ses futures évolutions.
+                Il faut compter sur une année entre 1 et 2 versions majeures des services
+            </p>
+        </div>
+
+    </div>
+
+</div>
+

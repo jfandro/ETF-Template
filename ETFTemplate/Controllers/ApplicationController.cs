@@ -12,7 +12,7 @@ namespace ETFTemplate.Controllers
     public abstract partial class ApplicationController : Controller
     {
 
-        private readonly string baseUrl = "http://localhost:64629";
+        private readonly string baseUrl = ConfigurationManager.AppSettings.Get("ServicesUrl");
 
         /// <summary>
         /// Return Uri of server

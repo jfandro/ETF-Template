@@ -1,0 +1,127 @@
+﻿@{
+    ViewBag.Title = "Guide Implémentation";
+}
+
+<div class="p-4 p-md-5 mb-4">
+    <h1 class="display-1">Guide d'implémentation</h1>
+    <p>
+        Voici les différentes étapes à respecter pour développer et déployer sur votre propre site web
+        en moins de 24 heures votre propre portail client.
+        Portail client et <a href="/Home/Robot">robot conseiller</a> sont deux projets proposés dans
+        une seule et même application, indépendantes l'une de l'autre.
+
+    </p>
+    <ul>
+        <li><a href="#etfreporting">Inscrivez-vous sur etfreporting</a></li>
+        <li><a href="#portal">Déploiement de votre portail client</a></li>
+    </ul>
+
+    <hr />
+
+    <div class="p-2">
+        <h2 id="etfreporting" class="display-5">ETFReporting.com</h2>
+        <div class="py-1">
+            <h3>Ouvrez un compte professionnel</h3>
+            <p>
+                La première étape est d'ouvrir un compte professionnel sur <a href="https://etfreporting.com">ETF reporting</a>.
+                Parmi les différents droits obtenus, figure celui de faire usage de sa <strong>WebAPI</strong>
+                afin d'obtenir et de poster des données.
+                Le mode économique est SaaS, la facturation étant opérée par notre partenaire Stripe qui
+                se charge de vous produire les factures.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="p-2">
+        <h2 id="robot" class="display-5">Votre portail</h2>
+        <div class="py-1">
+            <h3>Opensource</h3>
+            <p>
+                L'application où vous vous trouvez est notre application témoin.
+                Dotée d'une architecture ASP.NET des plus récentes, elle est proposée en open source.
+                Disponible sur Github, le service d'hébergement de code le plus populaire
+                parmi les développeurs et les programmeurs open source,
+                notre application est accessible au public afin d'être téléchargée,
+                modifiée puis déployée sur votre propre site.
+            </p>
+        </div>
+        <div class="py-1">
+            <h3>Configuration générale</h3>
+            <p>
+                Une fois l'application téléchargée, pour interagir avec
+                les services web d'etfreproting.com, vous devez changer le fichier local.config dans le répertoire
+                Configuration du projet afin de renseigner votre nom d'utilisateur et mot de passe.
+                <pre class="prettyprint bg-light mx-4">
+                <xmp>
+                    <!-- Please setup your credentials on etfreporting.com -->
+                    <add key="UserName" value="john" />
+                    <add key="UserPassword" value="Ejsld47%s" />
+                    </xmp>
+                </pre>
+            </p>
+            <p>
+                A ce stade, l'application est connectée en toute sécurité avec les services Web.API
+                de la plateforme etfreporting. Le portail est déjà effectif.
+            </p>
+        </div>
+        <div class="py-1">
+            <h3>Services offerts</h3>
+            <p>
+                Voici la
+            </p>
+            <pre class="prettyprint bg-light mx-4">
+            <xmp>
+                    <!-- Questionnaire id used by robo KYC -->
+            <add key="LeadQuestionnaire" value="2031" />
+                </xmp>
+            </pre>
+        </div>
+
+        <div class="py-1">
+            <h3>Parcours utilisateur</h3>
+            <p>
+                Le code étant ouvert, vous personnaliserez ou revoir
+                le parcours, le style, les textes, ou plus généralement
+                tout ou partie de l'expérience utilisateur que nous vous proposons par défaut.
+                Le chantier peut être plus ou moins important
+                selon vos capacités, vos exigences et vos objectifs.
+                Vous solliciterez vos prestataires actuels ou futurs.
+                Vous pouvez aussi nous confier cette prestation qui fera l'objet d'un devis détaillé.
+            </p>
+        </div>
+        <div class="py-1">
+            <h3>Déploiement</h3>
+            <p>
+                Quand à la phase de déploiement,
+                vous choisirez l'hébergeur.
+                Tout comme la tâche de personnalisation,
+                nous vous proposerons d'héberger votre application chez Microsoft Azure ou
+                chez Amazon AWS, les deux leaders en terme d'administration et de maintenance.
+            </p>
+        </div>
+
+        <div class="py-1">
+            <h3>Domaine</h3>
+            <p>
+                Vous devrez disposer d'un nom de domaine. Nous vous recommandons
+                d'être détenteur d'un certificat vous permettant l'usage des sous domaines.
+                Si votre site internet est mycompany.fr, assurez vous de disposer des droits
+                pour portal.mycompany.fr ou robo.mycompany.fr
+            </p>
+        </div>
+
+        <div class="py-1">
+            <h3>Maintenance applicative</h3>
+            <p>
+                Toutes les prestations que vous nous confierez seront accompagnées
+                d'un contrat de maintenance applicative garantissant
+                le bon fonctionnement de l'application et ses futures évolutions.
+                Il faut compter sur une année entre 1 et 2 versions majeures des services
+            </p>
+        </div>
+
+    </div>
+
+</div>
+

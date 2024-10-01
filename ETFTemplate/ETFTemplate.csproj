@@ -229,18 +229,19 @@
     <Content Include="Content\fa\scss\_stacked.scss" />
     <Content Include="Content\fa\scss\_variables.scss" />
     <Content Include="Content\fa\scss\font-awesome.scss" />
+    <Content Include="Configuration\server.config" />
     <None Include="Properties\PublishProfiles\ETFTemplate - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\controllers\assetsController-1.2.js" />
     <Content Include="Scripts\controllers\credentialsController-1.0.js" />
     <Content Include="Scripts\controllers\customersController-1.3.js" />
     <Content Include="Scripts\controllers\instrumentsController-1.2.js" />
-    <Content Include="Scripts\controllers\containersController-2.3.js" />
+    <Content Include="Scripts\controllers\containersController-2.4.js" />
     <Content Include="Scripts\controllers\leadsController-1.2.js" />
     <Content Include="Scripts\controllers\operationsController-1.2.js" />
     <Content Include="Scripts\controllers\portfoliosController-1.2.js" />
     <Content Include="Scripts\controllers\questionnairesController-1.6.js" />
-    <Content Include="Scripts\controllers\roboController-2.2.js" />
+    <Content Include="Scripts\controllers\roboController-2.3.js" />
     <Content Include="Scripts\controllers\signinController-1.0.js" />
     <Content Include="Scripts\controllers\universesController-1.2.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -299,6 +300,7 @@
     <Content Include="Views\Emails\_layout.cshtml" />
     <Content Include="Views\Client\_compliances.cshtml" />
     <Content Include="Views\Client\_help.cshtml" />
+    <Content Include="Views\Client\_notes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

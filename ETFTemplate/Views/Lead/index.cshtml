@@ -5,9 +5,9 @@
     Layout = "~/Views/Shared/_layout5NoMenu.cshtml";
 }
 
-@section title {
+@*@section title {
     Mon robot
-}
+}*@
 
 @section header {
     <!-- The style of my web site for widgets -->
@@ -23,11 +23,8 @@
             <p>
                 Si vous êtes en quête d'une solution financière adaptée à votre profil, vos attentes et
                 vos projets, alors vous êtes au bon endroit.
-                Si vous souhaitez resté anonyme et que l'on entre en contact 
-                seulement si vous êtes satisfait de la
-                proposition à la carte qui sera produite après 10 questions posées,
-                alors vous êtes au meilleur endroit.
-                On se retrouve dans quelques instants si vous le voulez bien.
+                On se retrouve dans quelques instants avec une proposition personalisée
+                au terme de ce questionnaire de connaissance.
                 Bienvenue sur myadvisor.com
             </p>
         </div>
@@ -89,8 +86,8 @@
                         </p>
 
                         <div class="align-content-center">
-                            <button type="submit" class="btn btn-primary">Je valide cette synthèse</button>
-                            <button type="button" class="btn btn-primary btn-redo">Je recommence le questionnaire</button>
+                            <button type="submit" class="btn btn-primary">Je valide</button>
+                            <button type="button" class="btn btn-primary btn-redo">Je recommence</button>
                         </div>
                     </form>
                 </div>
@@ -125,7 +122,7 @@
                         Si cette sélection ne correspond pas à vos attentes,
                         n'hésitez pas à <a href="#" class="btn-redo">revenir sur le questionnaire</a>.
                     </p>
-                    <div id="assets" class="assets-container card-group p-5"></div>
+                    <div id="assets" class="assets-container card-group p-lg-5 p-sm-2 p-xs-0 "></div>
                 </div>
 
                 <div class="py-5">

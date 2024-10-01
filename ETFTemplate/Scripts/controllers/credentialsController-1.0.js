@@ -41,7 +41,8 @@ var credentialsControl = function (reportid, callback) {
             pwd = $.cookie('credentials-p');
     }
     else if (reportid == $.cookie('credentials-u'))
-        pwd = $.cookie('credentials-p');
+        if ($.cookie('credentials-p'))
+            pwd = $.cookie('credentials-p');
 
 
     // verify here the client report

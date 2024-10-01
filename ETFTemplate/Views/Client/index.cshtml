@@ -6,7 +6,6 @@
 }
 
 @section title {
-    Mon Portail
 }
 
 @section menu {
@@ -29,6 +28,7 @@
     <button data-bs-toggle="pill" data-bs-target="#tab-cashflows" role="tab" class="nav-link text-white">Trésorerie</button>
     <hr />
     <button data-bs-toggle="pill" data-bs-target="#tab-compliances" role="tab" class="nav-link text-white">Contraintes</button>
+    <button data-bs-toggle="pill" data-bs-target="#tab-notes" role="tab" class="nav-link text-white">Notes</button>
     <hr />
     <button data-bs-toggle="pill" data-bs-target="#tab-contact" role="tab" class="nav-link text-white">Contact</button>
     <button data-bs-toggle="pill" data-bs-target="#tab-help" role="tab" class="nav-link text-white">Aide</button>
@@ -45,8 +45,8 @@
     <div class="tab-content">
 
         <div id="tab-portfolio" role="tabpanel" tabindex="0" class="tab-pane fade show active">
-            <div class="d-flex align-items-center justify-content-center">
-                <div class="p-4 p-md-5 mb-4">
+            <div class="">
+                <div class="p-lg-4 p-md-2 p-sm-1 py-5 mb-4">
                     <h1 class="display-4">Bonjour <span class="name"></span>,</h1>
                     <p>
                         Bienvenue dans votre espace privé.
@@ -78,7 +78,7 @@
         </div>
 
         <div id="tab-strategy" role="tabpanel" tabindex="0" class="tab-pane fade active tab-svg">
-            <div class="p-4 p-md-5 mb-4">
+            <div class="p-4 mb-4">
                 <h1 class="display-4">Stratégie</h1>
                 <p>
                     Retrouvez ci-dessous la stratégie conduite par votre portefeuille
@@ -96,7 +96,7 @@
 
         <div id="tab-indicators" role="tabpanel" tabindex="0" class="tab-pane fade active tab-svg">
 
-            <div class="p-4 p-md-5 mb-4">
+            <div class="p-4 mb-4">
                 <h1 class="display-4">Résultats</h1>
                 <p>
                     Retrouvez ci-dessous les principaux indicateurs
@@ -105,10 +105,10 @@
                 </p>
                 <div class="container py-5">
                     <div class="container-stats">
-                        <div class="py-2 mx-5">
+                        <div class="py-2 mx-lg-5 mx-sm-1">
                             @Html.Partial("_results")
                         </div>
-                        <div class="py-2 mx-5">
+                        <div class="py-2 mx-lg-5 mx-sm-1">
                             @Html.Partial("_indicators")
                         </div>
                     </div>
@@ -186,6 +186,29 @@
                     <div class="container-compliances mx-5">
                         <div class="py-2">
                             @Html.Partial("_compliances")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="tab-notes" role="tabpanel" tabindex="0" class="tab-pane fade">
+
+            <div class="p-4 p-md-5 mb-4">
+                <h1 class="display-4">Notes et correspondances</h1>
+                <p>
+                    Retrouvez ici tous les échanges et autres correspondances avec votre conseiller
+                    sur la gestion, la stratégie ou les risques de vos
+                    placements dans le cadre de ce portefeuille.
+                </p>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="container py-5">
+                    <div class="container-compliances mx-5">
+                        <div class="py-2">
+                            @Html.Partial("_notes")
                         </div>
                     </div>
                 </div>
@@ -397,9 +420,12 @@
                 robo.code = report.Portfolio.code;
                 // get portfolio informations
                 robo.get(function (data) {
-                    robo.showReportAnswers($('.container-kyc table tbody'), function () { });
+                    robo.showReportAnswers($('.container-kyc table tbody'), function () {
+                        robo.checkDiligence();
+                    });
                     var $a = robo.appContainers;
                     $a.code = report.Portfolio.code;
+                    $a.showProperties($('.properties-container'), report);
                     $a.showHoldings('#holdings', $('#PositionDate').val(), function () {
                         $a.showPortfolioSynthesis('.synthesis-item');
                         $a.showOperations('.container-operations', true);
@@ -410,12 +436,24 @@
                             $a.showCompliances(true);
                         });
                     });
+                    showNotes(report.Notes, $('#notes-container'));
                     // When we click for refreshing portfolio
                     $('.btn-positions').click(function () {
                         $a.showHoldings('#holdings', $('#PositionDate').val(), function () { });
                     });
                 })
             })
+
+            var showNotes = function (notes, container) {
+                $.each(notes, function (i, n) {
+                    var div = $('<article>').addClass('p-2 bg-light my-2');
+                    var h3 = $('<h3>').html(n.title);
+                    var h5 = $('<h5>').html(n.preamble);
+                    var p = $('<em>').html(n.body);
+                    div.append(h3, h5, p);
+                    div.appendTo(container);
+                })
+            }
 
             // contact form
             $('.form-contact').submit(function () {

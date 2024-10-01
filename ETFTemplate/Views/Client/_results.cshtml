@@ -2,49 +2,82 @@
 <div class="mb-4">
     <h2>Synthèse</h2>
     <p>
-        Ci-dessous une première synthèse de la valeur de votre portefeuille à ce jour,
-        en tenant compte de vos apports et retraits,
-        des plus et moins <strong>réalisées</strong> et <strong>latente</strong>
-        ainsi que les frais de gestion prélevés.
+        Ci-dessous les principales caractéristiques et une première synthèse de la valeur actuelle
+        de votre portefeuille
+        en tenant compte de tous vos apports et retraits,
+        des plus et moins <strong>réalisées</strong> et <strong>latentes</strong>
+        ainsi que les frais de gestion <strong>prélevés et provisionnés</strong>.
     </p>
 
-    <div class="mb-2 bg-light h-100 align-content-center">
-        <div class="text-center">
-            <h3 class="text-bg-light" style="font-size:5rem;font-family:'Lucida Calligraphy';">
-                <span class="yld-container"></span>%
-            </h3>
-            <p>Performance annuelle</p>
-            <div style="margin-left:20%; margin-right:20%;">
-                <table class="table table-sm table-synthesis">
-                    <tr>
-                        <td class="text-start"><label>Apports</label></td>
-                        <td class="text-end synthesis-item" data-indicator="Capital"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-start"><label>+/- réalisées</label></td>
-                        <td class="text-end synthesis-item" data-indicator="RealizedValue"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-start"><label>+/- latentes</label></td>
-                        <td class="text-end synthesis-item" data-indicator="UnrealizedValue"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-start"><label>Dividendes</label></td>
-                        <td class="text-end synthesis-item" data-indicator="Incomes"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-start"><label>Valeur brute</label></td>
-                        <td class="text-end synthesis-item" data-indicator="GrossValue"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-start"><label>Frais de gestion</label></td>
-                        <td class="text-end synthesis-item" data-indicator="ManagementFees"></td>
-                    </tr>
-                    <tr>
-                        <td class="text-start"><label>Valeur nette</label></td>
-                        <td class="text-end synthesis-item fw-bold" data-indicator="NetValue"></td>
-                    </tr>
-                </table>
+    <div class="row g-3 py-3">
+        <div class="col-md-6 p-lg-5 p-sm-2 bg-dark text-bg-dark properties-container">
+            <dl class="row">
+                <dt class="col-sm-4"><label>Devise</label></dt>
+                <dd class="col-sm-8 text-start pr-currencycode"></dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label>Univers</label></dt>
+                <dd class="col-sm-8 text-start pr-universe"></dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label>Classe d'actifs</label></dt>
+                <dd class="col-sm-8 text-start pr-class"></dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label>Ouverture</label></dt>
+                <dd class="col-sm-8 text-start pr-createdon"></dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label>Niveau de risques</label></dt>
+                <dd class="col-sm-8 text-start pr-srri"></dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label>Frais de gestion</label></dt>
+                <dd class="col-sm-8 text-start pr-universe-rate"></dd>
+            </dl>
+            <dl class="row">
+                <dt class="col-sm-4"><label>Benchmark</label></dt>
+                <dd class="col-sm-8 text-start pr-benchmark"></dd>
+            </dl>
+        </div>
+        <div class="col-md-6 p-lg-5 p-sm-2 bg-light">
+            <div class="text-center">
+                <h3 class="text-bg-light" style="font-size:5rem;font-family:'Lucida Calligraphy';">
+                    <span class="yld-container"></span>%
+                </h3>
+                <p>Performance annuelle</p>
+                <div style="margin-left:20%; margin-right:20%;">
+                    <table class="table table-sm table-synthesis">
+                        <tr>
+                            <td class="text-start"><label>Apports</label></td>
+                            <td class="text-end synthesis-item fw-bold" data-indicator="Capital"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-start"><label>+/- réalisées</label></td>
+                            <td class="text-end synthesis-item" data-indicator="RealizedValue"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-start"><label>+/- latentes</label></td>
+                            <td class="text-end synthesis-item" data-indicator="UnrealizedValue"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-start"><label>Dividendes</label></td>
+                            <td class="text-end synthesis-item" data-indicator="Incomes"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-start"><label>Valeur brute</label></td>
+                            <td class="text-end synthesis-item" data-indicator="GrossValue"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-start"><label>Frais de gestion</label></td>
+                            <td class="text-end synthesis-item" data-indicator="ManagementFees"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-start"><label>Valeur nette</label></td>
+                            <td class="text-end synthesis-item fw-bold" data-indicator="NetValue"></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -54,26 +87,34 @@
 <div class="mb-4">
     <h2>Evolution de la performance</h2>
     <p>
-    La courbe c-dessous affiche l'évolution de la performance de votre portefeuille
+    La courbe ci-dessous représente l'évolution de la performance de votre portefeuille
     calculée selon la méthode TWR (en anglais <em>Time Weighted Returns</em>).
     Cette méthode, insensible aux différents apports et retraits
-    exécutés depuis sa création, est non seulement la seule permettant de comparer la performance de votre
-        portefeuille à celle d'un indice, d'un intrument financier ou d'autre portefeuille.
-        Mais c'est aussi celle qui permet de calculer tous les indicateurs de risques de ce dernier.
+    exécutés depuis la création du portefeuille, permet de comparer votre
+        portefeuille à celle d'un indice, d'un intrument financier ou d'un autre portefeuille.
     </p>
-    <div class="lines-chart-container navs-container" style="height:60vh;">
-        <div id="navs" class="dc-chart lines-chart portfolio-content" data-option="YTD" data-animation="1000" data-x-dim="valuedate" data-y-dim="price"></div>
+    <em>
+        Si votre portefeuille est <b>benchmarké</b> (notamment dans le cadre d'une commission de
+        surperformance), vous pourrez comparer les performances
+        et les risques des deux entités.
+    </em>
+    <em>Les éventuels marqueurs affichés sur ce graphe correspondent à des 
+    décisions de gestion ou des changements de stratégies consultables plus 
+    en détails dans votre rubrique <b>Notes</b>.</em>
+
+    <div class="py-5">
+        <div class="lines-chart-container navs-container">
+            <div id="navs" class="dc-chart lines-chart portfolio-content" data-option="YTD" data-animation="1000" data-x-dim="valuedate" data-y-dim="price"></div>
+        </div>
     </div>
 </div>
 
-<div class="mb-4 p-4 results-container">
+<div class="mb-4 results-container">
     <h2>Derniers résultats mensuels</h2>
     <p>
-        La courbe c-dessous affiche l'évolution de la performance de votre portefeuille
-        calculée selon la méthode TWR (en anglais <em>Time Weighted Returns</em>).
-        Cette méthode, insensible aux différents apports et retraits
-        exécutés depuis sa création, est la seule permettant de comparer la performance de votre
-        portefeuille à celle d'un indice, d'un intrument financier ou d'autre portefeuille.
+        Le graphique ci-dessous permet de visualiser l'évolution des performances de votre portefeuille
+        mois par mois. Par défaut, la fenêtre consultée est sur les 12 derniers mois
+        mais vous pouvez choisir les dates de début et de fin.
     </p>
     <div class="row">
         <div class="col-3">

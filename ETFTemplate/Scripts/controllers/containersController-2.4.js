@@ -75,8 +75,9 @@ myAppContainers.prototype.showSectors = function (callback) {
 
     $('.sectors').each(function () {
         var container = $(this),
-            action = container.data('action'),
-            sector = new sectormap('#' + container.attr('id'));
+            action = container.data('action');
+        container.empty();
+        var sector = new sectormap('#' + container.attr('id'));
         $p.get(action, { code: code }, function (data) {
             sector.load(data, null, null);
             if (callback)
@@ -87,8 +88,9 @@ myAppContainers.prototype.showSectors = function (callback) {
     $('.breakdowns').each(function () {
         var container = $(this),
             action = container.data('action'),
-            legend = container.data('legend'),
-            map = new breakdownmap('#' + container.attr('id'));
+            legend = container.data('legend');
+        container.empty();
+        var map = new breakdownmap('#' + container.attr('id'));
         $p.get(action, { code: code }, function (data) {
             map.load(data, legend, function () {
                 if (callback)
@@ -100,8 +102,9 @@ myAppContainers.prototype.showSectors = function (callback) {
     $('.extra-breakdowns').each(function () {
         var container = $(this),
             key = container.data('breakdown'),
-            legend = container.data('legend'),
-            map = new breakdownmap('#' + container.attr('id'));
+            legend = container.data('legend');
+        container.empty();
+        var map = new breakdownmap('#' + container.attr('id'));
         $p.get('ExtraBreakdown', { code: code, key: key }, function (data) {
             map.load(data, legend, function () {
                 if (callback)
@@ -255,12 +258,34 @@ myAppContainers.prototype.showNavs = function () {
             option = linechart.data('option'),
             $n = new navschart(id);
 
+        $i.get('get', { id: code, benchmark:true }, function (result) {
+            if (result) {
+                $i.get('prices', { id: code, option: option }, function (data) {
+                    $n.load(data, code, false, function () {
+                        if (result.benchmark) {
+                            var codeB = result.benchmark.code;
+                            $i.get('prices', { id: codeB, option: option }, function (data2) {
+                                $n.load(data2, codeB, true, function () {
+                                    $('.tab-svg').removeClass('active');
+                                });
+                            });
+                        }
+                        else
+                        {
+                            $n.populate();
+                            $('.tab-svg').removeClass('active');
+                        }
+                    });
+                });
+            }
+        })
+
         // get the historical positions from the server in Json format
-        $i.get('prices', { id: code, option: option }, function (data) {
-            $n.load(data, code, true, function () {
-                $('.tab-svg').removeClass('active');
-            });
-        });
+        //$i.get('prices', { id: code, option: option }, function (data) {
+        //    $n.load(data, code, true, function () {
+        //        $('.tab-svg').removeClass('active');
+        //    });
+        //});
 
     });
 
@@ -452,6 +477,21 @@ myAppContainers.prototype.showPortfolioSynthesis = function (items) {
             item.html(data[item.data('indicator')].toLocaleString("fr-FR", myLocalFormat));
         })
     })
+
+}
+
+/** show portfolio properties */
+myAppContainers.prototype.showProperties = function (div, r) {
+
+    var ptf = r.Portfolio;
+    div.find('.pr-currencycode').html(ptf.currencycode);
+    div.find('.pr-universe').html(ptf.universe ? ptf.universe.name : 'Compte titres');
+    div.find('.pr-universe-rate').html(ptf.universe ? ptf.universe.ManagementFees.rate + '%' : '?');
+    div.find('.pr-class').html(ptf.class);
+    div.find('.pr-srri').html(ptf.srri);
+    div.find('.pr-createdon').html(ptf.createdon);
+    if (ptf.Benchmark)
+        div.find('.pr-benchmark').html(ptf.Benchmark.name);
 
 }
 

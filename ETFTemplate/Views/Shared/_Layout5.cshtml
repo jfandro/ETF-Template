@@ -20,7 +20,7 @@
         <div class="container px-4 px-lg-5">
             <a class="navbar-brand" href="/home">Mon site internet</a>
             <a class="navbar-brand text-primary" href="#">@RenderSection("title", false)</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarside" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 @RenderSection("menu", false)
             </div>
@@ -29,8 +29,8 @@
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <div class="col-2 px-0 px-sm-2 text-white bg-dark">
-                <aside class="sticky-top sticky-offset vh-100 overflow-auto">
+            <nav id="navbarside" class="col-md-2 px-0 px-sm-2 d-md-block text-white bg-dark sidebar collapse">
+                <aside class="sticky-top sticky-offset overflow-auto">
                     <div class="d-flex flex-column">
                         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                             <div style="height:60px;padding:10px 20px;" class="text-center align-middle">
@@ -44,8 +44,8 @@
                     </div>
 
                 </aside>
-            </div>
-            <main class="col-10 py-5">
+            </nav>
+            <main class="col-md-10 ms-sm-auto col-lg-10 px-md-4">
                 @RenderBody()
             </main>
         </div>

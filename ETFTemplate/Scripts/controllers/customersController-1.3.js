@@ -2,12 +2,12 @@
 LoyolApp = LoyolApp || {};
 
 // Constructor of the controller
-LoyolApp.CustomerController = function () {
+LoyolApp.CustomersController = function () {
     this.Code = '';
 }
 
 // Get all the data from API portfolios related to one portfolio
-LoyolApp.CustomerController.prototype.get = function (action, data, callback) {
+LoyolApp.CustomersController.prototype.get = function (action, data, callback) {
 
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
@@ -33,7 +33,7 @@ LoyolApp.CustomerController.prototype.get = function (action, data, callback) {
 }
 
 // Post the data to the controller API portfolios
-LoyolApp.CustomerController.prototype.post = function (action, data, callback) {
+LoyolApp.CustomersController.prototype.post = function (action, data, callback) {
     var session = LoyolApp.Session.getInstance().get();
     if (session && session.keepSignedIn && session.token) {
         var token = session.token,
@@ -59,20 +59,20 @@ LoyolApp.CustomerController.prototype.post = function (action, data, callback) {
 }
 
 // Get one report
-LoyolApp.CustomerController.prototype.getreport = function (credentials, callback) {
+LoyolApp.CustomersController.prototype.getreport = function (credentials, callback) {
     this.get('ActivityReport', credentials, function (data) {
         callback(data);
     });
 }
 
 // Get one access
-LoyolApp.CustomerController.prototype.getaccess = function (credentials, callback) {
+LoyolApp.CustomersController.prototype.getaccess = function (credentials, callback) {
     this.get('Access', credentials, function (data) {
         callback(data);
     });
 }
 // Return true or false if report exists
-LoyolApp.CustomerController.prototype.exists = function (id, callback) {
+LoyolApp.CustomersController.prototype.exists = function (id, callback) {
     this.get('ReportExists', { id: id }, function (resp) {
         callback(resp.status);
     });

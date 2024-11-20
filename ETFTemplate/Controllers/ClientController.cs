@@ -14,10 +14,8 @@ namespace ETFTemplate.Controllers
     /// </summary>
     public class ClientController : ApplicationController
     {
-        private readonly int questionnaireid = Convert.ToInt32(ConfigurationManager.AppSettings.Get("LeadQuestionnaire"));
-        private readonly string issuer = ConfigurationManager.AppSettings.Get("LeadEmail");
-        private readonly string domain = ConfigurationManager.AppSettings.Get("ServicesUrl");
-
+        private readonly int questionnaireid = ApplicationHelper.LeadQuestionnaire;
+        private readonly string domain = ApplicationHelper.ServicesUrl;
 
         /// <summary>
         /// Get client portal
@@ -30,6 +28,7 @@ namespace ETFTemplate.Controllers
             ViewBag.token = tokenDetails["access_token"];
             ViewBag.expires = tokenDetails["expires_in"];
             ViewBag.Domain = domain;
+            ViewBag.Title = ApplicationHelper.ApplicationName +  " - Client Portal";
 
             var model = new ClientPortal() { Code = id, QuestionnaireID = questionnaireid };
             return View(model);
@@ -94,6 +93,7 @@ namespace ETFTemplate.Controllers
             var model = new ClientPortal() { Code = id };
             return View(model);
         }
+
     }
 
 }

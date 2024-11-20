@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using System.Configuration;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,7 +20,7 @@
     <!-- Navigation-->
     <nav class="container-fluid navbar navbar-expand-lg navbar-light py-3 fixed-top p-0 shadow" id="mainNav">
         <div class="container px-4 px-lg-5">
-            <a class="navbar-brand" href="/home">Mon site internet</a>
+            <a class="navbar-brand" href="@ApplicationHelper.UserWebSite">@ApplicationHelper.ApplicationName</a>
             <a class="navbar-brand text-primary" href="#">@RenderSection("title", false)</a>
             <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarside" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -34,7 +36,7 @@
                     <div class="d-flex flex-column">
                         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                             <div style="height:60px;padding:10px 20px;" class="text-center align-middle">
-                                <span class="fs-4 text-primary text-username"></span>
+                                <span class="fs-4 text-white text-username"></span>
                             </div>
                         </a>
                         <hr>

@@ -16,45 +16,40 @@
 
     <div class="p-4 p-md-5 mb-4">
         <h1 class="display-4">C'est noté <span class="text-username"></span>!</h1>
-        <div class="row">
-            <div class="col-8">
-                <h2>Je vous recontacte au plus tard dans 24 heures.</h2>
-                <p>
-                    D'ici là, j'aurais examiné votre profil, vos attentes et votre projet.
-                    La proposition financière conçue automatiquement sur la base de vos réponses
-                    porte la référence <b>@Model.Code</b>. Conservez-la précieusement. 
-                    D'ici là, vous pouvez
-                    consulter notre propostion sur votre espace personnel comme si celle-ci
-                    avait été initiée il y a 3 ans pour bien comprendre performances
-                    et risques proposés.
-                </p>
-                <p class="text-center py-4">
-                    <a type="button" class="btn btn-dark" href="/ClientPortal">Accéder à mon portail</a>
-                </p>
-                <p>
-                    Bien évidemment, nous reverrons ensemble et en détail 
-                    cette proposition (enveloppe, niveau de risque ou actifs sélectionnés)
-                    qui pourra faire l'objet d'ajustements ou de changements en regard de
-                    ce que vous me direz de vive voix.
-                    Je vous contacte d'ici 24 heures. D'ici là, je vous ai
-                    envoyé un email à <b>@Model.Email</b> récapitulant votre profil et votre projet.
-                </p>
-                <p>Je vous souhaite une excellente journée,</p>
-                <hr />
-            </div>
-            <div class="col-4">
-                <div class="p-2">
-                    <img class="w-100" src="https://www.passion-entrepreneur.com/wp-content/uploads/2023/12/trading-ia.jpg" />
-                </div>
-                <h4>John Doe</h4>
-                <em>Conseiller en gestion patrimoniale</em>
-                <p>8 rue de la Fortune</p>
-                <p>75000 PARIS</p>
-            </div>
+        <div class="p-2">
+
+            <h2>Je vous recontacte au plus vite!</h2>
+            <p>
+                D'ici là, j'aurais examiné votre profil, vos attentes et votre projet.
+                La proposition financière conçue automatiquement sur la base de vos réponses
+                porte la référence <b>@Model.Code</b>. Conservez-la précieusement.
+                D'ici là, vous pouvez
+                consulter notre proposition dans votre espace personnel comme si celle-ci
+                avait été initiée il y a 3 ans pour bien comprendre les performances, les expositions
+                et les risques proposés.
+            </p>
+            <p class="text-center py-4">
+                <a type="button" class="btn btn-dark" href="/Client/Index?id=@Model.Code">Accéder à ma proposition</a>
+            </p>
+            <p>
+                Bien évidemment, nous reverrons ensemble et en détail
+                cette proposition (enveloppe, niveau de risque ou actifs sélectionnés)
+                qui pourra faire l'objet d'ajustements ou de changements en regard de
+                ce que vous me direz de vive voix.
+                Je vous contacte d'ici 24 heures. D'ici là, je vous
+                envoie un email à <b>@Model.Email</b> récapitulant votre profil et votre projet.
+            </p>
+            <p>Je vous souhaite une excellente journée,</p>
+            <hr />
         </div>
-
+        <div class="p-2">
+            <img class="w-25" src="@ApplicationHelper.UserImageUrl" />
+        </div>
+        <h4>@ApplicationHelper.UserSignature</h4>
+        <em>@ApplicationHelper.UserSignature2</em>
+        <p>email <a href="mailto:@ApplicationHelper.UserEmail">@ApplicationHelper.UserEmail</a></p>
+        <p><span class="fa fa-phone"></span> @ApplicationHelper.UserPhoneNumber</p>
     </div>
-
 </section>
 
 @section scripts {
@@ -66,7 +61,6 @@
             var domain = LoyolApp.Settings.domain;
             var sg = new LoyolApp.SignInController(domain);
 
-            //var session = LoyolApp.Session.getInstance().get();
             var cred = { access_token: '@ViewBag.token', userGuid: 'xxx', userName: 'etfreporting', expires_in: @ViewBag.expires  }
             sg.setcredentials(cred);
 

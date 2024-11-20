@@ -1,13 +1,18 @@
 ﻿@model ETFTemplate.Models.LeadConnection
 
 @{
-    ViewBag.Title = "Robo for Advisor";
     Layout = "~/Views/Shared/_layout5NoMenu.cshtml";
 }
 
 @*@section title {
-    Mon robot
-}*@
+        Mon robot
+    }*@
+
+@section menu {
+    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/Home">Accueil</a></li>
+    </ul>
+}
 
 @section header {
     <!-- The style of my web site for widgets -->
@@ -15,9 +20,9 @@
     <link rel="stylesheet" href="https://etfreporting.com/content/d3dc" />
 }
 
-<section id="section-start" class="section-start page-section w-100">
+<section id="section-start" class="section-start w-100">
 
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="">
         <div class="p-4 p-md-5 mb-4">
             <h1 class="display-4">Bonjour,</h1>
             <p>
@@ -25,7 +30,6 @@
                 vos projets, alors vous êtes au bon endroit.
                 On se retrouve dans quelques instants avec une proposition personalisée
                 au terme de ce questionnaire de connaissance.
-                Bienvenue sur myadvisor.com
             </p>
         </div>
     </div>
@@ -71,7 +75,7 @@
 
                     <form class="creation-form" method="post">
 
-                        <input type="hidden" id="StartDate" name="StartDate" value="2019-12-31" />
+                        <input type="hidden" id="StartDate" name="StartDate" value="@ApplicationHelper.RoboStartDate.ToString("yyyy-MM-dd")" />
                         <input type="hidden" id="RiskLevel" name="RiskLevel" value="4" />
                         <input type="hidden" id="IsModel" name="IsModel" value="false" />
                         <input type="hidden" id="Name" name="Name" value="Notre proposition" />
@@ -107,11 +111,11 @@
                 <p>
                     Il est temps de découvrir notre proposition.
                     Celle-ci est construite à partir de nos <b>portefeuilles modèles</b>.
-                    Nous avons retenus ceux qui répondent favorablement à vos objectifs,
+                    Nous avons retenu ceux qui répondent favorablement à vos objectifs,
                     puis nous avons ajusté leurs poids
-                    afin de coller à votre profil de risques tel que
+                    afin de coller à votre appétence aux risques tel que
                     nous l'avons compris via notre questionnaire.
-                    Si cette sélection ne correspond pas à vos attentes,
+                    Si cette sélection ou cette répartition ne correspondent pas à vos attentes,
                     n'hésitez pas à <a href="#" class="btn-redo">revenir sur le questionnaire</a>.
                 </p>
 
@@ -129,14 +133,14 @@
                     <h2>Expositions</h2>
                     <p>
                         Une fois nos <b>modèles</b> agrégés, voici le contenu détaillé de notre portefeuille.
-                        Nous vous offrons plusieurs analyses de ce dernier afin de porter à 
+                        Nous vous offrons plusieurs analyses de ce dernier afin de porter à
                         votre connaissance toutes les expositions et tous les risques portés à ce jour.
-                        Si cette proposition vous convient, je vous invite à <a href="#contact">prendre contact</a> 
+                        Si cette proposition vous convient, je vous invite à <a href="#contact">prendre contact</a>
                         avec moi afin d'améliorer celle-ci.
                     </p>
                     <div class="py-5">
                         @Html.Partial("_portfolio")
-                    </div>                
+                    </div>
                 </div>
 
             </div>
@@ -152,13 +156,15 @@
     <div class="container px-4 px-lg-5 py-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-lg-8 col-xl-6 text-center">
-                <h1 class="mt-0 display-4">Rencontrons-nous!</h1>
-                <hr class="divider" />
+                <h2 class="mt-0 display-4">Rencontrons-nous!</h2>
+                <div class="p-2">
+                    <img class="w-25" src="@ApplicationHelper.UserImageUrl" />
+                </div>
                 <p class="mb-5">
                     Vous souhaitez en savoir plus sur cette proposition?
-                    Contactez-nous via le formulaire ci-joint. Nous vous répondrons le plus vite possible!
-                    En attendant, dès la validation de cette prise de contact, vous recevrez un lien 
-                    permettant de revoir cette proposition <u>actualisée</u> 
+                    Contactez-moi via le formulaire ci-dessous. Je vous répondrai le plus vite possible!
+                    En attendant, pour valider cette prise de contact, vous recevrez un lien
+                    permettant de revoir cette proposition <u>actualisée</u>
                     comme si vous étiez un de mes clients.
                 </p>
             </div>
@@ -170,11 +176,15 @@
                         <input type="hidden" id="portfolioquestionnaireid" name="questionnaireid" value="2031" />
                         <input type="hidden" id="userid" name="userid" value="" />
                         <input type="hidden" id="portfoliocode" name="code" value="" />
-
-                        <!-- Name input-->
+                        <!-- First name input-->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="portfolio-name" name="name" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
-                            <label for="portfolio-name">Votre nom et prénom</label>
+                            <input class="form-control" id="firstname" name="firstname" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
+                            <label for="portfolio-name">Votre nom</label>
+                        </div>
+                        <!-- Last name input-->
+                        <div class="form-floating mb-3">
+                            <input class="form-control" id="lastname" name="lastname" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
+                            <label for="portfolio-name">Votre prénom</label>
                         </div>
                         <!-- Email address input-->
                         <div class="form-floating mb-3">
@@ -183,7 +193,7 @@
                         </div>
                         <!-- Phone number input-->
                         <div class="form-floating mb-3">
-                            <input class="form-control" id="phone" name="phone" type="tel" placeholder="(33) 6-15-14-15-14" data-sb-validations="required" />
+                            <input class="form-control" id="phone" name="phonenumber" type="tel" placeholder="(33) 6-15-14-15-14" data-sb-validations="required" />
                             <label for="phone">Votre numéro de téléphone</label>
                         </div>
                         <!-- Message input-->
@@ -207,20 +217,24 @@
 <!-- Modal -->
 <div class="modal fade" id="warning" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content bg-white text-black">
             <div class="modal-header">
                 <h5 class="modal-title">Validation</h5>
             </div>
             <div class="modal-body">
                 <p>
                     Un email vient d'être émis afin de valider votre adresse.
-                    Cliquez sur le lien contenu dans le message afin de transmettre votre demande.
-                    Dans l'attente de parler de vive voix de votre projet, nous vous souhaitons une excellente journée.
+                    Cliquez sur le lien contenu dans le message afin que je puisse accéder et
+                    analyser votre profil et votre demande.
+                    Attention, ce lien de validation est actif uniquement pendant les 10 prochaines minutes.
+                    Passé ce délai, il faudra refaire votre questionnaire.</p><p>
+                    Dans l'attente d'échanger de vive voix sur votre projet, je vous souhaite
+                    une excellente fin de journée.
                 </p>
-                <p><strong>John Doe</strong><br /><em>Votre conseiller en gestion de patrimoine</em></p>
+                <p><strong>@ApplicationHelper.UserSignature</strong><br /><em>@ApplicationHelper.UserSignature2</em></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">Fermer</button>
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fermer</button>
             </div>
         </div>
     </div>
@@ -240,7 +254,7 @@
             LoyolApp.Settings.domain = '@ViewBag.Domain';
             var domain = LoyolApp.Settings.domain;
             var sg = new LoyolApp.SignInController(domain);
-            var $cus = new LoyolApp.CustomerController();
+            var $cus = new LoyolApp.CustomersController();
 
             //var session = LoyolApp.Session.getInstance().get();
             var cred = { access_token: '@ViewBag.token', userGuid: 'xxx', userName: 'etfreporting', expires_in: @ViewBag.expires  }
@@ -274,7 +288,7 @@
             $('.creation-form').submit(function () {
                 $('.section-start').addClass('visually-hidden');
                 var params = $(this).serialize();
-                robo.create(params, '2021-01-04', function (result) {
+                robo.create(params, '@ApplicationHelper.RoboStartDate', function (result) {
                     $('.section-portfolio .portfolio-content').empty();
                     $('.section-portfolio').removeClass('visually-hidden');
                     $('.section-contact').removeClass('visually-hidden');
@@ -314,8 +328,11 @@
                 var data = $(this).serialize();
                 robo.post(data, function (result) {
                     if (result.Success)
-                        $.post('/Lead/ToConfirm', result, function () {
-                            wModal.show();
+                        $.post('/Lead/ToConfirm', result, function (status) {
+                            if (status.Success)
+                                wModal.show();
+                            else
+                                alert(status.Message);
                         })
                 });
                 return false;

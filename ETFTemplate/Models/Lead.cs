@@ -151,6 +151,32 @@ namespace ETFTemplate.Models
     }
 
     /// <summary>
+    /// Lead confirmation status
+    /// </summary>
+    public class LeadEmailConfirmationStatus
+    {
+        /// <summary>
+        /// True if connection has been completed
+        /// </summary>
+        public bool Success { get; set; }
+        /// <summary>
+        /// Message connection 
+        /// </summary>
+        public string Message { get; set; }
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="success"></param>
+        /// <param name="message"></param>
+        public LeadEmailConfirmationStatus(bool success, string message)
+        {
+            Success = success;
+            Message = message;
+        }
+    }
+
+
+    /// <summary>
     /// A class used to send email when lead must to be confirmed
     /// </summary>
     public class LeadToConfirmEmail : Email

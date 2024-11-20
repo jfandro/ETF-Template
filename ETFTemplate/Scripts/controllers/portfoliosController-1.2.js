@@ -180,7 +180,7 @@ LoyolApp.PortfolioController.prototype.populateCompliances = function (data, div
             $('<td class="text-end">').text(w.minvalue.toFixed(2)),
             $('<td class="text-end">').text(w.maxvalue.toFixed(2)),
             $('<td class="text-end">').text(w.value.toFixed(2)));
-        tr.addClass(w.isbreached ? 'table-warning' : 'table-success');
+        tr.addClass(w.status == 'Not complied' ? 'table-warning' : 'table-success');
         tr.appendTo(tbody);
     });
 }

@@ -1,5 +1,5 @@
 ﻿
-<div class="mb-4">
+<div class="mb-4 bg-light bg-opacity-75">
     <h2>Synthèse</h2>
     <p>
         Ci-dessous les principales caractéristiques et une première synthèse de la valeur actuelle
@@ -9,7 +9,7 @@
         ainsi que les frais de gestion <strong>prélevés et provisionnés</strong>.
     </p>
 
-    <div class="row g-3 py-3">
+    @*<div class="row g-3 py-3">
         <div class="col-md-6 p-lg-5 p-sm-2 bg-dark text-bg-dark properties-container">
             <dl class="row">
                 <dt class="col-sm-4"><label>Devise</label></dt>
@@ -40,47 +40,49 @@
                 <dd class="col-sm-8 text-start pr-benchmark"></dd>
             </dl>
         </div>
-        <div class="col-md-6 p-lg-5 p-sm-2 bg-light">
-            <div class="text-center">
-                <h3 class="text-bg-light" style="font-size:5rem;font-family:'Lucida Calligraphy';">
-                    <span class="yld-container"></span>%
-                </h3>
-                <p>Performance annuelle</p>
-                <div style="margin-left:20%; margin-right:20%;">
-                    <table class="table table-sm table-synthesis">
-                        <tr>
-                            <td class="text-start"><label>Apports</label></td>
-                            <td class="text-end synthesis-item fw-bold" data-indicator="Capital"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-start"><label>+/- réalisées</label></td>
-                            <td class="text-end synthesis-item" data-indicator="RealizedValue"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-start"><label>+/- latentes</label></td>
-                            <td class="text-end synthesis-item" data-indicator="UnrealizedValue"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-start"><label>Dividendes</label></td>
-                            <td class="text-end synthesis-item" data-indicator="Incomes"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-start"><label>Valeur brute</label></td>
-                            <td class="text-end synthesis-item" data-indicator="GrossValue"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-start"><label>Frais de gestion</label></td>
-                            <td class="text-end synthesis-item" data-indicator="ManagementFees"></td>
-                        </tr>
-                        <tr>
-                            <td class="text-start"><label>Valeur nette</label></td>
-                            <td class="text-end synthesis-item fw-bold" data-indicator="NetValue"></td>
-                        </tr>
-                    </table>
-                </div>
+    </div>*@
+
+    <div class="p-lg-5 p-sm-2 mb-auto">
+        <div class="text-center">
+            <h3 class="text-bg-light" style="font-size:5rem;font-family:'Lucida Calligraphy';">
+                <span class="yld-container"></span>%
+            </h3>
+            <p>Performance annuelle</p>
+            <div>
+                <table class="table table-sm table-synthesis">
+                    <tr>
+                        <td class="text-start"><label>Apports</label></td>
+                        <td class="text-end synthesis-item fw-bold" data-indicator="Capital"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start"><label>+/- réalisées</label></td>
+                        <td class="text-end synthesis-item" data-indicator="RealizedValue"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start"><label>+/- latentes</label></td>
+                        <td class="text-end synthesis-item" data-indicator="UnrealizedValue"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start"><label>Dividendes</label></td>
+                        <td class="text-end synthesis-item" data-indicator="Incomes"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start"><label>Valeur brute</label></td>
+                        <td class="text-end synthesis-item" data-indicator="GrossValue"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start"><label>Frais de gestion</label></td>
+                        <td class="text-end synthesis-item" data-indicator="ManagementFees"></td>
+                    </tr>
+                    <tr>
+                        <td class="text-start"><label>Valeur nette</label></td>
+                        <td class="text-end synthesis-item fw-bold" data-indicator="NetValue"></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
+
 
 </div>
 

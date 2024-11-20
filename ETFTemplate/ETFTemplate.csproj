@@ -133,11 +133,19 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ApplicationHelper.cs" />
     <Compile Include="Helpers\UrlHelper.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\Contact.cs" />
     <Compile Include="Models\Lead.cs" />
     <Compile Include="Models\Questionnaire.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\jbs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>jbs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\MailService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -156,6 +164,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\clients\jbs\myrobo-5.0.css" />
     <Content Include="Content\fa\css\font-awesome.css" />
     <Content Include="Content\fa\css\font-awesome.min.css" />
     <Content Include="Content\fa\fonts\fontawesome-webfont.svg" />
@@ -230,18 +239,25 @@
     <Content Include="Content\fa\scss\_variables.scss" />
     <Content Include="Content\fa\scss\font-awesome.scss" />
     <Content Include="Configuration\server.config" />
+    <Content Include="Configuration\jbs.config" />
+    <Content Include="Configuration\enexis.config" />
+    <None Include="Properties\PublishProfiles\enexis - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\ETFTemplate - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\JBPatrimoine - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\controllers\assetsController-1.2.js" />
-    <Content Include="Scripts\controllers\credentialsController-1.0.js" />
+    <Content Include="Scripts\controllers\credentialsController-1.1.js" />
     <Content Include="Scripts\controllers\customersController-1.3.js" />
     <Content Include="Scripts\controllers\instrumentsController-1.2.js" />
-    <Content Include="Scripts\controllers\containersController-2.4.js" />
+    <Content Include="Scripts\controllers\containersController-2.5.js" />
     <Content Include="Scripts\controllers\leadsController-1.2.js" />
     <Content Include="Scripts\controllers\operationsController-1.2.js" />
     <Content Include="Scripts\controllers\portfoliosController-1.2.js" />
     <Content Include="Scripts\controllers\questionnairesController-1.6.js" />
-    <Content Include="Scripts\controllers\roboController-2.3.js" />
+    <Content Include="Scripts\controllers\roboController-2.4.js" />
+    <Content Include="Scripts\controllers\robots\enexis-1.0.js" />
+    <Content Include="Scripts\controllers\robots\jbs-1.2.js" />
+    <Content Include="Scripts\controllers\robots\local-1.0.js" />
     <Content Include="Scripts\controllers\signinController-1.0.js" />
     <Content Include="Scripts\controllers\universesController-1.2.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -271,8 +287,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\robot.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\contact.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
     <Content Include="Views\Emails\_ViewStart.cshtml" />
     <Content Include="Views\Emails\Web.config" />
     <Content Include="Views\Shared\_Layout5.cshtml" />
@@ -301,9 +317,19 @@
     <Content Include="Views\Client\_compliances.cshtml" />
     <Content Include="Views\Client\_help.cshtml" />
     <Content Include="Views\Client\_notes.cshtml" />
+    <Content Include="Views\Home\about.cshtml" />
+    <Content Include="Views\Emails\ContactRequest.cshtml" />
+    <None Include="Web.Enexis.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.JBS.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\clients\enexis\" />
+    <Folder Include="Scripts\robots\" />
     <Folder Include="Views\Application\" />
   </ItemGroup>
   <ItemGroup>
@@ -311,9 +337,35 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\jbs.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>jbs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'JBS|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Enexis|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

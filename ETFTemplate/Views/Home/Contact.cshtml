@@ -1,15 +1,107 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contact us";
 }
-<h2 class="display-1">Besoin d'en savoir plus?</h2>
-<h3>Contactez nous. On tentera de répondre à toutes vos questions</h3>
+@section menu {
+    <ul class="navbar-nav ms-auto my-2 my-lg-0">
+        <li class="nav-item"><a class="nav-link" href="/Home">Accueil</a></li>
+    </ul>
+}
+<div class="p-4 p-md-5 mb-4 rounded text-body-emphasis bg-light">
+    @*<h1 class="display-1 fw-bolder">ETFReporting <span class="fst-italic text-primary">Premium</span></h1>*@
+    <h3 class="fs-3">
+        Besoin d'en savoir plus sur notre offre ?
+    </h3>
+    <p>Contactez-nous via ce formulaire. 
+    Nous répondrons au plus vite à toutes vos questions et autres attentes.
+    </p>
 
-<address>
-    LOYOL SAS<br />
-    3 La Boissière<br />
-    41800 LES HAYES <br />
-    FRANCE<br />
-    <abbr title="Phone">Tel:</abbr>
-    06.18.56.39.38<br />
-    <a href="mailto:jf.andro@loyol.fr">Ecrivez nous</a>
-</address>
+    <div class="row gx-4 gx-lg-5 justify-content-center mb-5">
+        <div class="col-lg-8">
+            <div class="py-3">
+                <form class="form-contact">
+
+                    <!-- Name input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="first-name" name="firstname" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
+                        <label for="portfolio-name">Votre nom</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="last-name" name="lastname" type="text" placeholder="Entrez vos nom et prénom..." data-sb-validations="required" />
+                        <label for="portfolio-name">Votre prénom</label>
+                    </div>
+                    <!-- Email address input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="email" name="email" placeholder="name@example.com" data-sb-validations="required,email" />
+                        <label for="email">Votre adresse email</label>
+                    </div>
+                    <!-- Phone number input-->
+                    <div class="form-floating mb-3">
+                        <input class="form-control" id="phone" name="phone" type="tel" placeholder="(33) 6-15-14-15-14" data-sb-validations="required" />
+                        <label for="phone">Votre numéro de téléphone</label>
+                    </div>
+                    <!-- Message input-->
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="message" name="message" type="text" placeholder="Expliquez-nous vos attentes en quelques mots..." style="height: 10rem" data-sb-validations="required"></textarea>
+                        <label for="message">Vos attentes particulières</label>
+                    </div>
+
+                    <!-- Submit Button-->
+                    <div class="d-grid"><button class="btn btn-primary btn-xl" id="submitButton" type="submit">Soumettre</button></div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="warning" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content bg-white text-black">
+            <div class="modal-header">
+                <h5 class="modal-title">Contact</h5>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Dans l'attente d'échanger de vive voix, je vous souhaite
+                    une excellente fin de journée.
+                </p>
+                <p><strong>@ApplicationHelper.UserSignature</strong><br /><em>@ApplicationHelper.UserSignature2</em></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts {
+
+    <script>
+
+        // warning modal
+        var wModal = new bootstrap.Modal(document.getElementById('warning'), {
+            keyboard: false
+        });
+
+        $(document).ready(function () {
+            // contact form
+            $('.form-contact').submit(function () {
+                var data = $(this).serialize();
+                $.post('/Home/Contact', data, function (result) {
+                    if (result.Success)
+                        wModal.show();
+                    else
+                        alert(result);
+                });
+                return false;
+            })
+        })
+
+    </script>
+
+}

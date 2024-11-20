@@ -1,115 +1,212 @@
-﻿<p>
-    Une présentation rapide des différents modules et services proposés
-    dans le cadre de ce portail clients.
-    Son périmètre n'est pas à ce jour arrêté.
-</p>
+﻿
+<h1 class="display-4">Aide portail client</h1>
+
+<div>
+    <p>
+        Vous trouverez ici une présentation des différents modules et services proposés
+        dans le cadre de ce portail clients. Il est important de rappeler que
+        ce portail est un <b>modèle</b>,
+        son code étant proposé en <b>open source</b>
+        ce qui donne à chaque professionnel
+        le droit de changer le style, le ton, le parcours utilisateur 
+        le choix et l'organisation des briques fonctionnelles
+        (<em>Widgets</em>)
+        proposées. Le champs des possibles est immense en matière d'expériences client
+        avec une librairie de widgets composée de +50 éléments prêt à emploi et proposée elle
+        aussi en open source (D3.js)
+        Pour terminer, l'interface utilisateur proposée par défaut
+        s'appuie sur les librairies javascript, jquery et Bootstrap 5 afin de bénéficier des dernières
+        techniques pour une fluidité optimale. Ces langages ne sont pas imposés.
+    </p>
+</div>
 
 <hr />
 
+<article>
+    <h3>Au menu</h3>
+    <p>
+        Le contenu de cet espace est organisé en 10 sections guidées par un menu latéral gauche.
+        Chaque section porte sur un thème précis:
+        <ul>
+            <li><a href="#portfolio-help" class="">Portefeuille</a></li>
+            <li><a href="#results-help" class="">Résultats</a></li>
+            <li><a href="#strategy-help" class="">Stratégies</a></li>
+            <li><a href="#kyc-help" class="">Connaissances client</a></li>
+            <li><a href="#documents-help" class="">Documents</a></li>
+            <li><a href="#orderbook-help" class="">Carnet d'Ordres</a></li>
+            <li><a href="#activity-help" class="">Opérations</a></li>
+            <li><a href="#treasury-help" class="">Trésorerie</a></li>
+            <li><a href="#compliances-help" class="">Contraintes de gestion</a></li>
+            <li><a href="#notes-help" class="">Notes diverses</a></li>
+        </ul>
+    </p>
+</article>
+
 <div class="py-3 mx-5">
-    <article>
-        <h3>Portefeuille (page d'acceuil)</h3>
+    <article id="portfolio-help">
+        <h3>Portefeuille</h3>
         <p>
-            Sur votre site, nous vous donnons les moyens techniques pour concevoir
-            un espace client personnalisé à vos couleurs.
-            Chaque client pourra
-            consulter ses portefeuilles en détail en tenant compte
-            des derniers prix de marchés, des derniers arbitrages réalisés
-            par lui, par vous ou par l'intermédiaire (assureur, banque, courtier)
-            dans le cadre d'un plan programmé par exemple.
-            Pour construire votre portail, vous le ferez avec ou sans nous, 
-            mais vous disposerez d'une librairie opensource
-            permettant de concevoir votre expérience, ainsi qu'un service
-            d'authentification anonyme (aucune donnée personnelle).
+            Dans cette section présentée par défaut,
+            figurent les principales informations donnant la dernière situation du
+            portefeuille. C'est en premier lieu un tableau donnant
+            <b>l'inventaire détaillé du jour</b> avec les informations suivantes:
+            <ul>
+                <li>Titre en position (libellé, code ISIN et classe d'actifs)</li>
+                <li>Nombre d'unité ou stock</li>
+                <li>Prix de revient</li>
+                <li>Valeur boursière</li>
+                <li>+/- values latentes</li>
+                <li>Poids</li>
+                <li>Performance</li>
+            </ul>
+            Ce tableau peut être revu totalement ou partiellement afin d'être complété de caractéristique (ex article SFDR)
+            ou d'indicateur de performances/risques (ex YTD) du titre.
+        </p>
+        <p>
+            L'une des facultés de cet inventaire est d'être rétroactif, c'est à dire de pouvoir
+            <b>revenir sur une situation passée</b> pour de multiples raisons financières ou fiscales.
+        </p>
+        <p>
+            L'autre capacité importante de cet inventaire est son pouvoir de <b>consolider les encours et les résultats</b> quand
+            le portefeuille est le résultat d'une agrégation d'autres portefeuilles,
+            ou une composition de modèles.
+        </p>
+        <p>
+            Cet inventaire est complété ensuite par une série de <em>widgets</em>
+            développés en D3.js (la bibliothèque de datavisualisation
+            de référence disponible en opensource).
+            La mission de ces graphiques (treemap, geoMap, radar) est de donner
+            <b>une vision claire et instinctive des principales expositions</b>
+            du portefeuille selon divers axes et thématiques.
+            Les données explorées sont financières ou extra-financières, standards ou spécifiques
+            (grâce à la personnalisation du modèle de données)
+        </p>
+        <p>
+            Enfin une matrice de correlations vient illustrer la <b>diversification</b>
+            du portefeuille.
         </p>
     </article>
 </div>
 
 <div class="py-3 mx-5">
-    <article>
+    <article id="results-help">
         <h3>Résultats</h3>
-        Cet espace contient toutes les informations permettant à vous et votre client
-        de comprendre en une seconde chrono les indicateurs clefs 
-        de son portefeuille. Puis deux graphiques pour voir la performance de ce dernier
-        soit en pas quotidien soit en pas mensuel.
-        Les performances sont calculées avec la méthode TWR,
-        comme si le portefeuille était un OPCVM. Cette faculté vous permettra
-        de comparer de le benchmarker et éventuellement construire un modèle économique
-        basé sur la surperformance.
+        <p>
+            Cette section couvre toutes les informations importantes permettant à vous et votre client
+            de comprendre les résultats passés du portefeuille.
+        </p>
+        <p>
+            Le premier lot d'informations est une synthèse qui donne actuellement:
+            <ul>
+                <li>Le taux de rendement du portefeuille (méthode MWR)</li>
+                <li>Le montant des apports et retraits cumulés</li>
+                <li>Le résultat réalisé et latent</li>
+                <li>Le montant global des dividendes perçus</li>
+                <li>Les frais de gestion (honoraires versés au conseiller)</li>
+                <li>La sur/sous performance si un benchmark est associé (voir ci-dessous)</li>
+                <li>La valeur brute du portefeuille</li>
+                <li>Les taxes prévisionnelles (selon le régime du portefeuille)</li>
+                <li>La valeur nette du portefeuille (brute - taxes)</li>
+            </ul>
+            Bien évidemment, cette synthèse peut être revue pour complément ou simplifcation.
+        </p>
+        <p>
+            Vient ensuite une courbe donnant en base 100 l'évolution de <b>la performance</b>
+            du portefeuille calculée selon la méthode TWR (en anglais Time Weighted Returns).
+            Cette méthode, insensible aux différents apports et retraits
+            exécutés depuis la création du portefeuille,
+            permet de comparer celui-ci à celle d'un indice,
+            d'un intrument financier ou d'un autre portefeuille (benchmark)
+        </p>
+        <p>
+            Si le portefeuille est associé à <b>benchmark</b>, le graphique affichera
+            aussi la performance de ce dernier en retenant les mêmes conditions, à savoir
+            sur une base 100 initiale.
+        </p>
+        <p>
+            Si des <b>décisions marquantes</b> ont été prises par le passé sur la gestion du portefeuille,
+            elles pourront figurer sur le graphique comme marqueur rappelant la date et les
+            raisons des décisions enterrinées.
+        </p>
+        <p>
+            Un second graphique en cascade complète la courbe précédente afin de
+            voir une évolution des performances passées par pas mensuel et non quotidien.
+            Cette représentation donne une <b>vision saisonnière</b> des performances.
+        </p>
+        <p>
+            Enfin pour terminer le chapitre résultats,
+            nous proposons un tableau d'indicateurs clefs du portefeuille.
+            Ces indicateurs couvre la performance et les risques sur des périodes
+            glissantes (1Y, 3M) ou calendaires (2020, 2021).
+            Ces indicateurs sont calculés par ETFReporting selon les normes en vigueur
+            appliquées par les sociétés de gestion dans la production de leurs rapports OPCVM.
+        </p>
+
     </article>
 </div>
 
 <div class="py-3 mx-5">
-    <article>
+    <article id="strategy-help">
         <h3>Stratégie</h3>
-        Cet espace contient un graphique que l'on appelle en datavisualisation un sankey.
-        Ce sankey est une de nos innovations.
-        qui permet de visualiser en un graphique la stratégie du portefeuille,
+        Cet espace contient un diagramme de flux
+        que l'on appelle en datavisualisation un <b>sankey</b>.
+        Le sankey que nous vous proposons est une de nos innovations et donne une lecture nouvelle
+        de l'histoire d'un portefeuille.
+        L'objectif est de visualiser en un seul graphique
+        la stratégie passée et actuelle du portefeuille,
         année après année, classe d'actifs par classe d'actifs.
-        Tous les flux sont couverts à savoir les investissements, les sorties, les résultats du portefeuille
-        qu'ils soient réalisés ou latents.
+        Tous les flux sont couverts à savoir les investissements,
+        les entrées et sorties, les résultats du portefeuille
+        qu'ils soient réalisés (ventes et dividendes) ou latents (associés à l'année courante)
     </article>
 </div>
 
 <div class="py-3 mx-5">
-    <article>
+    <article id="activity-help">
         <h3>Activité opérationnelle</h3>
-        Cet espace couvre l'ensemble des opérations impactant le
-        portefeuille de votre client.
-        Figurent notamment tous les arbitrages (achats et ventes),
-        les opérations sur titres (fusions, divisions) ainsi que
-        les opérations initiées par le courtier ou la compagnie d'assurance
-        dans le cadre d'un plan d'investissement programmé.
+        <p>
+            Cet espace est un tableau récapitulant
+            l'historique des opérations ayant impacté l'actif du
+            portefeuille.
+            Figurent notamment tous les arbitrages (achats et ventes),
+            les opérations sur titres (fusions, divisions) ainsi que
+            les opérations initiées par le courtier ou la compagnie d'assurance
+            dans le cadre d'un plan d'investissement programmé.
+        </p>
+        <p>
+            Chaque opération dispose d'un statut qui permet de savoir si l'opération est exécutée, en cours d'exécution
+            ou annulée. Cette information est importante dans le cas où
+            le <a href="#orderbook-help">carnet d'ordres</a> est activé.
+        </p>
+        <p>
+            S'agissant des opérations au passif (c'est à dire les
+            apports et les retraits), ces dernières figurent
+            dans la section <a href="#treasury-help">trésorerie</a> ci-dessous.
+        </p>
     </article>
 </div>
 
 <div class="py-3 mx-5">
-    <article>
-        <h3>Indicateurs</h3>
-        Cet espace couvre l'ensemble des indicateurs standards de performances
-        et de risques qui permettront aux investisseurs les plus avisés
-        de voir si les objectifs fixés avec vous lors de la
-        prise en mains de son portefeuille sont "cohérents".
-    </article>
-</div>
-
-<div class="py-3 mx-5">
-    <article>
+    <article id="orderbook-help">
         <h3>Carnet d'Ordres</h3>
-        Cet espace privé et sécurisé est destiné à vos clients
-        si vous le souhaitez.
-        En effet, nous vous offrons la possibilité de transmettre un ordre
-        ou plusieurs ordres (cas d'arbitrage par exemple)
-        que vous validerez de votre côté
-        avant de le transmettre sous la forme la plus efficace à notre courtier.
-        Merci de nous contacter sur ce chantier d'intégration.
+        <p>
+            L'objet du carnet d'ordres est de permettre à chaque client (ou certains d'entre eux)
+            de vous transmettre de manière fluide et sécurisée un ou plusieurs arbitrages sur leur portefeuille.
+            L'exécution de ces opérations reste de votre responsabilité
+            et suit le processus d'intégration définit par votre organisation, vos capacités
+            techniques et celles de vos intermédiaires.
+            Merci de nous contacter si vous avez un chantier d'intégration.
+        </p>
+        <p>
+            Un tableau rassemble tous les ordres n'ayant pas encore été marqués comme <b>exécuté</b>
+            par votre process.
+        </p>
     </article>
 </div>
 
 <div class="py-3 mx-5">
-    <article>
-        <h3>Connaissance Client</h3>
-        Cet espace privé et sécurisé est destiné à la connaissance client
-        et à tous les processus d'actualisation qui seront
-        à réaliser pour respecter vos obligations réglementaires.
-        Ainsi le questionnaire que vous avez créé
-        pourra être envoyé automatiquement à chacun de vos clients
-        et vous libérez du temps.
-    </article>
-</div>
-
-<div class="py-3 mx-5">
-    <article>
-        <h3>Base Documents</h3>
-        Cet espace est consacré à tous les documents requis par la réglementation
-        pour que chaque investisseur soit parfaitement informé des risques sous jacent
-        à chaque fonds investi.
-    </article>
-</div>
-
-<div class="py-3 mx-5">
-    <article>
-        <h3>Situation de trésorerie</h3>
+    <article id="treasury-help">
+        <h3>Trésorerie</h3>
         Cet espace regroupe tous les flux espèces créditant ou débitant
         le portefeuille client. On retrouvera les flux liés aux achats et ventes,
         aux versements de dividendes et aux différents apports et retraits.
@@ -117,11 +214,80 @@
 </div>
 
 <div class="py-3 mx-5">
-    <article>
-        <h3>Contraintes de gestion</h3>
-        Cet espace est consacré au suivi des contraintes de gestion
-        défini conjointement pour chaque projet de chaque investisseur.
-        Une contrainte peut surveiller toutes les données financières 
-        et extra-financières.
+    <article id="kyc-help">
+        <h3>Connaissance</h3>
+        <p>
+            Comme son nom l'indique cet espace est destiné à collecter et réactualiser
+            les informations propres au client, à son patrimoine, sa connaissance financière,
+            ses projets et ses attentes conformément à vos obligations réglementaires.
+            Le premier tableau de cet espace privé donne les réponses données
+            lors du dernier questionnaire transmis.
+            A chaque question posée, la réponse ou les réponses
+            données qu'il s'agisse d'un montant, une date ou une option dans un choix multipe.
+        </p>
+        <p>
+            Pour chaque client, vous pourrez préciser si l'actualisation de cette connaissance
+            est à la demande (voir le bouton actualiser) ou programmée.
+            Dans le second cas, précisez la fréquence souhaitée (tous les ans à date anniversaire
+            par exemple) ainsi que l'invitation qui sera transmis automatiquement par email
+            à votre client. Le paramétrage de ce processus se fait dans votre espace
+            <a href="https://etfreporting.com/MyDueDiligences">votre espace diligences</a>
+            sur etfreporting.com.
+        </p>
+
+
+    </article>
+</div>
+
+<div class="py-3 mx-5">
+    <article id="documents-help">
+        <h3>Documents</h3>
+        Cet espace regroupe tous les liens vers les documents requis par vous et la réglementation
+        afin que chaque investisseur soit parfaitement informé des performances, des risques sous jacent
+        qu'il prend en investi sur un fonds. Ces documents peuvent être des liens vers le site de
+        la société de gestion tels que les rapports mensuels ou les prospectus.
+    </article>
+</div>
+
+<div class="py-3 mx-5">
+    <article id="compliances-help">
+        <h3>Contraintes</h3>
+        <p>
+            Cet espace est destiné au suivi des contraintes de gestion
+            définies spécifquement pour chaque investisseur.
+            Une contrainte (de gestion) peut surveiller toutes les données financières
+            et extra-financières des actifs investis, ainsi que celles liées
+            à la situation générale du portefeuille, comme par exemple:<ul>
+                <li>le rendement ou la performance d'un titre ou du portefeuille</li>
+                <li>la perte maximale ou la volatilité d'un titre ou du portefeuille</li>
+                <li>le respect des <em>white list</em> définie par le client (uniquement des fonds SFDR 8 et 9)</li>
+                <li>l'application de <em>black-list</em> (pas d'exposition sur les financières)</li>
+                <li>les ratios d'exposition (pas plus de 80% en actions)</li>
+                <li>les ratios émetteur (pas plus de 40% du portefeuille)</li>
+                <li>la température implicite d'un titre ou du portefeuille ne doit pas dépasser les 2.5°</li>
+                <li>...</li>
+            </ul>
+        </p>
+        <p>
+            Les capacités de ce moteur de suivi des contraintes sont infinies.
+            Sa conception et la technologie employée soulignent une <b>approche programmable</b> (rédaction d'une règle en C#)
+            en mesure d'interroger toutes les données financières et extra-financières
+            conservées sur les titres et les portefeuilles.
+        </p>
+        <p>
+            Enfin l'évaluation des contraintes est <b>automatisée</b>, contrainte par contrainte:
+            <ul>
+                <li>Tous les soirs</li>
+                <li>A chaque nouvel arbitrage (post ou pre trade)</li>
+                <li>Une fois par mois, semaine ou année</li>
+                <li>A la demande</li>
+            </ul>
+            Chaque évaluation réalisée est conservée (date et résultats) pour être par la suite <b>auditable</b>
+            en cas d'incident.
+        </p>
+        <p>
+            Ce service dote chaque conseiller d'un suivi précis et des avoirs de ses clients
+            afin de créer un lien de confiance fort.
+        </p>
     </article>
 </div>

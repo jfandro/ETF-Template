@@ -14,9 +14,9 @@ namespace ETFTemplate.Controllers
 {
     public class LeadController : ApplicationController
     {
-        private readonly int questionnaireid = Convert.ToInt32(ConfigurationManager.AppSettings.Get("LeadQuestionnaire"));
-        private readonly string issuer = ConfigurationManager.AppSettings.Get("LeadEmail");
-        private readonly string domain = ConfigurationManager.AppSettings.Get("ServicesUrl");
+        private readonly int questionnaireid = ApplicationHelper.LeadQuestionnaire;
+        private readonly string issuer = ApplicationHelper.ContactEmail;
+        private readonly string domain = ApplicationHelper.ServicesUrl;
 
         /// <summary>
         /// Open robo advisor
@@ -28,6 +28,7 @@ namespace ETFTemplate.Controllers
             ViewBag.token = tokenDetails["access_token"];
             ViewBag.expires = tokenDetails["expires_in"];
             ViewBag.Domain = domain;
+            ViewBag.Title = ApplicationHelper.ApplicationName + " - Robot Conseiller";
 
             return View(new LeadConnection() { QuestionnaireID = questionnaireid });
         }
@@ -39,23 +40,31 @@ namespace ETFTemplate.Controllers
         /// <returns></returns>
         public JsonResult ToConfirm(LeadConnectionStatus status)
         {
-            var lead = new LeadConfirmation()
+            try
             {
-                Code = status.Code,
-                ID = status.DiligenceID,
-                UserID = status.LeadID
-            };
+                var lead = new LeadConfirmation()
+                {
+                    Code = status.Code,
+                    ID = status.DiligenceID,
+                    UserID = status.LeadID
+                };
 
-            var model = new LeadToConfirmEmail()
+                var model = new LeadToConfirmEmail()
+                {
+                    To = status.Email,
+                    From = issuer,
+                    Title = "Confirmation de votre adresse email",
+                    Url = Url.AbsoluteAction("Confirm", "Lead", new { id = lead.ID, code = lead.Code, userid = lead.UserID })
+                };
+                
+                // send email
+                model.Send();
+                return Json(new LeadEmailConfirmationStatus(true, "Email émis avec success"));
+            }
+            catch (Exception exc)
             {
-                To = status.Email,
-                From = "jf.andro@loyol.fr",
-                Title = "Confirmation de votre adresse email",
-                Url = Url.AbsoluteAction("Confirm", "Lead", lead)
-            };
-
-            model.Send();
-            return Json("");
+                return Json(new LeadEmailConfirmationStatus(false, exc.Message));
+            }
         }
 
         /// <summary>
@@ -124,7 +133,7 @@ namespace ETFTemplate.Controllers
             var model = new LeadConfirmationEmail()
             {
                 To = status.Email,
-                From = "jf.andro@loyol.fr",
+                From = issuer,
                 Title = "Confirmation de votre dossier",
                 Questions = Answers(status.DiligenceID)
             };

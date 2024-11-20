@@ -1,4 +1,15 @@
 ﻿
+<style>
+    .legend-container .legend {
+        position:relative !important;
+        top:unset;
+        left:unset;
+        background-color:unset;
+        max-height:unset;
+        overflow:unset;
+    }
+</style>
+
 <div class="row align-items-md-stretch">
 
     <div class="col-lg-6 mx-auto">
@@ -15,8 +26,8 @@
                         <li>ETF</li>
                     </ol>
                     La composition de ce portefeuille est revue quotidiennement afin de réfléter
-                    les mouvements de marché, les poids affichés peuvent changés mais
-                    de manière très faible. Si vous avez optez pour un rebalancement automatique,
+                    les mouvements de marché, les poids affichés peuvent évoluer mais
+                    de manière très faible. Si vous avez opter pour un rebalancement automatique ou programmé,
                     celui-ci est pris en compte à date anniversaire ou selon les conditions
                     de déclenchement prévues à cet effet.
                 </p>
@@ -30,43 +41,63 @@
             <h2>Classification SFDR</h2>
             <div class="py-3">
                 <p>
-                    Ce règlement vise à renforcer les obligations de transparence concernant les enjeux ESG 
-                    que les professionnels de la gestion d'actifs prennent en compte, ou non, 
-                    pour concevoir les placements qu'ils vous proposent. 
-                    Ce sont des règles relatives à la publication d'informations sur la durabilité d'un placement. 
+                    La réglementation SFDR vise à renforcer les obligations de transparence concernant les enjeux ESG
+                    que les professionnels de la gestion d'actifs prennent en compte, ou non,
+                    pour concevoir les placements qu'ils vous proposent.
+                    Ce sont des règles relatives à la publication d'informations sur la durabilité d'un placement.
                     Le règlement définit notamment 3 types de produits :
                     <ul>
                         <li>les placements dits <strong>« Article 9 »</strong> qui présentent un objectif d'investissement durable;</li>
                         <li>les placements dits <strong>« Article 8 »</strong> qui déclarent la prise en compte de critères sociaux et/ou environnementaux;</li>
-                        <li>les placements dits <strong>« Article 6 »</strong> qui n'ont pas d'objectif d'investissement durable et ne déclarent pas prendre en compte les critères ESG. 
-                        Ce sont tous les autres placements qui ne sont ni « Article 8 » ni « Article 9 ».</li>
-                    </ul>              
+                        <li>
+                            les placements dits <strong>« Article 6 »</strong> qui n'ont pas d'objectif d'investissement durable et ne déclarent pas prendre en compte les critères ESG.
+                            Ce sont tous les autres placements qui ne sont ni « Article 8 » ni « Article 9 ».
+                        </li>
+                    </ul>
                 </p>
             </div>
             <div id="sfdrmap" class="portfolio-content sectormap extra-breakdowns w-100 h-60" data-breakdown="SFDR"></div>
         </div>
 
-        <div class="mb-4 p-3 bg-light">
-            <h2>Notations ESG</h2>
-            <div class="py-3">
-                <p>
-                    D'un point de vue ESG (Environnement Social et Gouvernance des entreprises),
-                    les fonds de ce portefeuille font l'objet d'analyses et de notes données
-                    par des organismes privés (agences de notations).
-                    Voici la répartition des notes connues à ce jour.
-                    Bien évidemment, nous avons tenu compte de votre appétence aux
-                    risques ainsi qu'aux thématiques recherchées.
-                    Tout comme la grille d'allocation en classe d'actifs, les poids sont revus quotidiennement
-                    en fonction des mouvements de marchés.
-                </p>
-            </div>
-            <div id="esgmap" class="portfolio-content sectormap extra-breakdowns w-100 h-60" data-breakdown="MSCI-RAT" data-legend="#legend-esg"></div>
-            <div style="position:relative;">
+        @if (ApplicationHelper.ESGRating != "")
+        {
+            <div class="mb-4 p-3 bg-light">
+                <h2>Notations ESG</h2>
+                <div class="py-3">
+                    <p>
+                        D'un point de vue ESG (Environnement Social et Gouvernance des entreprises),
+                        les fonds de ce portefeuille font l'objet de nombreuses publications, analyses et de notes hétérogènes données
+                        par des organismes publics, d'agences de notations et d'analystes indépendants.
+                        Nous avons compilé pour vous ces différentes informations
+                        pour vous donner <b>notre propre avis </b> en toute indépendance
+                        pour qualifier l'implication du fonds dans les critères ESG.
+                        Compte tenu de la valeur actuelle du portefeuille,
+                        voici le profil ESG de nos opinions.
+                        Les poids sont revus quotidiennement en fonction des mouvements de marchés et des
+                        nouvelles publications émises.
+                    </p>
+                </div>
+                <div id="esgmap" class="portfolio-content sectormap extra-breakdowns w-100 h-60" data-breakdown="@ApplicationHelper.ESGRating" data-legend="#legend-esg"></div>
                 <div id="legend-esg" class="legend-container"></div>
             </div>
-        </div>
+        }
 
-    </div>
+        @if (ApplicationHelper.ESGITR != "")
+        {
+            <div class="mb-4 p-3 bg-light">
+                <h2>Température implicite</h2>
+                <div class="py-3">
+                    <p>
+                        La température implicite exprimée en degré celcius
+                        conçue pour montrer l'alignement de la température des entreprises,
+                        des portefeuilles et des fonds sur les objectifs mondiaux en matière de température.
+                    </p>
+                </div>
+                <div id="mytemp" class="portfolio-content sectormap extra-breakdowns w-100 h-60" data-breakdown="@ApplicationHelper.ESGITR"></div>
+            </div>
+        }
+
+        </div>
 
     <div class="col-lg-6 mx-auto">
         <div class="mb-4 p-3 bg-light">
@@ -74,10 +105,10 @@
             <div class="py-3">
                 <p>
                     D'un point de vue sectoriel, voici les principaux secteurs sur lesquels
-                    notre proposition est exposée. Nous avons tenu compte de votre appétence aux
+                    le portefeuille est exposé. Nous avons tenu compte de votre appétence aux
                     risques ainsi qu'aux thématiques recherchées.
-                    Tout comme la grille d'allocation ci-contre, les poids sont revus quotidiennement
-                    en fonction des mouvements de marchés.
+                    Tout comme la grille d'allocation, les poids sont revisés quotidiennement
+                    en fonction des mouvements de marchés et des nouveaux arbitrages.
                 </p>
             </div>
             <div id="sectors" class="portfolio-content sectormap sectors w-100 h-60" data-action="SectorBreakdown" data-legend=""></div>
@@ -89,24 +120,27 @@
                     Ci-dessous la répartition de vos encours en <b>actions</b> par taille des entreprises
                     investies. Nous avons tenu compte de votre appétence aux
                     risques ainsi que vos thématiques recherchées.
-                    Tout comme la grille d'allocation ci-contre, les poids sont revus quotidiennement
-                    en fonction des mouvements de marchés.
+                    Tout comme la grille d'allocation, les poids sont revisés quotidiennement
+                    en fonction des mouvements de marchés et des nouveaux arbitrages.
                 </p>
             </div>
             <div id="caps" class="portfolio-content sectormap breakdowns w-100 h-60" data-action="MarketCapBreakdown" data-legend=""></div>
         </div>
+
         <div class="mb-4 p-3 bg-light">
             <h2>Expositions géographiques</h2>
             <div class="py-3">
                 <p>
-                    Pour représenter vos risques d'expositions, rien de mieux qu'une map mode
-                    Intégrer un tel widget est assez simple. Veuillez d'abord déclarer une feuille de style pour les pays, les océans et des frontières.
-                    Attention, la couleur des expositions n'est pas gérée dans ce fihcier.
+                    Ci-dessous la répartition de vos encours en <b>actions</b> par région exposée.
+                    Nous avons tenu compte de votre appétence aux
+                    risques ainsi que vos thématiques recherchées.
+                    Tout comme la grille d'allocation, les poids sont revisés quotidiennement
+                    en fonction des mouvements de marchés et des nouveaux arbitrages.
                 </p>
             </div>
             <div id="world" class="geomap w-100 h-30" data-table="#geo-exposures"></div>
             <div class="py-3">
-                <p>Un tableau peut accompagner la map monde afin de préciser les différentes expositions géographique de cette proposition</p>
+                <p>Le tableau précise les différentes expositions géographiques en % du portefeuille</p>
                 <div class="table-responsive mx-5">
                     <table class="table table-light small">
                         <thead>
@@ -120,16 +154,24 @@
                 </div>
             </div>
         </div>
-        <div class="mb-4 p-3 bg-light">
-            <h2>Impact sur l'environnement</h2>
-            <div class="py-3">
-                <p>
-                    Le radar ci-dessous affiche l'intensité des différentes thématiques
-                    engagées en matière d'environnement.
-                </p>
+
+        @if (ApplicationHelper.RadarQuestion > 0)
+        {
+            <div class="mb-4 p-3 bg-light">
+                <h2>Impact sur l'environnement</h2>
+                <div class="py-3">
+                    <p>
+                        Le radar ci-dessous affiche l'intensité des différents impacts environnementaux
+                        engagées par votre portefeuille.
+                        Les informations affichées sur ce radar proviennent d'une analyse indépendante de
+                        votre conseiller qui a compilé les indicateurs jugés pertinents pour comprendre
+                        l'impact de vos avoirs sur l'environnement. N'hésitez pas à me contacter pour plus
+                        d'informations.
+                    </p>
+                </div>
+                <div id="radar-e" class="radar w-100 h-30" data-question="@ApplicationHelper.RadarQuestion"></div>
             </div>
-            <div id="radar-e" class="radar w-100 h-30" data-question="1085"></div>
-        </div>
+        }
 
     </div>
 

@@ -16,11 +16,16 @@
     <h2>Synthèse de votre profil</h2>
     <div class="py-3">
         <p>
-            Avant de vous recontacter, nous allons analyser plus en détails 
-            toutes vos réponses à notre questionnaire afin d'affiner notre proposition
-            financière. Lorsque nous aurons terminé cette analyse, nous vous recontacterons
-            au numéro de téléphone que vous nous avez laissé.
+            Avant de vous recontacter par téléphone, je vais analyser en détails
+            toutes vos réponses données à notre questionnaire afin d'affiner, le cas échéant, notre proposition
+            financière. Une fois cette analyse terminée, je vous recontacterais
+            au numéro de téléphone que vous m'avez laissé lors de votre demande de contact.
+            En ayant pris connaissance au préalable de votre situation personnelle et de vos projets,
+            je serais en mesure de vous présenter l'offre la plus adaptée, quite ensuite à l'amender
+            pour prendre en compte des informations hors du scope du questionnaire.
         </p>
+        <p>Toutes les informations fournies restent confidentielles et ne dépassent 
+        pas le cercle de nos échanges.</p>
     </div>
     <div class="table-responsive">
         <table id="kyc" class="table table-kyc">
@@ -31,26 +36,26 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach (var question in Model.Questions)
-            {
-                <tr>
-                    <td>@question.Question</td>
-                    <td>
-                        <ul>
-                            @foreach (var answer in question.Answers)
-                            {
-                                <li>@answer.Answer</li>
-                            }
-                        </ul>
-                    </td>
-                </tr>
-            }
+                @foreach (var question in Model.Questions)
+                {
+                    <tr>
+                        <td>@question.Question</td>
+                        <td>
+                            <ul>
+                                @foreach (var answer in question.Answers)
+                                {
+                                    <li>@answer.Answer</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
 </div>
 
-<p>Dans l'attente de notre prochaine rencontre.</p>
-
-<p>Bonne journée,<br />
-    <strong>Mr jonh Doe</strong></p>
+<div style="margin:50px;">
+    <p>Dans l'attente de notre prochaine rencontre, je vous souhaite une excellente journée,</p>
+    <p><b>@ApplicationHelper.UserSignature</b><br /><em>@ApplicationHelper.UserSignature2</em><br />Tél @ApplicationHelper.UserPhoneNumber</p>
+</div>

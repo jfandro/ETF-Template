@@ -7,6 +7,7 @@
 myAppContainers = function (app, code) {
 
     this.settings = app.Settings;
+    this.culture = app.Settings.language;
     this.code = code;
     this.pc = new app.PortfolioController();
     this.ic = new app.InstrumentController();
@@ -71,6 +72,7 @@ myAppContainers.prototype.showGeomaps = function () {
 myAppContainers.prototype.showSectors = function (callback) {
 
     var code = this.code,
+        culture = this.culture,
         $p = this.pc;
 
     $('.sectors').each(function () {
@@ -78,7 +80,7 @@ myAppContainers.prototype.showSectors = function (callback) {
             action = container.data('action');
         container.empty();
         var sector = new sectormap('#' + container.attr('id'));
-        $p.get(action, { code: code }, function (data) {
+        $p.get(action, { code: code, culture: culture }, function (data) {
             sector.load(data, null, null);
             if (callback)
                 callback();
@@ -208,6 +210,7 @@ myAppContainers.prototype.showAllocation = function (callback) {
         $p = me.pc,
         $i = me.ic,
         code = me.code,
+        culture = me.culture,
         domain = me.settings.domain,
         loadImages = function (data) {
             $.each(data, function (i, item) {
@@ -221,8 +224,9 @@ myAppContainers.prototype.showAllocation = function (callback) {
     $('.allocation-container').each(function () {
         var container = $(this),
             id = '#' + container.attr('id');
+
         $i.get('assetclasscolors', null, function (colors) {
-            $p.get('assetAllocations', { code: code }, function (data) {
+            $p.get('assetAllocations', { code: code, culture: culture }, function (data) {
                 if (data) {
                     loadImages(data.Children);
                     var tree = new treemap(id);
@@ -260,6 +264,7 @@ myAppContainers.prototype.showNavs = function () {
 
         $i.get('get', { id: code, benchmark:true }, function (result) {
             if (result) {
+                $('.tab-svg').addClass('active');
                 $i.get('prices', { id: code, option: option }, function (data) {
                     $n.load(data, code, false, function () {
                         if (result.benchmark) {
@@ -349,12 +354,13 @@ myAppContainers.prototype.showModels = function (containers) {
 
     var code = this.code,
         $p = this.pc,
-        domain = this.settings.domain;
+        domain = this.settings.domain,
+        culture = this.culture;
 
     $(containers).each(function () {
         var container = $(this);
         container.empty();
-        $p.get('LastHoldings', { code: code, transparency: false }, function (data) {
+        $p.get('LastHoldings', { code: code, transparency: false, culture: culture }, function (data) {
             $.each(data.Holdings, function (i, h) {
                 var item = h.Asset;
                 if (item.code != 'EUR') {
@@ -363,7 +369,7 @@ myAppContainers.prototype.showModels = function (containers) {
                         body = $('<div>').addClass('card-body'),
                         tb = $('<h5>').addClass('card-title').html(item.name),
                         txt = $('<p>').addClass('card-text').html(item.strategy),
-                        textfoot = h.weight + '% ' + item.category + ' - Risques ' + item.stat.SRRI,
+                        textfoot = h.weight + '% ' + item.category + ' - Risques ' + item.LastStat.SRRI,
                         footer = $('<div>').addClass('card-footer small text-muted').html(textfoot);
 
                     body.append(tb, txt);

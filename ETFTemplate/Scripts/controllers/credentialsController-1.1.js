@@ -6,10 +6,19 @@
  */
 var credentialsControl = function (reportid, callback) {
 
-    var $cus = new LoyolApp.CustomerController();
+    var id = reportid,
+        pwd = "";
+
+    // customer controller 
+    var $cus = new LoyolApp.CustomersController();
 
     // credentials modal
     var credentialsModal = new bootstrap.Modal(document.getElementById('credentials'), {
+        keyboard: false
+    });
+
+    // logout modal
+    var logoutModal = new bootstrap.Modal(document.getElementById('logout'), {
         keyboard: false
     });
 
@@ -29,8 +38,13 @@ var credentialsControl = function (reportid, callback) {
         return false;
     })
 
-    var id = reportid,
-        pwd = "";
+    // on form logout submit
+    $('.form-logout').submit(function () {
+        $.cookie('credentials-u', '', { path: '/' });
+        $.cookie('credentials-p', '', { path: '/' });
+        logoutModal.hde();
+        return false;
+    })
 
     // no given report
     if (reportid == "")

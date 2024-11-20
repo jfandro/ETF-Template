@@ -10,15 +10,33 @@
     Subject: @Model.Title
 }
 
-<h3>Bonjour,</h3>
+<h3>(Re)Bonjour,</h3>
 
-<p>Pour traiter votre demande, nous avons besoin de valider votre adresse email.
-    Pour cela, nous vous invitons à cliquer sur ce <a href="@Model.Url">lien</a>.
+<p>
+    Pour accéder à votre profil et traiter votre demande au plus vite, j'ai besoin de valider votre adresse email.
+    Pour cela, je vous invite à cliquer sur ce <a href="@Model.Url">lien sécurisé</a>. Attention, ce lien a une durée de 
+    vie limitée à 10 minutes.
 </p>
 
+<p>
+    Au terme de cette validation, vous recevrez par email un récapitulatif complet de votre profil (vos réponses
+    au questionnaire de connaissance), ainsi qu'un accès à la proposition personnalisée que je vous ai proposé.
+</p>
+
+<p>Je vous souhaite une excellente journée,</p>
 <hr />
+<table>
+    <tr>
+        <td style="min-width:100px;width:20%;padding:10px;">
+            <img src="@ApplicationHelper.UserImageUrl" style="width:100%;" />
+        </td>
+        <td><p><b>@ApplicationHelper.UserSignature</b>
+            <br />
+            <em>@ApplicationHelper.UserSignature2</em><br />
+            Tél @ApplicationHelper.UserPhoneNumber</p>
+        </td>
+    </tr>
+</table>
 
-<p>Au terme de cette validation, vous recevrez un récapitulatif de votre profil et de la
-    proposition jointe.</p>
 
-<p>Bonne journée,</p>
+

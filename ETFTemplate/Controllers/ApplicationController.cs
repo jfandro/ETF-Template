@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
 using Newtonsoft.Json;
+using ETFTemplate.Helpers;
 
 namespace ETFTemplate.Controllers
 {
@@ -33,8 +34,8 @@ namespace ETFTemplate.Controllers
             var requestParams = new List<KeyValuePair<string, string>>
                 {
                     new KeyValuePair<string, string>("grant_type", "password"),
-                    new KeyValuePair<string, string>("username", ConfigurationManager.AppSettings.Get("UserName")),
-                    new KeyValuePair<string, string>("password", ConfigurationManager.AppSettings.Get("UserPassword"))
+                    new KeyValuePair<string, string>("username", ApplicationHelper.UserName),
+                    new KeyValuePair<string, string>("password", ApplicationHelper.UserPassword)
                 };
 
             var baseUri = new Uri(baseUrl);

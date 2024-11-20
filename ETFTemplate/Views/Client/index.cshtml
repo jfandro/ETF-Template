@@ -1,7 +1,6 @@
 ﻿@model ETFTemplate.Models.ClientPortal
 
 @{
-    ViewBag.Title = "Client portal";
     Layout = "~/Views/Shared/_layout5.cshtml";
 }
 
@@ -10,8 +9,9 @@
 
 @section menu {
     <ul class="navbar-nav ms-auto my-2 my-lg-0">
-        <li class="nav-item"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#credentials">Login</a></li>
-        <li class="nav-item"><a class="nav-link" href="/Home/Contact">Contact</a></li>
+        <li class="nav-item nav-login"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#credentials">Login</a></li>
+        <li class="nav-item nav-logout"><a class="nav-link" data-bs-toggle="modal" data-bs-target="#logout">Logout</a></li>
+        <li class="nav-item"><a class="nav-link" href="/Home">Accueil</a></li>
     </ul>
 }
 
@@ -23,14 +23,16 @@
     <button data-bs-toggle="pill" data-bs-target="#tab-kyc" role="tab" class="nav-link text-white">Connaissance</button>
     <button data-bs-toggle="pill" data-bs-target="#tab-documents" role="tab" class="nav-link text-white">Documents</button>
     <hr />
-    <button data-bs-toggle="pill" data-bs-target="#tab-book" role="tab" class="nav-link text-white">Ordres</button>
+    @if (ApplicationHelper.OrderBook != "")
+    {
+        <button data-bs-toggle="pill" data-bs-target="#tab-book" role="tab" class="nav-link text-white">@ApplicationHelper.OrderBook</button>
+    }
     <button data-bs-toggle="pill" data-bs-target="#tab-operations" role="tab" class="nav-link text-white">Operations</button>
     <button data-bs-toggle="pill" data-bs-target="#tab-cashflows" role="tab" class="nav-link text-white">Trésorerie</button>
     <hr />
     <button data-bs-toggle="pill" data-bs-target="#tab-compliances" role="tab" class="nav-link text-white">Contraintes</button>
     <button data-bs-toggle="pill" data-bs-target="#tab-notes" role="tab" class="nav-link text-white">Notes</button>
     <hr />
-    <button data-bs-toggle="pill" data-bs-target="#tab-contact" role="tab" class="nav-link text-white">Contact</button>
     <button data-bs-toggle="pill" data-bs-target="#tab-help" role="tab" class="nav-link text-white">Aide</button>
 }
 
@@ -50,12 +52,33 @@
                     <h1 class="display-4">Bonjour <span class="name"></span>,</h1>
                     <p>
                         Bienvenue dans votre espace privé.
-                        Retrouvez ci-dessous la dernière situation de votre portefeuille.
-                        D'autres espaces sur ce portail vont vous permettre
-                        de retracer vos opérations, de consulter les derniers rapports
-                        émis par les sociétés de gestion ou nous transmettre un ordre à exécuter.
-                        N'hésitez pas à nous contacter pour toute question.Nous vous souhaitons une excellente journée.
+                        Cet espace est conçu pour vous donner toute la transparence sur vos placements.
+                        Qu'il s'agisse de rendements, de résultats, de risques, d'expositions ou de durabilité,
+                        vous trouverez ici l'essentiel des indicateurs à savoir.
+                        Retrouvez ci-dessous la situation actualisée de votre portefeuille ou de notre proposition
+                        si vous n'êtes pas encore client.
+                        D'autres espaces sont proposés sur ce portail
+                        afin de vous permettre de retracer l'historique de vos <u>arbitrages</u>,
+                        de consulter les <u>derniers rapports</u> publiés par les sociétés de gestion sur vos fonds,
+                        de suivre les <u>contraintes</u> que nous fixerons ensemble sur la gestion de vos actifs,
+                        ou nous transmettre un ordre à exécuter.
+                        N'hésitez pas à me contacter par téléphone
+                        ou par <a href="mailto:">email</a> pour toute question.
+                        Je vous souhaite une excellente journée.
                     </p>
+                    <hr />
+                    <address class="row" style="margin:50px;">
+                        <div class="col-2">
+                            <img class="img-fluid shadow" src="@ApplicationHelper.UserImageUrl" />
+                        </div>
+                        <div class="col-10">
+                            <p>
+                                <b>@ApplicationHelper.UserSignature</b><br />
+                                <em>@ApplicationHelper.UserSignature2</em><br />
+                                <span class="fa fa-phone"></span> @ApplicationHelper.UserPhoneNumber
+                            </p>
+                        </div>
+                    </address>
 
                     <div class="section-positions py-5">
                         <h2>Inventaire détaillé</h2>
@@ -75,46 +98,6 @@
 
                 </div>
             </div>
-        </div>
-
-        <div id="tab-strategy" role="tabpanel" tabindex="0" class="tab-pane fade active tab-svg">
-            <div class="p-4 mb-4">
-                <h1 class="display-4">Stratégie</h1>
-                <p>
-                    Retrouvez ci-dessous la stratégie conduite par votre portefeuille
-                    depuis sa création. En bleu, vos investissements par année et par classe d'actifs.
-                    En vert ou rouge, vos sorties respectivement gagnantes ou perdantes. La largeur des bandes et
-                    des noeuds est proportionnelle aux montants.
-                </p>
-
-                <div class="container-strategy container-sankey py-5">
-                    <div id="sankey" class="sankey-chart" data-positions="true"></div>
-                </div>
-
-            </div>
-        </div>
-
-        <div id="tab-indicators" role="tabpanel" tabindex="0" class="tab-pane fade active tab-svg">
-
-            <div class="p-4 mb-4">
-                <h1 class="display-4">Résultats</h1>
-                <p>
-                    Retrouvez ci-dessous les principaux indicateurs
-                    de risques et de performances relevés sur
-                    votre portefeuille.
-                </p>
-                <div class="container py-5">
-                    <div class="container-stats">
-                        <div class="py-2 mx-lg-5 mx-sm-1">
-                            @Html.Partial("_results")
-                        </div>
-                        <div class="py-2 mx-lg-5 mx-sm-1">
-                            @Html.Partial("_indicators")
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
         <div id="tab-operations" role="tabpanel" tabindex="0" class="tab-pane fade">
@@ -174,10 +157,12 @@
             <div class="p-4 p-md-5 mb-4">
                 <h1 class="display-4">Mes contraintes de gestion</h1>
                 <p>
-                    Vous pouvez convenir avec votre conseiller une surveillance de votre portefeuille
-                    réalisée à un rythme régulier (quotidien, hebdomadaire, mensuel ...) ou à la demande.
+                    Nous pouvons convenir ensemble d'une surveillance automatisée de votre portefeuille,
+                    surveillance réalisée à un rythme régulier (quotidien, hebdomadaire, mensuel ...) ou à la demande.
+                    Cette surveillance se traduit par la mise en place d'un ensemble de contraintes
+                    de gestion, chaque contrainte étant portée par un règle programmable.
                     Le tableau ci-dessous regroupe toutes les contraintes de gestion que vous avez souhaité
-                    voir appliquer sur votre portefeuille.
+                    voir appliquer sur votre portefeuille. Ensemble, jouons la transparence.
                 </p>
             </div>
 
@@ -297,21 +282,53 @@
             </div>
         </div>
 
-        <div id="tab-contact" role="tabpanel" tabindex="0" class="tab-pane fade">
-            <div class="p-4 p-md-5 mb-4">
-                <h1 class="display-4">Contact</h1>
-                @Html.Partial("_contact")
+        <div id="tab-help" role="tabpanel" tabindex="0" class="tab-pane fade">
+            <div class="p-lg-4 p-md-2 p-sm-1 py-5 mb-4">
+                @Html.Partial("_help")
             </div>
         </div>
 
-        <div id="tab-help" role="tabpanel" tabindex="0" class="tab-pane fade">
-            <div class="d-flex align-items-center justify-content-center">
-                <div class="container">
-                    <h1 class="display-4">Aide pour le conseiller</h1>
-                    @Html.Partial("_help")
+        <div id="tab-strategy" role="tabpanel" tabindex="0" class="tab-pane fade active tab-svg">
+            <div class="p-lg-4 p-md-2 p-sm-1 py-5 mb-4">
+                <h1 class="display-4">Stratégie</h1>
+                <p>
+                    Retrouvez ci-dessous la stratégie conduite par votre portefeuille
+                    depuis sa création. En bleu, vos investissements par année et par classe d'actifs.
+                    En vert ou rouge, vos sorties respectivement gagnantes ou perdantes. La largeur des bandes et
+                    des noeuds est proportionnelle aux montants.
+                </p>
+
+                <div class="p-5">
+                    <div class="container-strategy container-sankey p-5 bg-white bg-opacity-50">
+                        <div id="sankey" class="sankey-chart" data-positions="true"></div>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div id="tab-indicators" role="tabpanel" tabindex="0" class="tab-pane fade active tab-svg">
+
+            <div class="p-4 mb-4">
+                <h1 class="display-4">Résultats</h1>
+                <p>
+                    Retrouvez ci-dessous les principaux indicateurs
+                    de risques et de performances relevés sur
+                    votre portefeuille.
+                </p>
+                <div class="container py-5">
+                    <div class="container-stats">
+                        <div class="py-2 mx-lg-5 mx-sm-1">
+                            @Html.Partial("_results")
+                        </div>
+                        <div class="py-2 mx-lg-5 mx-sm-1">
+                            @Html.Partial("_indicators")
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
     </div>
 
@@ -349,14 +366,19 @@
             var ac = new LoyolApp.AssetsController();
             var robo = new myRobo(LoyolApp, @Model.QuestionnaireID, $('.container-question'));
 
-            // warning modal
-            var wModal = new bootstrap.Modal(document.getElementById('warning'), {
-                keyboard: false
-            });
-
             //var session = LoyolApp.Session.getInstance().get();
             var cred = { access_token: '@ViewBag.token', userGuid: 'xxx', userName: 'etfreporting', expires_in: @ViewBag.expires  }
             sg.setcredentials(cred);
+
+            if ($.cookie('credentials-u')) {
+                $('.nav-login').hide();
+                $('.nav-logout').show();
+            }
+            else {
+                $('.nav-logout').hide();
+                $('.nav-login').show();
+
+            }
 
             // create a new instance of portfolioCharts in charge of widgets management
             var pcharts = new portfolioCharts('');
@@ -454,15 +476,6 @@
                     div.appendTo(container);
                 })
             }
-
-            // contact form
-            $('.form-contact').submit(function () {
-                var data = $(this).serialize();
-                robo.post(data, function (result) {
-                    wModal.show();
-                });
-                return false;
-            })
 
             $('#status').on('change', function () {
                 if ($(this).val() == 'INV') {
